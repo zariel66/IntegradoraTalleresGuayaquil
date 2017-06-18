@@ -1,0 +1,53 @@
+
+.mainContent
+{
+	width: 100%;
+	padding: 0px;
+	margin: 0px;
+}
+#navbar-section
+{
+	margin-bottom: 0px;
+}
+#register-buttons-section
+{
+	width: 100%;
+
+	animation: fadein 2s;
+}
+
+
+
+@keyframes fadein {
+	from { opacity: 0; }
+	to   { opacity: 1; }
+}
+.footer
+{
+	margin: 0;
+	padding: 0px;
+	width: 100%;
+
+}
+.footer-bottom{
+	background-color: black;
+	color: white;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-size: 11px;
+	padding-top: 10px;
+}
+.footer-body
+{
+	background-color: #222;
+	color: white;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-size: 13px;
+	padding-top: 12px;
+	padding-bottom: 7px
+}
+.adjust-content
+{
+	padding-left: 10%;
+	padding-right: 10%;
+	margin: 0px
+}
