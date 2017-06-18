@@ -125,10 +125,11 @@
 								<label>Indique la ubicación de su taller en el mapa(*): </label>
 							</div>
 							<div >
-								<img class="col-md-10" src="mapademo.jpg" style="height:500px;padding-left:15px;">
+								<div id="map" style="min-height:300px;min-width:300px;"></div>
 							</div>
 						</div>
 						<br>
+
 						<div class="row">
 							<div class="col-md-3">
 								<a class="btn register-buttons" href="">Registrar</a>
@@ -139,6 +140,7 @@
 				</div>
 			</div>
 		</div>
+		
 		<style type="text/css">
 			#form-section-background
 			{
@@ -182,4 +184,21 @@
 				overflow-y:scroll;
 			}
 		</style>
+		<script>
+	      function initMap() {
+	        var uluru = {lat: -25.363, lng: 131.044};
+	        var map = new google.maps.Map(document.getElementById('map'), {
+	          zoom: 4,
+	          center: uluru,
+	          disableDefaultUI: true
+	        });
+	        var marker = new google.maps.Marker({
+	          position: uluru,
+	          map: map
+	        });
+	      }
+	      
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMWnFVjp1hJEu6zTj5Y646z15ecr1WH7Q&callback=initMap">
+    </script>
 @stop
