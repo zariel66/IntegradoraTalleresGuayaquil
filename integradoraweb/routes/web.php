@@ -11,10 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('template');
-});
+Route::get('/',"HomeController@index");
+Route::get("registrartaller","HomeController@registrarTaller");
 
-Route::get('/index', function () {
-    return view('welcome');
-});

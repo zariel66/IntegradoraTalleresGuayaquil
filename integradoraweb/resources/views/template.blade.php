@@ -20,14 +20,19 @@
 	<nav id="navbar-section" class="navbar navbar-inverse navbar-static-top">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a class="navbar-brand" href="demointro.html">APPNAME HERE</a>
+				<a class="navbar-brand" href="{{url('/')}}">APPNAME HERE</a>
 			</div>
+			@if (Auth::check())
+ 	
 			<ul class="nav navbar-nav">
 				<li class="active"><a href="#">Busca tu taller</a></li>
 				<li><a href="#">Guía</a></li>
 				<li><a href="#"> Mis vehiculos</a></li>
 				<li><a href="#">Mi perfil</a></li>
 			</ul>
+ 	
+			@endif
+			
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="registerclient.html"><span class="glyphicon glyphicon-user"></span> Regístrate</a></li>
 				<li><a href="login.html"><span class="glyphicon glyphicon-log-in"></span> Iniciar Sesión</a></li>
@@ -35,39 +40,7 @@
 		</div>
 	</nav>
 	<div class="mainContent container">
-		<div id="register-section-background">
-			<!-- <h1 class="app-body-title">APP NAME HERE</h1> -->
-			<div id="register-buttons-section" >
-				<div class="row">
-					<div class="panel panel-default col-md-5">
-						<div class="panel-body">
-							<div class="row info-text">
-								<img src="{{ URL::asset('imagenes/icons/usericon.png')}}" alt="imagen"  class="center-block" style="width:130px;height:130px">
-								<p class="register-text">Únete a nuestro sitio y encuentra el taller automotriz ideal que necesitas para el mantenimiento y reparación de tu vehiculo aquí en la ciudad de Guayaquil. Podrás encontrar un servicio de calidad basado en tu opinión y la de los demás. Qué esperas regístrate ya</p>
-							</div>
-							<div class="row">
-								<a href="registerclient.html" class="btn register-buttons center-block">Regístrate</a>
-							</div>
-							
-						</div>
-					</div>
-					<div class="panel panel-default col-md-5 col-md-offset-1">
-						<div class="panel-body">
-							<div class="row info-text">
-								<img src="{{ URL::asset('imagenes/icons/tallericon.png')}}" alt="imagen" class="center-block" style="width:130px;height:130px">
-								<p class="register-text">Registra la información de tus talleres automotrices en nuestra plataforma de forma gratuita y nuestros usuarios podrán contactarte por tus servicios. No pierdas la oportunidad de ganar clientes y de que tu negocio crezca.</p>
-
-							</div>
-							<div class="row">
-								<a href="registerworkshop.html" class="btn register-buttons center-block">Registra tu taller</a>
-							</div>
-							
-						</div>
-					</div>
-				</div>
-
-			</div>
-		</div>
+		@yield("content")
 
 	</div>
 	<footer class="container footer navbar-static-bottom">
@@ -100,59 +73,6 @@
 	</footer>
 </body>
 
-<style type="text/css">
 
-#register-buttons-section
-{
-	width: 100%;
-
-	animation: fadein 2s;
-}
-#register-section-background
-{
-	background-image: url("{{ URL::asset('imagenes/icons/bg2.jpg')}}");
-	background-color: #cccccc;
-	/*background-size:  100% 100%;*/
-	background-size: 100% 100%;
-	height:700px;
-	padding-left: 30%;
-	padding-right: 20%;
-	padding-top: 12%;
-/*-webkit-filter: blur(2px);
--moz-filter: blur(2px);
--o-filter: blur(2px);
--ms-filter: blur(2px);
-filter: blur(2px);*/
-
-}
-#register-buttons-section .panel{
-	height: 400px;
-	color: #373737;
-	border-radius: 25px;
-}
-
-#register-buttons-section .info-text
-{
-	height: 320px;
-}
-.register-text
-{
-	text-align: justify;
-	text-justify: inter-word;
-	margin-top: 25px;
-}
-.register-buttons
-{
-	width: 150px;
-	
-	font-weight:bold;
-	color: #373737;
-	background-color:#cdc0b7;
-
-}
-
-
-
-</style>
 
 </html> 
