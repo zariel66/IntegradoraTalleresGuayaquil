@@ -8,19 +8,30 @@
 			</div>
 				<div class="row">
 					<br>
-					<form class="form-inline">
+					<form class="form-inline" action="registrotallersubmit" method="GET" autocomplete="on">
 						<div class="row">
 							<div class="col-md-2">
 								<label>Nombres(*): </label>
 							</div>
 							<div class="col-md-3">
-								<input class="form-control" type="text">
+								<input value="{{old('nombre')}}" class="form-control" type="text" name="nombre"
+								@if($errors->has('nombre'))
+								style="border-color:red;"
+								@endif
+								>
+								<div style="color:red"><small>{{ $errors->first('nombre') }}</small></div>
 							</div>
 							<div class="col-md-2">
 								<label>Correo(*): </label>
 							</div>
 							<div class="col-md-3">
-								<input class="form-control" type="text">
+								<input class="form-control" type="text" name="correo"
+								@if($errors->has('correo'))
+								style="border-color:red;"
+								@endif
+								>
+								<div style="color:red"><small>{{ $errors->first('correo') }}</small></div>
+								
 							</div>
 						</div>
 						<br>
@@ -29,13 +40,23 @@
 								<label>Apellidos(*): </label>
 							</div>
 							<div class="col-md-3">
-								<input class="form-control" type="text">
+								<input class="form-control" type="text" name="apellido"
+								@if($errors->has('apellido'))
+								style="border-color:red;"
+								@endif
+								>
+								<div style="color:red"><small>{{ $errors->first('apellido') }}</small></div>
 							</div>
 							<div class="col-md-2">
 								<label>Dirección(*): </label>
 							</div>
 							<div class="col-md-3">
-								<input type="text" class="form-control">
+								<input type="text" class="form-control" name="direccion"
+								@if($errors->has('direccion'))
+								style="border-color:red;"
+								@endif
+								>
+								<div style="color:red"><small>{{ $errors->first('direccion') }}</small></div>
 							</div>
 						</div>
 						<br>
@@ -44,13 +65,23 @@
 								<label>Usuario(*): </label>
 							</div>
 							<div class="col-md-3">
-								<input class="form-control" type="text">
+								<input class="form-control" type="text" name="username"
+								@if($errors->has('username'))
+								style="border-color:red;"
+								@endif
+								>
+								<div style="color:red"><small>{{ $errors->first('username') }}</small></div>
 							</div>
 							<div class="col-md-2">
 								<label>Teléfono(*): </label>
 							</div>
 							<div class="col-md-3">
-								<input class="form-control" type="text">
+								<input class="form-control" type="text" name="telefono"
+								@if($errors->has('telefono'))
+								style="border-color:red;"
+								@endif
+								>
+								<div style="color:red"><small>{{ $errors->first('telefono') }}</small></div>
 							</div>
 						</div>
 						<br>
@@ -59,13 +90,23 @@
 								<label>Contraseña(*): </label>
 							</div>
 							<div class="col-md-3">
-								<input class="form-control" type="password">
+								<input class="form-control" type="password" name="password"
+								@if($errors->has('password'))
+								style="border-color:red;"
+								@endif
+								>
+								<div style="color:red"><small>{{ $errors->first('password') }}</small></div>
 							</div>
 							<div class="col-md-2">
 								<label>Nombre completo del empleado a cargo(*): </label>
 							</div>
 							<div class="col-md-3">
-								<input class="form-control" type="text">
+								<input class="form-control" type="text" name="nombre_empleado"
+								@if($errors->has('nombre_empleado'))
+								style="border-color:red;"
+								@endif
+								>
+								<div style="color:red"><small>{{ $errors->first('nombre_empleado') }}</small></div>
 							</div>
 						</div>
 						<br>
@@ -74,7 +115,13 @@
 								<label>Confirmar Contraseña(*):</label>
 							</div>
 							<div class="col-md-3">
-								<input class="form-control" type="password">
+								<input class="form-control" type="password" name="password_confirmation"
+								@if($errors->has('password_confirmation'))
+								style="border-color:red;"
+								@endif
+								>
+								<div style="color:red"><small>{{ $errors->first('password_confirmation') }}</small></div>
+								
 							</div>
 							<div class="col-md-2"></div>
 							<div class="col-md-3"></div>
@@ -86,7 +133,12 @@
 							</div>
 							<div class="col-md-3">
 								<ul class="list-group checkbox-list" >
-									<a href="" class="list-group-item">
+									@foreach($marcas as $marca)
+									<div href="" class="list-group-item">
+										<input type="checkbox" value="{{$marca->id}}" name="marcas[]"> {{$marca->nombre}}
+									</div>
+									@endforeach
+									<!-- <a href="" class="list-group-item">
 										<input type="checkbox" class=""> Chevrolet
 									</a>
 									<a href="" class="list-group-item">
@@ -97,7 +149,7 @@
 									</a>
 									<a href="" class="list-group-item">
 										<input type="checkbox" class=""> Mercedez
-									</a>
+									</a> -->
 								</ul>
 							</div>
 							<div class="col-md-2">
@@ -105,18 +157,21 @@
 							</div>
 							<div class="col-md-3">
 								<ul class="list-group checkbox-list" >
-									<a href="" class="list-group-item">
-										<input type="checkbox" class=""> Pintado
-									</a>
-									<a href="" class="list-group-item">
-										<input type="checkbox" class=""> Tapizeria
-									</a>
-									<a href="" class="list-group-item">
-										<input type="checkbox" class=""> Eléctrico
-									</a>
-									<a href="" class="list-group-item">
-										<input type="checkbox" class=""> Mecánico
-									</a>
+									<div href="" class="list-group-item">
+										<input type="checkbox" name="servicios[]"> Carrocería
+									</div>
+									<div href="" class="list-group-item">
+										<input type="checkbox"  name="servicios[]"> Eléctrico
+									</div>
+									<div href="" class="list-group-item">
+										<input type="checkbox"  name="servicios[]"> Mecánico
+									</div>
+									<div href="" class="list-group-item">
+										<input type="checkbox"  name="servicios[]"> Pintado
+									</div>
+									<div href="" class="list-group-item">
+										<input type="checkbox"  name="servicios[]"> Tapizeria
+									</div>
 								</ul>
 							</div>
 						</div>
@@ -125,14 +180,14 @@
 								<label>Indique la ubicación de su taller en el mapa(*): </label>
 							</div>
 							<div >
-								<div id="map" style="min-height:300px;min-width:300px;"></div>
+								<div id="map" class="col-md-10" style="min-height:400px;"></div>
 							</div>
 						</div>
 						<br>
 
 						<div class="row">
 							<div class="col-md-3">
-								<a class="btn register-buttons" href="">Registrar</a>
+								<input class="btn register-buttons" type="submit" value="Registrar">
 							</div>
 
 						</div>
@@ -186,14 +241,14 @@
 		</style>
 		<script>
 	      function initMap() {
-	        var uluru = {lat: -25.363, lng: 131.044};
+	        var guayaquil = {lat: -2.1456078,lng: -79.9499721};
 	        var map = new google.maps.Map(document.getElementById('map'), {
-	          zoom: 4,
-	          center: uluru,
+	          zoom: 15,
+	          center: guayaquil,
 	          disableDefaultUI: true
 	        });
 	        var marker = new google.maps.Marker({
-	          position: uluru,
+	          position: guayaquil,
 	          map: map
 	        });
 	      }

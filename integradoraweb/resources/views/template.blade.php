@@ -14,6 +14,7 @@
 
 	<!-- Latest compiled and minified JavaScript -->
 	<link href="{{ URL::asset('css/template.css')}}" rel="stylesheet">
+	<meta name="csrf-token" content="{{ csrf_token() }}">
 
 </head>
 <body>
@@ -71,6 +72,13 @@
 
 
 	</footer>
+	<script type="text/javascript">
+		$.ajaxSetup({
+		    headers: {
+		        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		    }
+		});
+	</script>
 </body>
 
 

@@ -10,7 +10,7 @@ class User extends Authenticatable
     use Notifiable;
 
     
-    protected $table = 'ususario';
+    protected $table = 'usuario';
     protected $primaryKey = 'id';
     protected $fillable = array('id', 'nombre', 'apellido', 'cedula', 'tipo', 'username', 'correo', 'password', 'remember_token');
     public $timestamps = false;

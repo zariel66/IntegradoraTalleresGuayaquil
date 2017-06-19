@@ -13,4 +13,5 @@
 
 Route::get('/',"HomeController@index");
 Route::get("registrartaller","HomeController@registrarTaller");
+Route::get("registrotallersubmit","HomeController@registrarTallerSubmit");
 
