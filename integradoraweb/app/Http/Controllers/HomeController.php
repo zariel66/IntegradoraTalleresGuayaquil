@@ -27,15 +27,15 @@ class HomeController extends Controller
    public function registrarTallerSubmit()
    {
     $rules = array(
-            'nombre' => 'required|alpha|size:3',
-            'apellido' => 'required|alpha|size:3',
-            'username' => 'required|unique:usuario,username|size:6',
+            'nombre' => 'required|alpha|min:3',
+            'apellido' => 'required|alpha|min:3',
+            'username' => 'required|unique:usuario,username|min:6',
             'correo' => 'required|unique:usuario,correo|email',
-            'password' => 'required|size:8',
+            'password' => 'required|min:8',
             'password_confirmation' => 'same:password',
-            'direccion' => 'required|size:10',
-            'telefono' => 'required|size:6',
-            'nombre_empleado' => 'required|size:10',
+            'direccion' => 'required|min:10',
+            'telefono' => 'required|min:6',
+            'nombre_empleado' => 'required|min:10',
             "marcas" => 'required|array|min:1',
             "servicios" => 'required|array|min:1',
             ); 
@@ -64,13 +64,13 @@ class HomeController extends Controller
             "nombre.alpha" => "El :attribute solo debe contener texto",
             "apellido.alpha" => "El :attribute solo debe contener texto",
 
-            "nombre.size" => "El :attribute debe tener mínimo :size caracteres",
-            "apellido.size" => "El :attribute debe tener mínimo :size caracteres",
-            "username.size" => "El :attribute debe tener mínimo :size caracteres",
-            "password.size" => "La contraseña debe tener mínimo :size caracteres",
-            "telefono.size" => "El teléfono debe tener mínimo :size caracteres",
-            "direccion.size" => "La dirección debe tener mínimo :size caracteres",
-            "nombre_empleado.size" => "El nombre del empleado debe tener mínimo :size caracteres",
+            "nombre.min" => "El :attribute debe tener mínimo :min caracteres",
+            "apellido.min" => "El :attribute debe tener mínimo :min caracteres",
+            "username.min" => "El :attribute debe tener mínimo :min caracteres",
+            "password.min" => "La contraseña debe tener mínimo :min caracteres",
+            "telefono.min" => "El teléfono debe tener mínimo :min caracteres",
+            "direccion.min" => "La dirección debe tener mínimo :min caracteres",
+            "nombre_empleado.min" => "El nombre del empleado debe tener mínimo :min caracteres",
             
             
         );
@@ -81,7 +81,7 @@ class HomeController extends Controller
             
             return Redirect::back()->withErrors($validation)->withInput(Input::all());
         }
-    try {
+    //try {
         $idusuario = DB::table('usuario')->insertGetId(
         array(
             
@@ -93,24 +93,25 @@ class HomeController extends Controller
             'username' => Input::get('username')
             )
         );
+
         $idtaller = DB::table('taller')->insertGetId(
         array(
             
             'latitud' => Input::get('lat'),
             'longitud' => Input::get('lon'),
-            'correo' => Input::get('correo'),
-            'password' => bcrypt(Input::get('password')),
-            'tipo' => 1,
-            'username' => Input::get('username')
+            'direccion' => Input::get('direccion'),
+            'idusuario' => $idusuario,
+            'nombre_empleado' => Input::get('nombre_empleado'),
+            'telefono' => Input::get('telefono')
             )
         );
+        return "TALLER CREADO EXITOSAMENTE CON ID" . $idusuario;
         
+    // } catch (QueryException $e) {
+    //     error_log("query exception: possible duplicate constraint");
+    //     return "error query";
         
-    } catch (QueryException $e) {
-        error_log("query exception: possible duplicate constraint");
-        return "error query";
-        
-    }
+    // }
         
    }
 }
