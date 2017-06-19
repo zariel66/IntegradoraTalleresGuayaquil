@@ -25,7 +25,7 @@
 								<label>Correo(*): </label>
 							</div>
 							<div class="col-md-3">
-								<input class="form-control" type="text" name="correo"
+								<input value="{{old('correo')}}" class="form-control" type="text" name="correo"
 								@if($errors->has('correo'))
 								style="border-color:red;"
 								@endif
@@ -40,7 +40,7 @@
 								<label>Apellidos(*): </label>
 							</div>
 							<div class="col-md-3">
-								<input class="form-control" type="text" name="apellido"
+								<input value="{{old('apellido')}}" class="form-control" type="text" name="apellido"
 								@if($errors->has('apellido'))
 								style="border-color:red;"
 								@endif
@@ -51,7 +51,7 @@
 								<label>Dirección(*): </label>
 							</div>
 							<div class="col-md-3">
-								<input type="text" class="form-control" name="direccion"
+								<input value="{{old('direccion')}}" type="text" class="form-control" name="direccion"
 								@if($errors->has('direccion'))
 								style="border-color:red;"
 								@endif
@@ -65,7 +65,7 @@
 								<label>Usuario(*): </label>
 							</div>
 							<div class="col-md-3">
-								<input class="form-control" type="text" name="username"
+								<input value="{{old('username')}}" class="form-control" type="text" name="username"
 								@if($errors->has('username'))
 								style="border-color:red;"
 								@endif
@@ -76,7 +76,7 @@
 								<label>Teléfono(*): </label>
 							</div>
 							<div class="col-md-3">
-								<input class="form-control" type="text" name="telefono"
+								<input value="{{old('telefono')}}" class="form-control" type="text" name="telefono"
 								@if($errors->has('telefono'))
 								style="border-color:red;"
 								@endif
@@ -90,7 +90,7 @@
 								<label>Contraseña(*): </label>
 							</div>
 							<div class="col-md-3">
-								<input class="form-control" type="password" name="password"
+								<input value="{{old('password')}}" class="form-control" type="password" name="password"
 								@if($errors->has('password'))
 								style="border-color:red;"
 								@endif
@@ -101,7 +101,7 @@
 								<label>Nombre completo del empleado a cargo(*): </label>
 							</div>
 							<div class="col-md-3">
-								<input class="form-control" type="text" name="nombre_empleado"
+								<input value="{{old('nombre_empleado')}}" class="form-control" type="text" name="nombre_empleado"
 								@if($errors->has('nombre_empleado'))
 								style="border-color:red;"
 								@endif
@@ -134,47 +134,41 @@
 							<div class="col-md-3">
 								<ul class="list-group checkbox-list" >
 									@foreach($marcas as $marca)
-									<div href="" class="list-group-item">
+									<div class="list-group-item">
 										<input type="checkbox" value="{{$marca->id}}" name="marcas[]"> {{$marca->nombre}}
 									</div>
 									@endforeach
-									<!-- <a href="" class="list-group-item">
-										<input type="checkbox" class=""> Chevrolet
-									</a>
-									<a href="" class="list-group-item">
-										<input type="checkbox" class=""> Honda
-									</a>
-									<a href="" class="list-group-item">
-										<input type="checkbox" class=""> Nissan
-									</a>
-									<a href="" class="list-group-item">
-										<input type="checkbox" class=""> Mercedez
-									</a> -->
+									
 								</ul>
+								<div style="color:red"><small>{{ $errors->first('marcas') }}</small></div>
 							</div>
+
 							<div class="col-md-2">
 								<label>Seleccione los servicios que ofrece su taller(*):</label>
 							</div>
 							<div class="col-md-3">
 								<ul class="list-group checkbox-list" >
-									<div href="" class="list-group-item">
-										<input type="checkbox" name="servicios[]"> Carrocería
+									<div  class="list-group-item">
+										<input type="checkbox" value="Carrocería" name="servicios[]"> Carrocería
 									</div>
-									<div href="" class="list-group-item">
-										<input type="checkbox"  name="servicios[]"> Eléctrico
+									<div  class="list-group-item">
+										<input type="checkbox"  value="Eléctrico" name="servicios[]"> Eléctrico
 									</div>
-									<div href="" class="list-group-item">
-										<input type="checkbox"  name="servicios[]"> Mecánico
+									<div  class="list-group-item">
+										<input type="checkbox" value="Mecánico" name="servicios[]"> Mecánico
 									</div>
-									<div href="" class="list-group-item">
-										<input type="checkbox"  name="servicios[]"> Pintado
+									<div  class="list-group-item">
+										<input type="checkbox" value="Pintado" name="servicios[]"> Pintado
 									</div>
-									<div href="" class="list-group-item">
-										<input type="checkbox"  name="servicios[]"> Tapizeria
+									<div  class="list-group-item">
+										<input type="checkbox" value="Tapiceria" name="servicios[]"> Tapiceria
 									</div>
 								</ul>
+								<div style="color:red"><small>{{ $errors->first('servicios') }}</small></div>
 							</div>
 						</div>
+						<br>
+						<br>
 						<div class="row">
 							<div class="col-md-12">
 								<label>Indique la ubicación de su taller en el mapa(*): </label>
@@ -184,10 +178,11 @@
 							</div>
 						</div>
 						<br>
-
+						<input type="hidden" name="lat">
+						<input type="hidden" name="lon">
 						<div class="row">
 							<div class="col-md-3">
-								<input class="btn register-buttons" type="submit" value="Registrar">
+								<input id="submitRegistro" class="btn register-buttons" type="submit" value="Registrar" disabled>
 							</div>
 
 						</div>
@@ -247,11 +242,27 @@
 	          center: guayaquil,
 	          disableDefaultUI: true
 	        });
-	        var marker = new google.maps.Marker({
-	          position: guayaquil,
-	          map: map
-	        });
-	      }
+	          
+	        
+			var marker;
+        	google.maps.event.addListener(map, 'click', function( event ){
+        		if(marker != null)
+        		{
+        			marker.setMap(null);
+        		}
+	        	var lati =  event.latLng.lat();
+	        	var longi = event.latLng.lng();
+	        	marker = new google.maps.Marker({
+		          position: {lat: lati,lng: longi},
+		          map: map
+		        });
+		        $('input[name="lat"]').val(lati);
+		        $('input[name="lon"]').val(longi);
+		        $('#submitRegistro').prop("disabled", false);
+
+	  			//alert( "Latitude: "+event.latLng.lat()+" "+", longitude: "+event.latLng.lng() ); 
+			});
+	     }
 	      
     </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMWnFVjp1hJEu6zTj5Y646z15ecr1WH7Q&callback=initMap">
