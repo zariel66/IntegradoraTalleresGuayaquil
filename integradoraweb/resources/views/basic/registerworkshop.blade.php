@@ -21,7 +21,7 @@
 								>
 								<div style="color:red"><small>{{ $errors->first('nombre') }}</small></div>
 							</div>
-							<div class="col-md-2">
+							<div class="col-md-2 col-md-offset-1">
 								<label>Correo(*): </label>
 							</div>
 							<div class="col-md-3">
@@ -47,16 +47,16 @@
 								>
 								<div style="color:red"><small>{{ $errors->first('apellido') }}</small></div>
 							</div>
-							<div class="col-md-2">
-								<label>Dirección(*): </label>
+							<div class="col-md-2 col-md-offset-1">
+								<label>Nombre del taller(*): </label>
 							</div>
 							<div class="col-md-3">
-								<input value="{{old('direccion')}}" type="text" class="form-control" name="direccion"
-								@if($errors->has('direccion'))
+								<input value="{{old('nombre_taller')}}" class="form-control" type="text" name="nombre_taller"
+								@if($errors->has('nombre_taller'))
 								style="border-color:red;"
 								@endif
 								>
-								<div style="color:red"><small>{{ $errors->first('direccion') }}</small></div>
+								<div style="color:red"><small>{{ $errors->first('nombre_taller') }}</small></div>
 							</div>
 						</div>
 						<br>
@@ -72,16 +72,16 @@
 								>
 								<div style="color:red"><small>{{ $errors->first('username') }}</small></div>
 							</div>
-							<div class="col-md-2">
-								<label>Teléfono(*): </label>
+							<div class="col-md-2 col-md-offset-1">
+								<label>Dirección(*): </label>
 							</div>
 							<div class="col-md-3">
-								<input value="{{old('telefono')}}" class="form-control" type="text" name="telefono"
-								@if($errors->has('telefono'))
+								<input value="{{old('direccion')}}" type="text" class="form-control" name="direccion"
+								@if($errors->has('direccion'))
 								style="border-color:red;"
 								@endif
 								>
-								<div style="color:red"><small>{{ $errors->first('telefono') }}</small></div>
+								<div style="color:red"><small>{{ $errors->first('direccion') }}</small></div>
 							</div>
 						</div>
 						<br>
@@ -97,16 +97,16 @@
 								>
 								<div style="color:red"><small>{{ $errors->first('password') }}</small></div>
 							</div>
-							<div class="col-md-2">
-								<label>Nombre completo del empleado a cargo(*): </label>
+							<div class="col-md-2 col-md-offset-1">
+								<label>Teléfono(*): </label>
 							</div>
 							<div class="col-md-3">
-								<input value="{{old('nombre_empleado')}}" class="form-control" type="text" name="nombre_empleado"
-								@if($errors->has('nombre_empleado'))
+								<input value="{{old('telefono')}}" class="form-control" type="text" name="telefono"
+								@if($errors->has('telefono'))
 								style="border-color:red;"
 								@endif
 								>
-								<div style="color:red"><small>{{ $errors->first('nombre_empleado') }}</small></div>
+								<div style="color:red"><small>{{ $errors->first('telefono') }}</small></div>
 							</div>
 						</div>
 						<br>
@@ -123,8 +123,17 @@
 								<div style="color:red"><small>{{ $errors->first('password_confirmation') }}</small></div>
 								
 							</div>
-							<div class="col-md-2"></div>
-							<div class="col-md-3"></div>
+							<div class="col-md-2 col-md-offset-1">
+								<label>Nombre completo del empleado a cargo(*): </label>
+							</div>
+							<div class="col-md-3">
+								<input value="{{old('nombre_empleado')}}" class="form-control" type="text" name="nombre_empleado"
+								@if($errors->has('nombre_empleado'))
+								style="border-color:red;"
+								@endif
+								>
+								<div style="color:red"><small>{{ $errors->first('nombre_empleado') }}</small></div>
+							</div>
 						</div>
 						<br>
 						<div class="row">
@@ -143,7 +152,7 @@
 								<div style="color:red"><small>{{ $errors->first('marcas') }}</small></div>
 							</div>
 
-							<div class="col-md-2">
+							<div class="col-md-2 col-md-offset-1">
 								<label>Seleccione los servicios que ofrece su taller(*):</label>
 							</div>
 							<div class="col-md-3">
@@ -169,6 +178,7 @@
 						</div>
 						<br>
 						<br>
+
 						<div class="row">
 							<div class="col-md-12">
 								<label>Indique la ubicación de su taller en el mapa(*): </label>
