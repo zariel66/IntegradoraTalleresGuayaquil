@@ -36,7 +36,7 @@
 			
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="registerclient.html"><span class="glyphicon glyphicon-user"></span> Regístrate</a></li>
-				<li><a href="login.html"><span class="glyphicon glyphicon-log-in"></span> Iniciar Sesión</a></li>
+				<li><a href="{{url('login')}}"><span class="glyphicon glyphicon-log-in"></span> Iniciar Sesión</a></li>
 			</ul>
 		</div>
 	</nav>

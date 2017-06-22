@@ -11,7 +11,7 @@
 						<p class="register-text">Únete a nuestro sitio y encuentra el taller automotriz ideal que necesitas para el mantenimiento y reparación de tu vehiculo aquí en la ciudad de Guayaquil. Podrás encontrar un servicio de calidad basado en tu opinión y la de los demás. Qué esperas regístrate ya</p>
 					</div>
 					<div class="row">
-						<a href="registerclient.html" class="btn register-buttons center-block">Regístrate</a>
+						<a href="{{url('registrocliente')}}" class="btn register-buttons center-block">Regístrate</a>
 					</div>
 
 				</div>

@@ -10,6 +10,8 @@ use App\Http\Controllers\Controller;
 use App\Marca;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Http\Request;
+
 
 class HomeController extends Controller
 {
@@ -27,8 +29,8 @@ class HomeController extends Controller
 	public function registrarTallerSubmit()
 	{
 		$rules = array(
-			'nombre' => 'required|alpha|min:3',
-			'apellido' => 'required|alpha|min:3',
+			'nombre' => 'required|regex:/(^[A-Za-z ]+$)+/|min:3',
+			'apellido' => 'required|regex:/(^[A-Za-z ]+$)+/|min:3',
 			'username' => 'required|unique:usuario,username|min:5',
 			'correo' => 'required|unique:usuario,correo|email',
 			'password' => 'required|min:8',
@@ -63,8 +65,8 @@ class HomeController extends Controller
 			"password.confirmed" => "La contraseña debe ser confirmada",
 			"password_confirmation.same" => "Las contraseñas deben coincidir",
 
-			"nombre.alpha" => "El :attribute solo debe contener texto",
-			"apellido.alpha" => "El :attribute solo debe contener texto",
+			"nombre.regex" => "El :attribute solo debe contener texto",
+			"apellido.regex" => "El :attribute solo debe contener texto",
 
 			"nombre.min" => "El :attribute debe tener mínimo :min caracteres",
 			"apellido.min" => "El :attribute debe tener mínimo :min caracteres",
@@ -140,5 +142,103 @@ class HomeController extends Controller
 
 
 
+	}
+
+	public function registrarCliente()
+	{    
+		$marcas = DB::table('marca')->orderBy("nombre","ASC")->get();
+		return view("basic.registerclient",array('marcas' => $marcas ));
+	}
+
+
+	public function registrarClienteSubmit(Request $request)
+	{    
+		error_log("entro controller");
+		$rules = array(
+			'nombre' => 'required|regex:/(^[A-Za-z ]+$)+/|min:3',
+			'apellido' => 'required|regex:/(^[A-Za-z ]+$)+/|min:3',
+			'username' => 'required|unique:usuario,username|min:5',
+			'correo' => 'required|unique:usuario,correo|email',
+			'password' => 'required|min:8',
+			'password_confirmation' => 'same:password',
+			"marca" => 'required',
+			'modelo' => "required",
+			); 
+
+
+		$custom = array(
+			"nombre.required" => "El :attribute es requerido",
+			"apellido.required" => "El :attribute es requerido",
+			"username.required" => "El usuario es requerido",
+			"password.required" => "La contraseña es requerida",
+			"correo.required" => "El :attribute es requerido",
+			"marca.required" => "La :attribute es requerida",
+			"modelo.required" => "La :attribute del vehículo es requerido",
+
+			"username.unique" => "El usuario ingresado ya existe, elija otro",
+			"correo.unique" => "El :attribute ingresado ya se encuentra en uso, elija otro",
+			"correo.email" => "Ingrese una dirección de correo válida",
+
+			"password.confirmed" => "La contraseña debe ser confirmada",
+			"password_confirmation.same" => "Las contraseñas no coinciden",
+
+			"nombre.regex" => "El :attribute solo debe contener texto",
+			"apellido.regex" => "El :attribute solo debe contener texto",
+
+			"nombre.min" => "El :attribute debe tener mínimo :min caracteres",
+			"apellido.min" => "El :attribute debe tener mínimo :min caracteres",
+			"username.min" => "El :attribute debe tener mínimo :min caracteres",
+			"password.min" => "La contraseña debe tener mínimo :min caracteres",
+			
+
+
+			);
+		error_log("entro controller 2");
+		$validation = Validator::make(Input::all(),$rules,$custom);
+
+		if ($validation->fails())
+		{
+			error_log("entro controller 3");
+			return Redirect::back()->withErrors($validation)->withInput(Input::all());
+		}
+
+		DB::beginTransaction();
+		try {
+			$idusuario = DB::table('usuario')->insertGetId(
+				array(
+
+					'nombre' => Input::get('nombre'),
+					'apellido' => Input::get('apellido'),
+					'correo' => Input::get('correo'),
+					'password' => bcrypt(Input::get('password')),
+					'tipo' => 2,
+					'username' => Input::get('username')
+					)
+				);
+			$idvehiculo = DB::table('vehiculo')->insertGetId(
+				array(
+
+					'idmarca' => Input::get('marca'),
+					'idusuario' => $idusuario,
+					'modelo' => Input::get('modelo'),
+					
+					)
+				);
+			error_log($idusuario);
+			error_log($idvehiculo);
+		} catch (\Exception $e) {
+			DB::rollback();
+			throw $e;	
+		}
+
+		DB::commit();
+		return "EXITO";
+
+
+	}
+
+	public function login()
+	{
+		return view("basic.login");
 	}
 }

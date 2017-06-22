@@ -6,6 +6,7 @@
 			<div class="row">
 				<h3>Registro de Taller</h1>
 			</div>
+			
 				<div class="row">
 					<br>
 					<form class="form-inline" action="registrotallersubmit" method="GET" autocomplete="on">
@@ -98,7 +99,7 @@
 								<div style="color:red"><small>{{ $errors->first('password') }}</small></div>
 							</div>
 							<div class="col-md-2 col-md-offset-1">
-								<label>Teléfono(*): </label>
+								<label>Teléfono del establecimiento(*): </label>
 							</div>
 							<div class="col-md-3">
 								<input value="{{old('telefono')}}" class="form-control" type="text" name="telefono"
@@ -161,7 +162,7 @@
 										<input type="checkbox" value="Carrocería" name="servicios[]"> Carrocería
 									</div>
 									<div  class="list-group-item">
-										<input type="checkbox"  value="Eléctrico" name="servicios[]"> Eléctrico
+										<input type="checkbox"  value="Electromecánico" name="servicios[]"> Electromecánico
 									</div>
 									<div  class="list-group-item">
 										<input type="checkbox" value="Mecánico" name="servicios[]"> Mecánico
@@ -170,7 +171,7 @@
 										<input type="checkbox" value="Pintado" name="servicios[]"> Pintado
 									</div>
 									<div  class="list-group-item">
-										<input type="checkbox" value="Tapiceria" name="servicios[]"> Tapiceria
+										<input type="checkbox" value="Tapicería" name="servicios[]"> Tapicería
 									</div>
 								</ul>
 								<div style="color:red"><small>{{ $errors->first('servicios') }}</small></div>
@@ -245,36 +246,36 @@
 			}
 		</style>
 		<script>
-	      function initMap() {
-	        var guayaquil = {lat: -2.1456078,lng: -79.9499721};
-	        var map = new google.maps.Map(document.getElementById('map'), {
-	          zoom: 15,
-	          center: guayaquil,
-	          disableDefaultUI: true
-	        });
-	          
-	        
-			var marker;
-        	google.maps.event.addListener(map, 'click', function( event ){
-        		if(marker != null)
-        		{
-        			marker.setMap(null);
-        		}
-	        	var lati =  event.latLng.lat();
-	        	var longi = event.latLng.lng();
-	        	marker = new google.maps.Marker({
-		          position: {lat: lati,lng: longi},
-		          map: map
-		        });
-		        $('input[name="lat"]').val(lati);
-		        $('input[name="lon"]').val(longi);
-		        $('#submitRegistro').prop("disabled", false);
-
-	  			//alert( "Latitude: "+event.latLng.lat()+" "+", longitude: "+event.latLng.lng() ); 
+		  function initMap() {
+			var guayaquil = {lat: -2.1456078,lng: -79.9499721};
+			var map = new google.maps.Map(document.getElementById('map'), {
+			  zoom: 15,
+			  center: guayaquil,
+			  disableDefaultUI: true
 			});
-	     }
-	      
-    </script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMWnFVjp1hJEu6zTj5Y646z15ecr1WH7Q&callback=initMap">
-    </script>
+			  
+			
+			var marker;
+			google.maps.event.addListener(map, 'click', function( event ){
+				if(marker != null)
+				{
+					marker.setMap(null);
+				}
+				var lati =  event.latLng.lat();
+				var longi = event.latLng.lng();
+				marker = new google.maps.Marker({
+				  position: {lat: lati,lng: longi},
+				  map: map
+				});
+				$('input[name="lat"]').val(lati);
+				$('input[name="lon"]').val(longi);
+				$('#submitRegistro').prop("disabled", false);
+
+				//alert( "Latitude: "+event.latLng.lat()+" "+", longitude: "+event.latLng.lng() ); 
+			});
+		 }
+		  
+	</script>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMWnFVjp1hJEu6zTj5Y646z15ecr1WH7Q&callback=initMap">
+	</script>
 @stop
