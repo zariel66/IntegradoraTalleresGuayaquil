@@ -4,21 +4,22 @@
 			
 	<div class="row login-section">
 		<div class="panel panel-default col-md-5">
-				<img src="credentialicon.png" alt="imagen" class="center-block" style="width:130px;height:130px">
+				<img src="{{ URL::asset('imagenes/icons/credentialicon.png')}}" alt="imagen" class="center-block" style="width:130px;height:130px">
 				<h4 class="text-center"><strong>Ingresa al sistema</strong></h4>
 				
 				<div class="panel-body">
-					<form>
+					<form method="POST" action="iniciarsesion">
+						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 					  <div class="form-group">
 					    <label for="email">Usuario:</label>
-					    <input type="text" class="form-control" id="username">
+					    <input type="text" class="form-control" id="username" name="username">
 					  </div>
 					  <div class="form-group">
 					    <label for="pwd">Contraseña:</label>
-					    <input type="password" class="form-control" id="pwd">
+					    <input type="password" class="form-control" id="pwd" name="password">
 					  </div>
 					  <br>
-					  <a href="searchclient.html"	class="btn login-btn center-block">Iniciar Sesión</a>
+					  <input type="submit" class="btn login-btn center-block" value="Iniciar Sesion">
 					</form>
 		</div>
 	</div>
@@ -28,7 +29,7 @@
 {
 	margin: 0px;
 	height: 700px;
-	background-image: url("bgtool.jpg");
+	background-image: url("{{ URL::asset('imagenes/icons/bgtool.jpg')}}");
 	background-size: 300px 300px;
 	padding-left: 40%;
 	
