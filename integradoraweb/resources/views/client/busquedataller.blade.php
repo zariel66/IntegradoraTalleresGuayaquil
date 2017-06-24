@@ -39,46 +39,46 @@
 						<div class="col-md-4 col-md-offset-1">
 							<ul class="list-group" id="search-results">
 								<a href="#" class="list-group-item align-items-start">
-								    <div class="justify-content-between">
-								      <h4 class="mb-1">Nombre del taller</h4>
-								      <small>Dirección del taller</small>
-								    </div>
-								    
+									<div class="justify-content-between">
+									  <h4 class="mb-1">Nombre del taller</h4>
+									  <small>Dirección del taller</small>
+									</div>
+									
 							  </a>
 							  <a href="#" class="list-group-item align-items-start">
-								    <div class="justify-content-between">
-								      <h4 class="mb-1">Nombre del taller</h4>
-								      <small>Dirección del taller</small>
-								    </div>
-								    
+									<div class="justify-content-between">
+									  <h4 class="mb-1">Nombre del taller</h4>
+									  <small>Dirección del taller</small>
+									</div>
+									
 							  </a>
 							  <a href="#" class="list-group-item align-items-start">
-								    <div class="justify-content-between">
-								      <h4 class="mb-1">Nombre del taller</h4>
-								      <small>Dirección del taller</small>
-								    </div>
-								    
+									<div class="justify-content-between">
+									  <h4 class="mb-1">Nombre del taller</h4>
+									  <small>Dirección del taller</small>
+									</div>
+									
 							  </a>
 							  <a href="#" class="list-group-item align-items-start">
-								    <div class="justify-content-between">
-								      <h4 class="mb-1">Nombre del taller</h4>
-								      <small>Dirección del taller</small>
-								    </div>
-								    
+									<div class="justify-content-between">
+									  <h4 class="mb-1">Nombre del taller</h4>
+									  <small>Dirección del taller</small>
+									</div>
+									
 							  </a>
 							  <a href="#" class="list-group-item align-items-start">
-								    <div class="justify-content-between">
-								      <h4 class="mb-1">Nombre del taller</h4>
-								      <small>Dirección del taller</small>
-								    </div>
-								    
+									<div class="justify-content-between">
+									  <h4 class="mb-1">Nombre del taller</h4>
+									  <small>Dirección del taller</small>
+									</div>
+									
 							  </a>
 							  <a href="#" class="list-group-item align-items-start">
-								    <div class="justify-content-between">
-								      <h4 class="mb-1">Nombre del taller</h4>
-								      <small>Dirección del taller</small>
-								    </div>
-								    
+									<div class="justify-content-between">
+									  <h4 class="mb-1">Nombre del taller</h4>
+									  <small>Dirección del taller</small>
+									</div>
+									
 							  </a>
 								
 							</ul>
@@ -114,20 +114,53 @@
 					background-color:#cdc0b7;
 				}
 			</style>
-			<script>
-		  function initMap() {
-			var guayaquil = {lat: -2.1456078,lng: -79.9499721};
-			var map = new google.maps.Map(document.getElementById('map'), {
-			  zoom: 15,
-			  center: guayaquil,
-			  disableDefaultUI: true
-			});
-			  
-			
-			var marker;
-			
-		 }
-		  
+	<script>
+	var marker;
+	var posXY;
+	var map;		
+	function initMap() {
+		var guayaquil = {lat: -2.1456078,lng: -79.9499721};
+		map = new google.maps.Map(document.getElementById('map'), {
+			zoom: 15,
+			center: guayaquil,
+			disableDefaultUI: true
+		});
+
+
+		
+
+	}
+
+	function getLocation() {
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(showPosition, showError);
+		} else { 
+			alert("Geolocation is not supported by this browser.");
+		}
+	}
+
+	function showPosition(position) {
+	
+		posXY = {lat: position.coords.latitude,lng:  position.coords.longitude};
+	}
+
+	function showError(error) {
+		switch(error.code) {
+			case error.PERMISSION_DENIED:
+			alert("User denied the request for Geolocation.");
+			break;
+			case error.POSITION_UNAVAILABLE:
+			alert("Location information is unavailable.");
+			break;
+			case error.TIMEOUT:
+			alert("The request to get user location timed out.");
+			break;
+			case error.UNKNOWN_ERROR:
+			alert("An unknown error occurred.");
+			break;
+		}
+	}
+	document.onload=getLocation(); 
 	</script>
 	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMWnFVjp1hJEu6zTj5Y646z15ecr1WH7Q&callback=initMap">
 	</script>	

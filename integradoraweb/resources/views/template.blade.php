@@ -33,10 +33,13 @@
 			</ul>
  	
 			@endif
-			
 			<ul class="nav navbar-nav navbar-right">
+			@if (Auth::check())
+				<li><a href="{{url('logout')}}"><span class="glyphicon glyphicon-off"></span> Cerrar Sesión</a></li>
+			@else
 				<li><a href="registerclient.html"><span class="glyphicon glyphicon-user"></span> Regístrate</a></li>
 				<li><a href="{{url('login')}}"><span class="glyphicon glyphicon-log-in"></span> Iniciar Sesión</a></li>
+			@endif
 			</ul>
 		</div>
 	</nav>

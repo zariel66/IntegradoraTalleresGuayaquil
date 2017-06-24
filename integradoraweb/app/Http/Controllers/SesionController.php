@@ -31,4 +31,10 @@ class SesionController extends Controller
         }
         return redirect("login");
     }
+
+    public function cerrarSesion()
+    {
+        Auth::logout();
+        return redirect("/");
+    }
 }

@@ -16,6 +16,11 @@ Route::get("registrartaller","HomeController@registrarTaller");
 Route::get("registrotallersubmit","HomeController@registrarTallerSubmit");
 Route::get("registrocliente","HomeController@registrarCliente");
 Route::get("registroclientesubmit","HomeController@registrarClienteSubmit");
+
+
 Route::get('login',"HomeController@login");
+Route::get('logout',"SesionController@cerrarSesion");
 Route::post('iniciarsesion',"SesionController@iniciarSesion");
+
+
 Route::get('busquedataller',"ClienteController@busquedaTaller");
