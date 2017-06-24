@@ -18,4 +18,4 @@ Route::get("registrocliente","HomeController@registrarCliente");
 Route::get("registroclientesubmit","HomeController@registrarClienteSubmit");
 Route::get('login',"HomeController@login");
 Route::post('iniciarsesion',"SesionController@iniciarSesion");
-
+Route::get('busquedataller',"ClienteController@busquedaTaller");

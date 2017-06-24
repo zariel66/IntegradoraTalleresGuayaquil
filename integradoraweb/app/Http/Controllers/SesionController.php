@@ -20,8 +20,15 @@ class SesionController extends Controller
         if (Auth::attempt(['username' =>  Input::get('username'), 'password' => Input::get('password')])) {
             // Authentication passed...
             //return redirect()->intended('dashboard');
-            return "LOGIN EXITOSO";
+            $user = Auth::user();
+            if($user->tipo== 2)
+            {
+                return redirect("busquedataller");
+            }
+
+// Get the currently authenticated user's ID...
+            
         }
-        return "LOGIN FALLO";
+        return redirect("login");
     }
 }
