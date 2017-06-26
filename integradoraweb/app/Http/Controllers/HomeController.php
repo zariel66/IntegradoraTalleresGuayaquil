@@ -236,7 +236,7 @@ class HomeController extends Controller
 		}
 
 		DB::commit();
-		return "EXITO";
+		return redirect("busquedataller");
 
 
 	}

@@ -173,6 +173,9 @@
 									<div  class="list-group-item">
 										<input type="checkbox" value="Tapicería" name="servicios[]"> Tapicería
 									</div>
+									<div  class="list-group-item">
+										<input type="checkbox" value="Vidriería" name="servicios[]"> Vidriería
+									</div>
 								</ul>
 								<div style="color:red"><small>{{ $errors->first('servicios') }}</small></div>
 							</div>
