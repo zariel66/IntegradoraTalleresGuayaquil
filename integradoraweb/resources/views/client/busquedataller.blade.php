@@ -21,13 +21,13 @@
 								<label>Vehiculo:</label>
 								<select class="form-control" id="carselect">
 									@foreach(Auth::user()->vehiculos as $v)
-									<option value="{{$v->idmarca}}">{{$v->modelo}}</option>
+									<option value="{{$v->idmarca}}">{{$v->modelo}} ({{$v->marca->nombre}})</option>
 									@endforeach
 									
 								</select>
 							</div>
 							<div class="col-md-3 col-md-offset-1" style="margin-top:25px">
-								<button class="btn" onclick="searchWorkshops()">Buscar Taller</button>
+								<button class="btn" onclick="searchWorkshops(5)">Buscar Taller</button>
 							</div>
 						<!-- </form> -->
 					</div>
@@ -138,12 +138,12 @@
 		}
 	}
 
-	function searchWorkshops()
+	function searchWorkshops(distancia)
 	{
-		
+		//var distancia = 5;
 		var servicio = $("#serviceselect").val();
 		var car = $("#carselect").val();
-		var values = {"servicio":servicio, "vehiculo":car, "latitude": posXY.lat ,"longitude": posXY.lng};
+		var values = {"servicio":servicio, "vehiculo":car, "latitude": posXY.lat ,"longitude": posXY.lng, "distancia" : distancia};
 		var jqxhr = $.ajax({
 			method: "POST",
 			url: "busquedataller",
@@ -152,23 +152,37 @@
 			success: function(response)
 			{
 				setMapOnAll(null);
-				var workshops = response.workshops;
 				$("#search-results").html(response.html);
-				var icono = {
-				    url: "{{ URL::asset('imagenes/icons/tallericon.png')}}",
-				    scaledSize: new google.maps.Size(30, 30), // scaled size
-				    origin: new google.maps.Point(0,0), // origin
-				    anchor: new google.maps.Point(0, 0) // anchor
-				};
-				for (var i = 0; i < workshops.length; i++) {
-					var workshoposXY = new google.maps.Marker({
-					  position: {lat: workshops[i].latitud,lng: workshops[i].longitud},
-					  map: map,
-					  title: workshops[i].nombre_taller,
-					  icon: icono
-					});
-					markers.push(workshoposXY);
-				};
+				if(response.html != "")
+				{
+					
+					var workshops = response.workshops;
+					
+					var icono = {
+					    url: "{{ URL::asset('imagenes/icons/tallericon.png')}}",
+					    scaledSize: new google.maps.Size(30, 30), // scaled size
+					    origin: new google.maps.Point(0,0), // origin
+					    anchor: new google.maps.Point(0, 0) // anchor
+					};
+					for (var i = 0; i < workshops.length; i++) {
+						var workshoposXY = new google.maps.Marker({
+						  position: {lat: workshops[i].latitud,lng: workshops[i].longitud},
+						  map: map,
+						  title: workshops[i].nombre_taller,
+						  icon: icono
+						});
+						markers.push(workshoposXY);
+					};
+				}
+				else
+				{
+					if(distancia >= 15)
+					{
+						return;
+					}
+					searchWorkshops(distancia + 1);
+				}
+				
 				
 			}
 		});

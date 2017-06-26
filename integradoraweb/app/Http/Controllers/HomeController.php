@@ -236,7 +236,10 @@ class HomeController extends Controller
 		}
 
 		DB::commit();
-		return redirect("busquedataller");
+		if(Auth::attempt(['username' =>  Input::get('username'), 'password' => Input::get('password')]))
+			return redirect("busquedataller");
+		else
+			return "failed login";
 
 
 	}

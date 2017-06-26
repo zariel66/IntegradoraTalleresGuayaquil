@@ -21,7 +21,7 @@ class SesionController extends Controller
             // Authentication passed...
             //return redirect()->intended('dashboard');
             $user = Auth::user();
-            if($user->tipo== 2)
+            if($user->tipo == 2)
             {
                 return redirect("busquedataller");
             }
