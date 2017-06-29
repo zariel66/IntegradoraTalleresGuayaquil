@@ -25,3 +25,5 @@ Route::post('iniciarsesion',"SesionController@iniciarSesion");
 
 Route::get('busquedataller',"ClienteController@busquedaTaller");
 Route::post('busquedataller',"ClienteController@busquedaTaller2");
+
+Route::get('perfiltaller/{id}',"ClienteController@perfilTaller");

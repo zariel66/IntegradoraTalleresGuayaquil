@@ -15,7 +15,7 @@
 	<!-- Latest compiled and minified JavaScript -->
 	<link href="{{ URL::asset('css/template.css')}}" rel="stylesheet">
 	<meta name="csrf-token" content="{{ csrf_token() }}">
-
+	<title>Integradora Demo</title>
 </head>
 <body>
 	<nav id="navbar-section" class="navbar navbar-inverse navbar-static-top">
@@ -26,7 +26,7 @@
 			@if (Auth::check())
  	
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="#">Busca tu taller</a></li>
+				<li class="active"><a href="{{url('busquedataller')}}">Busca tu taller</a></li>
 				<li><a href="#">Guía</a></li>
 				<li><a href="#"> Mis vehiculos</a></li>
 				<li><a href="#">Mi perfil</a></li>

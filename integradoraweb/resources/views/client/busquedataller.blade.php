@@ -55,7 +55,7 @@
 					width: 100%;
 					margin: 0px;
 					min-height: 700px;
-					background-image:  url("{{ URL::asset('imagenes/icons/bg2.jpg')}}");
+					background-image:  url("{{ URL::asset('imagenes/icons/bgtool.jpg')}}");
 					background-size: 300px 300px;
 					padding: 5%;
 
@@ -160,7 +160,7 @@
 					
 					var icono = {
 					    url: "{{ URL::asset('imagenes/icons/tallericon.png')}}",
-					    scaledSize: new google.maps.Size(30, 30), // scaled size
+					    scaledSize: new google.maps.Size(35, 35), // scaled size
 					    origin: new google.maps.Point(0,0), // origin
 					    anchor: new google.maps.Point(0, 0) // anchor
 					};

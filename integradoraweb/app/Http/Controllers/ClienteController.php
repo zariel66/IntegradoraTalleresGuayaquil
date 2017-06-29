@@ -47,4 +47,9 @@ class ClienteController extends Controller
 		return response()->json(array('workshops' => $workshops, "html" => $html));
 	}
 	
+	public function perfilTaller($id)
+	{
+		error_log($id);
+		return view("client.perfiltaller");
+	}
 }
