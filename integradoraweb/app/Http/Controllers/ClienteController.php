@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use App\User;
 use App\Http\Controllers\Controller;
 use App\Marca;
+use App\Taller;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
@@ -50,6 +51,7 @@ class ClienteController extends Controller
 	public function perfilTaller($id)
 	{
 		error_log($id);
-		return view("client.perfiltaller");
+		$taller =  Taller::find($id);
+		return view("client.perfiltaller",array("taller" => $taller));
 	}
 }

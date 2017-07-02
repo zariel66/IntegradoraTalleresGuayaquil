@@ -86,7 +86,7 @@
 	function initMap() {
 		var guayaquil = {lat: -2.1456078,lng: -79.9499721};
 		map = new google.maps.Map(document.getElementById('map'), {
-			zoom: 18,
+			zoom: 13,
 			center: guayaquil,
 			disableDefaultUI: true
 		});
