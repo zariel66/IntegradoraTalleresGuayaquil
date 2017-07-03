@@ -27,7 +27,7 @@
  	
 			<ul class="nav navbar-nav">
 				<li class="active"><a href="{{url('busquedataller')}}">Busca tu taller</a></li>
-				<li><a href="#">Guía</a></li>
+				<li><a href="#">Recomienda y evalúa  <span class="badge">5</span></a></li>
 				<li><a href="#"> Mis vehiculos</a></li>
 				<li><a href="#">Mi perfil</a></li>
 			</ul>

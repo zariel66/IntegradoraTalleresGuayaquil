@@ -12,7 +12,7 @@ use App\Taller;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 
 class ClienteController extends Controller
 {
@@ -50,8 +50,33 @@ class ClienteController extends Controller
 	
 	public function perfilTaller($id)
 	{
-		error_log($id);
+		$iduser = Auth::user()->id;
 		$taller =  Taller::find($id);
-		return view("client.perfiltaller",array("taller" => $taller));
+		return view("client.perfiltaller",array("taller" => $taller,"idusuario" => $iduser));
+	}
+
+	public function nuevaEvaluacion()
+	{
+		$desc_code = str_random(8);
+		try {
+			
+			$id = DB::table('calificacion')->insertGetId(
+		    ['idusuario' => Auth::user()->id,
+		     'idtaller' => Input::get('idtaller'),
+		     'estado' => 0,
+		     'desc_code' => $desc_code
+		    ]
+			);
+
+			return array("desc_code" => $desc_code, "success" =>1);
+		} catch (\Exception $e) {
+			return array("desc_code" => $desc_code, "success" =>0);
+		}
+		
+	}
+
+	public function evaluacionesRecomendaciones()
+	{
+
 	}
 }
