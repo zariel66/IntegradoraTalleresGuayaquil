@@ -14,4 +14,9 @@ class Calificacion extends Model
 	{
 	    return $this->belongsTo('App\User', 'idusuario',"id");
 	}
+
+	public function taller()
+	{
+	    return $this->belongsTo('App\Taller', 'idtaller',"id");
+	}
 }

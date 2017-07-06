@@ -50,9 +50,12 @@ class ClienteController extends Controller
 	
 	public function perfilTaller($id)
 	{
+		
+		
 		$iduser = Auth::user()->id;
 		$taller =  Taller::find($id);
-		return view("client.perfiltaller",array("taller" => $taller,"idusuario" => $iduser));
+		$comentarios = $taller->calificaciones()->where('estado', 1)->paginate(10);
+		return view("client.perfiltaller",array("taller" => $taller,"idusuario" => $iduser,"comentarios" => $comentarios));
 	}
 
 	public function nuevaEvaluacion()
@@ -64,7 +67,8 @@ class ClienteController extends Controller
 		    ['idusuario' => Auth::user()->id,
 		     'idtaller' => Input::get('idtaller'),
 		     'estado' => 0,
-		     'desc_code' => $desc_code
+		     'desc_code' => $desc_code,
+		     'fecha_hora' => \Carbon\Carbon::now()
 		    ]
 			);
 
@@ -77,6 +81,8 @@ class ClienteController extends Controller
 
 	public function evaluacionesRecomendaciones()
 	{
-
+		
+		$reviews = Auth::user()->calificaciones()->where('estado', 0)->paginate(1);
+		return view("client.encuesta", array('reviews' => $reviews ));
 	}
 }

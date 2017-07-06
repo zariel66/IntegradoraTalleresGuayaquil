@@ -23,7 +23,9 @@ class SesionController extends Controller
             $user = Auth::user();
             if($user->tipo == 2)
             {
-                return redirect("busquedataller");
+                $pendingreview = count($user->calificaciones->where("estado",0));
+                session(['pendingreview' => $pendingreview]);
+                return redirect()->intended('busquedataller');
             }
 
 // Get the currently authenticated user's ID...

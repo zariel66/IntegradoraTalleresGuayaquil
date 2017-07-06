@@ -24,14 +24,18 @@
 				<a class="navbar-brand" href="{{url('/')}}">APPNAME HERE</a>
 			</div>
 			@if (Auth::check())
- 	
+ 			@if (Auth::user()->tipo == 2)
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="{{url('busquedataller')}}">Busca tu taller</a></li>
-				<li><a href="#">Recomienda y evalúa  <span class="badge">5</span></a></li>
+				<li class=""><a href="{{url('busquedataller')}}">Busca tu taller</a></li>
+				<li><a href="{{url('evaluacionservicio')}}">Recomienda y evalúa
+				@if(session()->has('pendingreview') && session()->get('pendingreview')>0)	
+				  <span class="badge">{{session()->get('pendingreview')}}</span>
+				@endif  
+				</a></li>
 				<li><a href="#"> Mis vehiculos</a></li>
 				<li><a href="#">Mi perfil</a></li>
 			</ul>
- 	
+ 			@endif
 			@endif
 			<ul class="nav navbar-nav navbar-right">
 			@if (Auth::check())

@@ -52,7 +52,7 @@
 		  			@endif
 		  		</div>
 		  		<div class="col-md-4">
-		  			@if(count($taller->calificaciones->where('estado', 1))>0)
+		  			@if(count($comentarios)>0)
 		  			<div class="row">
 		  				<div class="col-md-4">
 		  					<div class="bar-label"><strong>Honestidad</strong></div>
@@ -143,8 +143,8 @@
 		  		</div>
 		  		<br>
 		  		<div>
-		  			@if(count($taller->calificaciones->where('estado', 1)) >0)
-		  			@foreach($taller->calificaciones->where('estado', 1) as $calificacion)
+		  			@if(count($comentarios) >0)
+		  			@foreach($comentarios as $calificacion)
 		  			<div class="user-comment row">
 		  				<div class="col-md-8">
 		  					<p class="user-comment-username"><strong>{{$calificacion->user->username}}</strong> comento:</p>
@@ -205,6 +205,7 @@
 		  				</div>
 		  			</div>
 		  			@endforeach
+		  			<div class="text-center">{{$comentarios->links()}}</div>
 		  			@else
 
 					<div class="alert alert-warning">
@@ -292,6 +293,12 @@
 				 {
 				 	font-size: 120%;
 				 }
+				 .pagination .active span,.pagination .active span:hover
+				 {
+				 	background-color: #333;
+				 	border-color:#333;
+				 }
+
 			</style>
 	<script type="text/javascript">
 		function getContactInfo()
