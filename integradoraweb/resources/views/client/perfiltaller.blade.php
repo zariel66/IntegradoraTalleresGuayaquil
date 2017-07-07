@@ -72,11 +72,11 @@
 							     " role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width:{{$taller->honestidad * 10}}%">
 							      <span>
 							     @if($taller->honestidad <= 5)
-							     Poco confiable({{$taller->honestidad}})
+							     Poco confiable({{number_format($taller->honestidad, 2, '.', ',')}})
 							     @elseif($taller->honestidad < 8)
-							     Honrado({{$taller->honestidad}})
+							     Honrado({{number_format($taller->honestidad, 2, '.', ',')}})
 							     @elseif($taller->honestidad <= 10)
-							     Íntegro({{$taller->honestidad}})
+							     Íntegro({{number_format($taller->honestidad, 2, '.', ',')}})
 							     @endif
 							     </span>
 							    </div>
@@ -93,11 +93,11 @@
 							    " role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width:{{$taller->eficiencia * 10}}%">
 							     <span>
 							     @if($taller->eficiencia <= 5)
-							     Poco capacitado({{$taller->eficiencia}})
+							     Poco capacitado({{number_format($taller->eficiencia, 2, '.', ',')}})
 							     @elseif($taller->eficiencia < 8)
-							     Competente({{$taller->eficiencia}})
+							     Competente({{number_format($taller->eficiencia, 2, '.', ',')}})
 							     @elseif($taller->eficiencia <= 10)
-							     Eficiente({{$taller->eficiencia}})
+							     Eficiente({{number_format($taller->eficiencia, 2, '.', ',')}})
 							     @endif
 							     </span>
 							    </div>
@@ -114,11 +114,11 @@
 							     " role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width:{{$taller->precio * 10}}%">
 							     <span>
 							     @if($taller->precio <= 5)
-							     Caro({{$taller->precio}})
+							     Caro({{number_format($taller->precio, 2, '.', ',')}})
 							     @elseif($taller->precio < 8)
-							     Moderado({{$taller->precio}})
+							     Moderado({{number_format($taller->precio, 2, '.', ',')}})
 							     @elseif($taller->precio <= 10)
-							     Económico({{$taller->precio}})
+							     Económico({{number_format($taller->precio, 2, '.', ',')}})
 							     @endif
 							     </span>
 							    </div>

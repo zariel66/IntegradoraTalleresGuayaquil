@@ -9,6 +9,7 @@ use App\User;
 use App\Http\Controllers\Controller;
 use App\Marca;
 use App\Taller;
+use App\Calificacion;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
@@ -54,7 +55,7 @@ class ClienteController extends Controller
 		
 		$iduser = Auth::user()->id;
 		$taller =  Taller::find($id);
-		$comentarios = $taller->calificaciones()->where('estado', 1)->paginate(10);
+		$comentarios = $taller->calificaciones()->where('estado', 1)->orderBy('fecha_hora', 'desc')->paginate(10);
 		return view("client.perfiltaller",array("taller" => $taller,"idusuario" => $iduser,"comentarios" => $comentarios));
 	}
 
@@ -71,7 +72,7 @@ class ClienteController extends Controller
 		     'fecha_hora' => \Carbon\Carbon::now()
 		    ]
 			);
-
+			session(['pendingreview' => session()->get('pendingreview') + 1]);
 			return array("desc_code" => $desc_code, "success" =>1);
 		} catch (\Exception $e) {
 			return array("desc_code" => $desc_code, "success" =>0);
@@ -88,6 +89,84 @@ class ClienteController extends Controller
 
 	public function calificacionNuevaEvaluacion()
 	{
-		
+		try {
+			$honestidad = Input::get('honestidad');
+			$precio = Input::get('precio');	
+			$eficiencia = Input::get('eficiencia');
+			$idcalificacion = Input::get('idcalificacion');	
+			$comentario = Input::get('comentario');
+			$calificacion = Calificacion::find($idcalificacion);
+			$taller = $calificacion->taller;
+
+			$rules = array(
+			'comentario' => 'required|min:30',
+			
+			); 
+
+
+			$custom = array(
+				"comentario.required" => "El :attribute es requerido",
+				
+				"comentario.min" => "El :attribute debe tener mínimo :min caracteres",
+				
+
+
+				);
+
+			$validation = Validator::make(Input::all(),$rules,$custom);
+
+			if ($validation->fails())
+			{
+				error_log("entro controller validacion");
+				return Redirect::back()->withErrors($validation)->withInput(Input::all());
+			}
+
+			DB::beginTransaction();
+			$calificacion->update(
+			[
+				"honestidad"=> $honestidad,
+				"eficiencia"=> $eficiencia,
+				"precio"=> $precio,
+				"comentario"=> $comentario,
+				"estado" => 1,
+				'fecha_hora' => \Carbon\Carbon::now()
+			]);
+			$calificaciones = $taller->calificaciones->where("estado",1);
+			$honestidad_prom = 0;
+			$eficiencia_prom = 0;
+			$precio_prom = 0;
+			foreach ($calificaciones as $c ) {
+				$honestidad_prom = $honestidad_prom + $c->honestidad;
+				$eficiencia_prom = $eficiencia_prom + $c->eficiencia;
+				$precio_prom = $precio_prom + $c->precio;
+			}
+			$tam = count($calificaciones);
+			$honestidad_prom = $honestidad_prom /$tam;
+			$eficiencia_prom = $eficiencia_prom /$tam;
+			$precio_prom = $precio_prom /$tam;
+			$taller->update(
+			[
+				"honestidad"=> $honestidad_prom,
+				"eficiencia"=> $eficiencia_prom,
+				"precio"=> $precio_prom,
+				
+			]);
+			
+			session(['pendingreview' => session()->get('pendingreview') - 1]);
+
+		} catch (\Exception $e) {
+			DB::rollback();
+			throw $e;
+			return redirect("evaluacionservicio");	
+		}
+		DB::commit();
+		if(session()->get('pendingreview') >0)
+		{
+			return redirect("evaluacionservicio");
+		}
+		else
+		{
+			return redirect("perfiltaller/" . $taller->id);
+		}
 	}
 }

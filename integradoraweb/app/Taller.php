@@ -8,7 +8,8 @@ class Taller extends Model
 {
 	protected $table = 'taller';
     protected $primaryKey = 'id';
-
+    protected $fillable = ['honestidad','precio','eficiencia'];
+    public $timestamps = false;
     public function marcas()
     {
     	return $this->belongsToMany('App\Marca', 'marca_taller', 'idtaller', 'idmarca');

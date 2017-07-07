@@ -19,13 +19,18 @@
 						<input type="hidden" value="{{$review->id}}" name="idcalificacion">
 						<div class="row">
 							<label>Escriba sus recomendaciones y críticas del taller en un comentario:</label>
-							<textarea class="form-control" name="comentario"></textarea>
+							<textarea class="form-control" name="comentario" maxlength="300"  
+							@if($errors->has('comentario'))
+							style="border-color:red;"
+							@endif
+							>{{old('comentario')}}</textarea>
+							<div style="color:red"><small>{{ $errors->first('comentario') }}</small></div>
 						</div>
 						<br><br><br><br><br><br>
 						<div class="row">
 							<label>Evalúe la honestidad de las personas que lo atendieron en el taller:</label>
 							<div id="honestidad" class="range-input"></div>
-							<input class="form-control" type="hidden" name="honestidad">
+							<input class="form-control" type="hidden" name="honestidad" value="5">
 							<div class="col-md-4 bad-label"><strong>Poco confiable</strong></div>
 							<div class="col-md-4 medium-label"><strong>Honrado</strong></div>
 							<div class="col-md-4 good-label"><strong>Íntegro</strong></div>
@@ -34,7 +39,7 @@
 						<div class="row">
 							<label>¿Pudo el taller resolver los problemas de vehículo?, califique la eficiencia del mismo:</label>
 							<div id="eficiencia" class="range-input"></div>
-							<input class="form-control" type="hidden" name="eficiencia">
+							<input class="form-control" type="hidden" name="eficiencia" value="5">
 							<div class="col-md-4 bad-label"><strong>Poco capacitado</strong></div>
 							<div class="col-md-4 medium-label"><strong>Competente</strong></div>
 							<div class="col-md-4 good-label"><strong>Eficiente</strong></div>
@@ -43,7 +48,7 @@
 						<div class="row">
 							<label>¿Cómo se siente respecto a precio de los servicios del taller?</label>
 							<div id="precio" class="range-input"></div>
-							<input class="form-control" type="hidden" name="precio">
+							<input class="form-control" type="hidden" name="precio" value="5">
 							<div class="col-md-4 bad-label"><strong>Caro</strong></div>
 							<div class="col-md-4 medium-label"><strong>Moderado</strong></div>
 							<div class="col-md-4 good-label"><strong>Económico</strong></div>
@@ -150,7 +155,7 @@ for (var i = 0; i < slider.length; i++) {
 	slider[i].noUiSlider.on('slide', function(){
 		var id= this.target.id;
 		var value = this.get();
-		if(value < 5)
+		if(value <= 5)
 		{
 			$("#" + id + " .noUi-connect").css("background","#c51010");
 		}

@@ -8,7 +8,8 @@ class Calificacion extends Model
 {
 	protected $table = 'calificacion';
     protected $primaryKey = 'id';
-
+    protected $fillable = ['honestidad', 'comentario', 'estado','precio','eficiencia','fecha_hora'];
+    public $timestamps = false;
 
 	public function user()
 	{
