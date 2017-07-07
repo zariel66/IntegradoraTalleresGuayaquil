@@ -85,4 +85,9 @@ class ClienteController extends Controller
 		$reviews = Auth::user()->calificaciones()->where('estado', 0)->paginate(1);
 		return view("client.encuesta", array('reviews' => $reviews ));
 	}
+
+	public function calificacionNuevaEvaluacion()
+	{
+		
+	}
 }

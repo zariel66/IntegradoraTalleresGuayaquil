@@ -30,3 +30,4 @@ Route::get('perfiltaller/{id}',"ClienteController@perfilTaller");
 Route::post('crearevaluacion',"ClienteController@nuevaEvaluacion");
 
 Route::get('evaluacionservicio',"ClienteController@evaluacionesRecomendaciones");
+Route::post('evaluacionservicio',"ClienteController@calificacionNuevaEvaluacion");

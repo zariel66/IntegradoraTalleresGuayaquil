@@ -1,5 +1,6 @@
 @extends("template")
 @section("content")
+
 <div id="form-section-background" class="container">
 	<div class="panel col-md-6 col-md-offset-3">
 		<div class="panel-body">
@@ -8,40 +9,50 @@
 		  	</div>
 		  	@foreach($reviews as $review)
 		  	<div id="review-content">
-				<div>
+				<div class="row">
 					<h4>Cuéntanos tu experiencia en <strong>{{$review->taller->nombre_taller}}</strong></h4>
 				</div>
 				<br><br><br>
 				<div >
-					<form>
+					<form method="POST" action="{{url('evaluacionservicio')}}">
+						{{ csrf_field() }}
+						<input type="hidden" value="{{$review->id}}" name="idcalificacion">
 						<div class="row">
 							<label>Escriba sus recomendaciones y críticas del taller en un comentario:</label>
 							<textarea class="form-control" name="comentario"></textarea>
 						</div>
-						<br><br><br>
+						<br><br><br><br><br><br>
 						<div class="row">
 							<label>Evalúe la honestidad de las personas que lo atendieron en el taller:</label>
-							<input class="form-control" type="range" min="1" max="10" name="honestidad">
-							<div class="col-md-4 bad-label">Malo</div>
-							<div class="col-md-4 medium-label">Regular</div>
-							<div class="col-md-4 good-label">Bueno</div>
+							<div id="honestidad" class="range-input"></div>
+							<input class="form-control" type="hidden" name="honestidad">
+							<div class="col-md-4 bad-label"><strong>Poco confiable</strong></div>
+							<div class="col-md-4 medium-label"><strong>Honrado</strong></div>
+							<div class="col-md-4 good-label"><strong>Íntegro</strong></div>
 						</div>
-						<br><br><br>
+						<br><br><br><br><br><br>
 						<div class="row">
 							<label>¿Pudo el taller resolver los problemas de vehículo?, califique la eficiencia del mismo:</label>
-							<input class="form-control" type="range" min="1" max="10" name="eficiencia">
-							<div class="col-md-4 bad-label">Malo</div>
-							<div class="col-md-4 medium-label">Regular</div>
-							<div class="col-md-4 good-label">Bueno</div>
+							<div id="eficiencia" class="range-input"></div>
+							<input class="form-control" type="hidden" name="eficiencia">
+							<div class="col-md-4 bad-label"><strong>Poco capacitado</strong></div>
+							<div class="col-md-4 medium-label"><strong>Competente</strong></div>
+							<div class="col-md-4 good-label"><strong>Eficiente</strong></div>
 						</div>
-						<br><br><br>
+						<br><br><br><br><br><br>
 						<div class="row">
 							<label>¿Cómo se siente respecto a precio de los servicios del taller?</label>
-							<input class="form-control" type="range" min="1" max="10" name="honestidad">
-							<div class="col-md-4 bad-label">Malo</div>
-							<div class="col-md-4 medium-label">Regular</div>
-							<div class="col-md-4 good-label">Bueno</div>
+							<div id="precio" class="range-input"></div>
+							<input class="form-control" type="hidden" name="precio">
+							<div class="col-md-4 bad-label"><strong>Caro</strong></div>
+							<div class="col-md-4 medium-label"><strong>Moderado</strong></div>
+							<div class="col-md-4 good-label"><strong>Económico</strong></div>
 						</div>
+						<br><br><br><br>
+						<div class="row">
+							<input type="submit" class="btn submit-btn center-block" value="Enviar">
+						</div>
+						
 					</form>
 				</div>
 		  	</div>
@@ -95,8 +106,67 @@
 	.good-label
 	{
 		text-align: right;
-	} 
-</style>
+	}
+	textarea {
+    	resize: none;
+	}
+	.submit-btn
+	{
+		background-color: #cdc0b7;
+		font-weight: bold;
+		width: 150px;
+	}
+	.submit-btn:hover
+	{
+		background-color: #a7968b;
+		font-weight: bold;
+		color: white;
 
-		
+	}
+	/*.range-input .noUi-connect
+	{
+		background: red;
+	}*/ 
+</style>
+<link href="{{ asset('css/nouislider.min.css') }}" rel="stylesheet">
+
+<!-- In <body> -->
+<script src="{{ asset('js/nouislider.min.js') }}"></script>
+<script type="text/javascript">
+var slider = document.getElementsByClassName('range-input');
+for (var i = 0; i < slider.length; i++) {
+	noUiSlider.create(slider[i], {
+		start: 0,
+		animate: true,
+		step:1,
+		connect: [true, false],
+		range: {
+			min: 0,
+			max: 10
+		},
+		tooltips: [ true ],
+	});
+
+	slider[i].noUiSlider.on('slide', function(){
+		var id= this.target.id;
+		var value = this.get();
+		if(value < 5)
+		{
+			$("#" + id + " .noUi-connect").css("background","#c51010");
+		}
+		else if(value < 8)
+		{
+			$("#" + id + " .noUi-connect").css("background","#f58610");
+		}
+		if(value >= 8)
+		{
+			$("#" + id + " .noUi-connect").css("background","#49da5c");
+		}
+		$("input[name=" + id + "]").val(value);
+	});
+}
+
+
+
+</script>		
 @stop

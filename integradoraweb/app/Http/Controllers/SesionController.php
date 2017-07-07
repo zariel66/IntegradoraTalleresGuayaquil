@@ -27,8 +27,6 @@ class SesionController extends Controller
                 session(['pendingreview' => $pendingreview]);
                 return redirect()->intended('busquedataller');
             }
-
-// Get the currently authenticated user's ID...
             
         }
         return redirect("login");
