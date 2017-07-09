@@ -255,7 +255,18 @@
 				{
 					padding-top: 20px;
 					padding-bottom: 20px;
-					background-color: #f1e4dc;
+					/*background-color: #f1e4dc;*/
+					background-color: #e8f5f7;
+					
+					border: ridge 2px #e4e8e8;
+				}
+				.user-comment:hover
+				{
+					padding-top: 20px;
+					padding-bottom: 20px;
+					background-color:#e6e5e5;
+					
+					
 					border: ridge 2px #afa6a6;
 				}
 				.user-comment-username

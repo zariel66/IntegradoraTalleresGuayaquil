@@ -14,6 +14,8 @@
 
 	<!-- Latest compiled and minified JavaScript -->
 	<link href="{{ URL::asset('css/template.css')}}" rel="stylesheet">
+	<link href="{{ URL::asset('css/jquery-ui.min.css')}}" rel="stylesheet">
+	<script type="text/javascript" src="{{ URL::asset('js/jquery-ui.min.js')}}"></script>
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<title>Integradora Demo</title>
 </head>

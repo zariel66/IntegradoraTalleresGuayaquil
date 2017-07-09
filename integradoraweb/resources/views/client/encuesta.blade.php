@@ -7,6 +7,7 @@
 			<div class="text-center">
 		    	<h2><strong>Evaluación y encuesta del servicio</strong></h2>      
 		  	</div>
+		  	@if(count($reviews) > 0)
 		  	@foreach($reviews as $review)
 		  	<div id="review-content">
 				<div class="row">
@@ -14,7 +15,7 @@
 				</div>
 				<br><br><br>
 				<div >
-					<form method="POST" action="{{url('evaluacionservicio')}}">
+					<form method="POST" action="{{url('evaluacionservicio')}}" autocomplete="on">
 						{{ csrf_field() }}
 						<input type="hidden" value="{{$review->id}}" name="idcalificacion">
 						<div class="row">
@@ -63,6 +64,14 @@
 		  	</div>
 		  	
 		  	@endforeach
+		  	
+		  	@else
+		  	<br>
+		  	<br>
+		  	<div class="alert alert-warning text-center">
+			  <strong>Usted no tiene evaluaciones pendientes. Busque un taller de acuerdo a sus necesidades <a href="{{url('busquedataller')}}">aquí</a></strong>
+			</div>
+		  	@endif
 		  	<div class="text-center">{{$reviews->links()}}</div>
 		</div>
 	</div>

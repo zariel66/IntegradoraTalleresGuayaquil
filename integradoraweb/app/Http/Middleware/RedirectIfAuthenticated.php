@@ -18,6 +18,10 @@ class RedirectIfAuthenticated
             {
                 return redirect('busquedataller');    
             }
+            else if($user->tipo == 1)
+            {
+                return redirect('tallertickets');
+            }
             
         }
         

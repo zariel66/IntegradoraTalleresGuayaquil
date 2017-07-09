@@ -10,19 +10,19 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+/*HOME*/
 Route::get('/',"HomeController@index");
 Route::get("registrartaller","HomeController@registrarTaller");
 Route::get("registrotallersubmit","HomeController@registrarTallerSubmit");
 Route::get("registrocliente","HomeController@registrarCliente");
 Route::get("registroclientesubmit","HomeController@registrarClienteSubmit");
 
-
+/*SESION*/
 Route::get('login',"HomeController@login");
 Route::get('logout',"SesionController@cerrarSesion");
 Route::post('iniciarsesion',"SesionController@iniciarSesion");
 
-
+/*CLIENT*/
 Route::get('busquedataller',"ClienteController@busquedaTaller");
 Route::post('busquedataller',"ClienteController@busquedaTaller2");
 
@@ -31,3 +31,7 @@ Route::post('crearevaluacion',"ClienteController@nuevaEvaluacion");
 
 Route::get('evaluacionservicio',"ClienteController@evaluacionesRecomendaciones");
 Route::post('evaluacionservicio',"ClienteController@calificacionNuevaEvaluacion");
+
+/*WORKSHOP*/
+Route::get('tallertickets',"WorkshopController@userTickets");
+Route::get('busquedatickets/{opt}',"WorkshopController@busquedaTickets");

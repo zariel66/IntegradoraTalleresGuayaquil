@@ -11,7 +11,7 @@ use App\Marca;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -142,7 +142,10 @@ class HomeController extends Controller
 		DB::commit();
 
 
-		return "TALLER CREADO EXITOSAMENTE CON ID" ;
+		if(Auth::attempt(['username' =>  Input::get('username'), 'password' => Input::get('password')]))
+			return redirect("/");
+		else
+			return redirect("login");
 
 
 
@@ -239,7 +242,7 @@ class HomeController extends Controller
 		if(Auth::attempt(['username' =>  Input::get('username'), 'password' => Input::get('password')]))
 			return redirect("busquedataller");
 		else
-			return "failed login";
+			return redirect("login");
 
 
 	}
