@@ -91,7 +91,6 @@ class WorkshopController extends Controller
             [
                 "precio_original"=> $precio,
                 "descuento"=> $descuento,
-                "precio"=> $precio,
                 "total"=> $total,
                 "estado" => 2,
             ]);
