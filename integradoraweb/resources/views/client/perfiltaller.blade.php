@@ -314,6 +314,7 @@
 	<script type="text/javascript">
 		function getContactInfo()
 		{
+			
 			var values = {"idtaller":{{$taller->id}}};
 			$("#contact-button").hide();
 			var jqxhr = $.ajax({

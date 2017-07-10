@@ -13,7 +13,11 @@
 				<div class="row">
 					<h4>Cuéntanos tu experiencia en <strong>{{$review->taller->nombre_taller}}</strong></h4>
 				</div>
-				<br><br><br>
+				<br>
+				<div class="row">
+					Recuerda que recibiste un <strong>descuento</strong> del <strong>{{$review->descuento}}%</strong> en tu última visita
+				</div>
+				<br><br>
 				<div >
 					<form method="POST" action="{{url('evaluacionservicio')}}" autocomplete="on">
 						{{ csrf_field() }}
@@ -38,7 +42,7 @@
 						</div>
 						<br><br><br><br><br><br>
 						<div class="row">
-							<label>¿Pudo el taller resolver los problemas de vehículo?, califique la eficiencia del mismo:</label>
+							<label>¿Pudo el taller resolver los problemas de su vehículo?, califique la eficiencia del mismo:</label>
 							<div id="eficiencia" class="range-input"></div>
 							<input class="form-control" type="hidden" name="eficiencia" value="5">
 							<div class="col-md-4 bad-label"><strong>Poco capacitado</strong></div>
@@ -47,7 +51,7 @@
 						</div>
 						<br><br><br><br><br><br>
 						<div class="row">
-							<label>¿Cómo se siente respecto a precio de los servicios del taller?</label>
+							<label>¿Cómo se siente respecto al precio de los servicios del taller?</label>
 							<div id="precio" class="range-input"></div>
 							<input class="form-control" type="hidden" name="precio" value="5">
 							<div class="col-md-4 bad-label"><strong>Caro</strong></div>

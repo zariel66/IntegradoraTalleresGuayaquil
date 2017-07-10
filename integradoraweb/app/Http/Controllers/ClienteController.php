@@ -72,7 +72,7 @@ class ClienteController extends Controller
 		     'fecha_hora' => \Carbon\Carbon::now()
 		    ]
 			);
-			session(['pendingreview' => session()->get('pendingreview') + 1]);
+			//session(['pendingreview' => session()->get('pendingreview') + 1]);
 			return array("desc_code" => $desc_code, "success" =>1);
 		} catch (\Exception $e) {
 			return array("desc_code" => $desc_code, "success" =>0);
@@ -83,7 +83,7 @@ class ClienteController extends Controller
 	public function evaluacionesRecomendaciones()
 	{
 		
-		$reviews = Auth::user()->calificaciones()->where('estado', 0)->paginate(1);
+		$reviews = Auth::user()->calificaciones()->where('estado', 2)->paginate(1);
 		return view("client.encuesta", array('reviews' => $reviews ));
 	}
 

@@ -4,7 +4,7 @@
 		<h4 class="mb-1" >{{$fila->nombre_taller}}</h4>
 		
 		<small>{{$fila->direccion}}</small>
-		<div><small>A {{number_format($fila->distance, 2, '.', ',')}} Km de distancia</small></div>
+		<div><strong>A {{number_format($fila->distance, 2, '.', ',')}} Km de distancia</strong></div>
 	</div>
 
 </a>

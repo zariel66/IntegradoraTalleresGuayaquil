@@ -6,12 +6,21 @@
 			<div class="row">
 				<h2 class="page-header"><strong>Clientes interesados</strong></h2>
 			</div>
+			<div class="row">
+				<br>
+				<br>
+				<div id="opmessage" class=" text-center alert col-md-6 col-md-offset-3" style="display:none;">
+				  <strong>Success!</strong> Indicates a successful or positive action.
+				</div>
+				<br>
+				<br>
+			</div>
 			<br><br>
 			<div class="row">
 				<div class="col-md-3 col-md-offset-3">
 					<div class="input-group">
 					  <span class="input-group-addon glyphicon glyphicon-search" id="search-icon"></span>
-					  <input type="search" class="form-control" placeholder="Buscar por nombre" aria-describedby="basic-addon1" id="buscador">
+					  <input type="search" class="form-control" placeholder="Buscar" aria-describedby="basic-addon1" id="buscador">
 					</div>
 										
 				</div>
@@ -22,6 +31,7 @@
 					</select>
 				</div>
 			</div>
+
 			<br><br>
 			<div class="row">
 				<table class="table table-striped table-hover">
@@ -32,7 +42,7 @@
 						<th class="text-center">Taller</th>
 						<th class="text-center">Precio Normal</th>
 						<th class="text-center">% descuento</th>
-						<th class="text-center">Precio con descuento</th>
+						<th class="text-center">Precio Final</th>
 						<th class="text-center">Enviar</th>
 					  </tr>
 					</thead>
@@ -117,6 +127,95 @@ function filterSearch()
 
 	});	
 }
+$('.doubleonly').keypress(function(eve) {
+	if ((eve.which != 46 || $(this).val().indexOf('.') != -1) && (eve.which < 48 || eve.which > 57) || (eve.which == 46 && $(this).caret().start == 0) ) {
+		eve.preventDefault();
+	}
+});     
+// this part is when left part of number is deleted and leaves a . in the leftmost position. For example, 33.25, then 33 is deleted
+$('.doubleonly').keyup(function(eve) {
+	if($(this).val().indexOf('.') == 0) {    $(this).val($(this).val().substring(1));
+	}
+});
+
+function isNumber(evt) {
+    evt = (evt) ? evt : window.event;
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+    }
+    
+    return true;
+}
+
+function maxnumber(event,entero)
+{
+	var number = event.target.value
+	if(number > 100)
+	{
+		event.target.value = number.substr(0, number.length - 1);
+	}
+	else if(number*1 <= 0)
+	{
+		event.target.value = number.substr(0, number.length - 1);
+	}
+}
+
+function calcTotal(id)
+{
+	$('#btnEnviar'+ id).prop("disabled", true);
+	var precio = $("#preciooriginal" + id).val();
+	var descuento = $("#descuento" + id).val();
+	if(precio!="" && descuento!="")
+	{
+		var valor= parseFloat(precio -  precio * (descuento/100)).toFixed(2)
+		$("#total" + id).val(valor);
+		$('#btnEnviar'+ id).prop("disabled", false);	
+	}
+	else
+	{
+		$("#total" + id).val("");
+	}
+	
+}
+
+function actualizarRecomendacion(id)
+{
+	$("#opmessage").hide();
+	$("#opmessage").removeClass("alert-success");
+	$("#opmessage").removeClass("alert-danger");
+	var precio = $("#preciooriginal" + id).val();
+	var descuento = $("#descuento" + id).val();
+	var total = $("#total" + id).val();
+	var request={"id": id,"precio":precio , "descuento":descuento, "total": total};
+	var jqxhr = $.ajax({
+		method: "POST",
+		url: "cerrarticket",
+		dataType: 'json',
+		data: request,
+		success: function(response)
+		{
+			
+			if(response.success == 1)
+			{
+				$("#opmessage").html(response.message);
+				$("#opmessage").addClass("alert-success");
+				$("#opmessage").show();
+				$("#fila"+id).remove();
+				 
+			}
+			else
+			{
+				$("#opmessage").html(response.message);
+				$("#opmessage").addClass("alert-danger");
+				$("#opmessage").show();
+			}
+		}
+	});
+}
+
+
 filterSearch();
+
 </script>
 @stop

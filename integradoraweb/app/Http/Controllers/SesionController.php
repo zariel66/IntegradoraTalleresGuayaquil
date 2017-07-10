@@ -23,7 +23,7 @@ class SesionController extends Controller
             $user = Auth::user();
             if($user->tipo == 2)
             {
-                $pendingreview = count($user->calificaciones->where("estado",0));
+                $pendingreview = count($user->calificaciones->where("estado",2));
                 session(['pendingreview' => $pendingreview]);
                 return redirect()->intended('busquedataller');
             }
@@ -35,6 +35,6 @@ class SesionController extends Controller
     public function cerrarSesion()
     {
         Auth::logout();
-        return redirect("/");
+        return redirect("login");
     }
 }

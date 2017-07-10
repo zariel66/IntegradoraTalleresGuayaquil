@@ -78,4 +78,29 @@ class WorkshopController extends Controller
         error_log("llega al final");
         return response()->json($result);
     }
+
+    public function cerrarTicket()
+    {
+        $id = Input::get('id');
+        $precio = Input::get('precio');
+        $descuento = Input::get('descuento');
+        $total = Input::get('total');
+        try {
+            $calificacion = Calificacion::find($id);
+            $calificacion->update(
+            [
+                "precio_original"=> $precio,
+                "descuento"=> $descuento,
+                "precio"=> $precio,
+                "total"=> $total,
+                "estado" => 2,
+            ]);
+            $output = "<strong>El código de la transacción ha sido confirmado. El usuario evaluará la calidad del servicio en los próximos días</strong>";
+
+        } catch (\Exception $e) {
+            $output = "<strong>Hubo un error al procesar los datos intente después</strong>";
+            return response()->json(array('message' => $output , 'success'=> 0 ));
+        }
+        return response()->json(array('message' => $output , 'success'=> 1 ));
+    }
 }

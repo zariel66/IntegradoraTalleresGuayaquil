@@ -35,3 +35,4 @@ Route::post('evaluacionservicio',"ClienteController@calificacionNuevaEvaluacion"
 /*WORKSHOP*/
 Route::get('tallertickets',"WorkshopController@userTickets");
 Route::get('busquedatickets/{opt}',"WorkshopController@busquedaTickets");
+Route::post('cerrarticket',"WorkshopController@cerrarTicket");
