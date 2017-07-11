@@ -56,7 +56,7 @@
                     android:textStyle="bold" />
 
                 <EditText
-                    android:id="@+id/editText9"
+                    android:id="@+id/txtnombre"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.00"
@@ -72,7 +72,7 @@
                     android:textStyle="bold" />
 
                 <EditText
-                    android:id="@+id/editText16"
+                    android:id="@+id/txtapellido"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -87,7 +87,7 @@
                     android:textStyle="bold" />
 
                 <EditText
-                    android:id="@+id/editText17"
+                    android:id="@+id/txtcorreo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -102,7 +102,7 @@
                     android:textStyle="bold" />
 
                 <EditText
-                    android:id="@+id/editText18"
+                    android:id="@+id/txtusuario"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.00"
@@ -118,7 +118,7 @@
                     android:textStyle="bold" />
 
                 <EditText
-                    android:id="@+id/editText19"
+                    android:id="@+id/txtpassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -133,13 +133,12 @@
                 android:orientation="vertical">
 
                 <Button
-                    android:id="@+id/button"
+                    android:id="@+id/btn_siguiente"
                     style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="250dp"
                     android:layout_height="wrap_content"
                     android:background="@android:color/holo_green_dark"
                     android:gravity="center"
-                    android:onClick="registrovehiculo"
                     android:text="Siguiente"
                     android:textStyle="bold" />
             </LinearLayout>

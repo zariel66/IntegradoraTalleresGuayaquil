@@ -43,7 +43,7 @@
             android:orientation="horizontal">
 
             <ImageButton
-                android:id="@+id/imageButton3"
+                android:id="@+id/img_btntaller"
                 android:layout_width="176dp"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/registrar_taller"
@@ -53,7 +53,7 @@
                 tools:layout_editor_absoluteY="141dp" />
 
             <ImageButton
-                android:id="@+id/imageButton5"
+                android:id="@+id/img_btncliente"
                 android:layout_width="228dp"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/registrar_usuario"

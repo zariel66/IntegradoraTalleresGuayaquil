@@ -28,7 +28,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="BIENVENIDO"
+                    android:text="@string/bienvenido"
                     android:textColor="@android:color/holo_green_dark"
                     android:textSize="45sp"
                     android:textStyle="bold" />
@@ -65,17 +65,17 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textView15"
+                    android:id="@+id/txtuser"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:text="Usuario"
+                    android:text="@string/usuario"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
                 <EditText
-                    android:id="@+id/editText5"
+                    android:id="@+id/txtusuario"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -86,12 +86,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Contraseña"
+                    android:text="@string/contrase_a"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
                 <EditText
-                    android:id="@+id/editText6"
+                    android:id="@+id/txtpassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -111,7 +111,7 @@
                     android:layout_height="wrap_content"
                     android:background="@android:color/holo_green_dark"
                     android:onClick="categorias"
-                    android:text="Ingresar"
+                    android:text="@string/ingresar"
                     android:textColor="@android:color/background_light"
                     android:textSize="18sp" />
             </LinearLayout>
