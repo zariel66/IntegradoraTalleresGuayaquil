@@ -12,8 +12,9 @@ public class RegistroTaller extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro_taller);
     }
+
     public void registroservicios(View view) {
-        Intent i = new Intent(this, RegistroServicios.class );
+        Intent i = new Intent(this, RegistroServicios.class);
         startActivity(i);
     }
 }

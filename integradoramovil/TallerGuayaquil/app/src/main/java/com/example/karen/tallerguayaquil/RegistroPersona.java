@@ -1,9 +1,12 @@
 package com.example.karen.tallerguayaquil;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -15,24 +18,23 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
 public class RegistroPersona extends AppCompatActivity implements View.OnClickListener {
 
-
-    private static final String URL_FOR_REGISTRATION = "https://192.168.0.5/registro.php";
-    private static final String KEY_NOMBRE = "nombre";
-    private static final String KEY_APELLIDO = "apellido";
-    private static final String KEY_CORREO = "correo";
-    private static final String KEY_USUARIO = "usuario";
-    private static final String KEY_PASSWORD = "password";
-
-
-    EditText txtnombre, txtapellido, txtcorreo, txtusuario, txtpassword;
-    Button btnsiguiente;
+    //Definiendo Views
+    private EditText txtnombre, txtapellido, txtcorreo, txtusuario, txtpassword;
+    private Button btnsiguiente;
+    //Variable tipo cliente
 
 
     @Override
@@ -40,6 +42,9 @@ public class RegistroPersona extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro_persona);
 
+
+
+        //Inicializando Views
         txtnombre = (EditText) findViewById(R.id.txtnombre);
         txtapellido = (EditText) findViewById(R.id.txtapellido);
         txtcorreo = (EditText) findViewById(R.id.txtcorreo);
@@ -49,7 +54,26 @@ public class RegistroPersona extends AppCompatActivity implements View.OnClickLi
         btnsiguiente.setOnClickListener(this);
     }
 
-    private void registerUser() {
+    @Override
+    public void onClick(View v) {
+       if (txtnombre.getText().toString().equals("") || txtapellido.getText().toString().equals("") || txtcorreo.getText().toString().equals("") || txtusuario.getText().toString().equals("") || txtpassword.getText().toString().equals("")) {
+            Toast.makeText(RegistroPersona.this, "Por favor, llene todos los campos", Toast.LENGTH_LONG).show();
+           } else {
+            String name = txtnombre.getText().toString();
+            String apellido = txtapellido.getText().toString();
+            String correo = txtcorreo.getText().toString();
+            String usuario = txtusuario.getText().toString();
+            String password = txtpassword.getText().toString();
+
+            Intent intent = new Intent(RegistroPersona.this, RegistroVehiculo.class);
+            Bundle extras = new Bundle();
+            startActivity(intent);
+       }
+    }
+}
+
+
+/*    private void registerUser() {
         final String nombre = txtnombre.getText().toString().trim();
         final String apellido = txtapellido.getText().toString().trim();
         final String correo = txtcorreo.getText().toString().trim();
@@ -91,10 +115,27 @@ public class RegistroPersona extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
         if (v == btnsiguiente) {
+            if(txtnombre.getText().toString().equals("")|| txtapellido.getText().toString().equals("")||txtcorreo.getText().toString().equals("") || txtusuario.getText().toString().equals("")||txtpassword.getText().toString().equals("")){
+                Toast.makeText(RegistroPersona.this,"Por favor, llene todos los campos",Toast.LENGTH_LONG).show();
+            }else {
+                String name = txtnombre.getText().toString();
+                String apellido = txtapellido.getText().toString();
+                String correo = txtcorreo.getText().toString();
+                String usuario = txtusuario.getText().toString();
+                String password = txtpassword.getText().toString();
             registerUser();
         }
     }
-}
+}*/
+
+
+
+
+
+
+
+
+
 /*
     /*
     btnsiguiente.setOnClickListener(new View.OnClickListener() {

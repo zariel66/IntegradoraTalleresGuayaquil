@@ -14,7 +14,7 @@ public class Categorias extends AppCompatActivity {
     }
 
     public void mecanicos(View view) {
-        Intent i = new Intent(this, Mapa.class );
+        Intent i = new Intent(this, Mapa.class);
         startActivity(i);
     }
 }

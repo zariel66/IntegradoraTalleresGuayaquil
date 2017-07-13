@@ -12,8 +12,9 @@ public class Credencial extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_credencial);
     }
+
     public void categorias(View view) {
-        Intent i = new Intent(this, Categorias.class );
+        Intent i = new Intent(this, Categorias.class);
         startActivity(i);
     }
 }
