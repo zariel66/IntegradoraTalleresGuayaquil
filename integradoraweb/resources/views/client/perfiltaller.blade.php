@@ -126,8 +126,16 @@
 		  				</div>
 		  				
 		  			</div>
+		  			<div class="row">
+		  				@if(count($comentarios)==1)
+		  				<p class="text-center"><strong>{{count($comentarios)}} persona ha evaluado este sitio</strong></p>
+		  				@else
+		  				<p class="text-center"><strong>{{count($comentarios)}} personas han evaluado este sitio</strong></p>
+		  				@endif
+		  			</div>
+		  			<br><br><br>
 		  			@endif
-		  			<br>
+		  			
 		  			<div class="row">
 		  				<div id="map" style="width: 100%; height: 100%; max-height:300px;"></div>
 		  			</div>

@@ -33,8 +33,8 @@ class HomeController extends Controller
 	public function registrarTallerSubmit()
 	{
 		$rules = array(
-			'nombre' => 'required|regex:/(^[A-Za-z ]+$)+/|min:3',
-			'apellido' => 'required|regex:/(^[A-Za-z ]+$)+/|min:3',
+			'nombre' => 'required|regex:/(^[A-Za-záéíóú ]+$)+/|min:3',
+			'apellido' => 'required|regex:/(^[A-Za-záéíóú ]+$)+/|min:3',
 			'username' => 'required|unique:usuario,username|min:5',
 			'correo' => 'required|unique:usuario,correo|email',
 			'password' => 'required|min:8',
@@ -89,7 +89,15 @@ class HomeController extends Controller
 
 			return Redirect::back()->withErrors($validation)->withInput(Input::all());
 		}
-
+		$api_token = str_random(60);
+		$input = array('api_token' => $api_token );
+		
+		$reglas  = array('api_token' => "unique:usuario,api_token" );
+		while (Validator::make($input,$reglas,array())->fails()) {
+			$api_token = str_random(60);
+			$input = array('api_token' => $api_token );
+		}
+		error_log("api_token: ". $api_token);
 		DB::beginTransaction();
 		try {
 			$idusuario = DB::table('usuario')->insertGetId(
@@ -100,7 +108,8 @@ class HomeController extends Controller
 					'correo' => Input::get('correo'),
 					'password' => bcrypt(Input::get('password')),
 					'tipo' => 1,
-					'username' => Input::get('username')
+					'username' => Input::get('username'),
+					'api_token' => $api_token
 					)
 				);
 
@@ -162,8 +171,8 @@ class HomeController extends Controller
 	{    
 		error_log("entro controller");
 		$rules = array(
-			'nombre' => 'required|regex:/(^[A-Za-z ]+$)+/|min:3',
-			'apellido' => 'required|regex:/(^[A-Za-z ]+$)+/|min:3',
+			'nombre' => 'required|regex:/(^[A-Za-záéíóú ]+$)+/|min:3',
+			'apellido' => 'required|regex:/(^[A-Za-záéíóú ]+$)+/|min:3',
 			'username' => 'required|unique:usuario,username|min:5',
 			'correo' => 'required|unique:usuario,correo|email',
 			'password' => 'required|min:8',
@@ -209,6 +218,16 @@ class HomeController extends Controller
 			return Redirect::back()->withErrors($validation)->withInput(Input::all());
 		}
 
+		$api_token = str_random(60);
+		$input = array('api_token' => $api_token );
+		
+		$reglas  = array('api_token' => "unique:usuario,api_token" );
+		while (Validator::make($input,$reglas,array())->fails()) {
+			$api_token = str_random(60);
+			$input = array('api_token' => $api_token );
+		}
+		error_log("api_token: ". $api_token);
+
 		DB::beginTransaction();
 		try {
 			$idusuario = DB::table('usuario')->insertGetId(
@@ -219,7 +238,8 @@ class HomeController extends Controller
 					'correo' => Input::get('correo'),
 					'password' => bcrypt(Input::get('password')),
 					'tipo' => 2,
-					'username' => Input::get('username')
+					'username' => Input::get('username'),
+					'api_token' => $api_token
 					)
 				);
 			$idvehiculo = DB::table('vehiculo')->insertGetId(
@@ -250,5 +270,13 @@ class HomeController extends Controller
 	public function login()
 	{
 		return view("basic.login");
+	}
+
+	public function serverInfo()
+	{
+		$results = DB::select( DB::raw("select version()") );
+		$laravel = app();
+		$version = $laravel::VERSION;
+		return response()->json(array("laravel"=>$version, "PHP"=>phpversion(), "MYSQL" => $results[0]));
 	}
 }

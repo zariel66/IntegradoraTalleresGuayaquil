@@ -20,7 +20,7 @@
 				<div class="col-md-3 col-md-offset-3">
 					<div class="input-group">
 					  <span class="input-group-addon glyphicon glyphicon-search" id="search-icon"></span>
-					  <input type="search" class="form-control" placeholder="Buscar" aria-describedby="basic-addon1" id="buscador">
+					  <input type="search" class="form-control" placeholder="Buscar" aria-describedby="basic-addon1" id="buscador" onkeyup="restoretable(event)">
 					</div>
 										
 				</div>
@@ -96,11 +96,12 @@
 
 
 <script type="text/javascript">
-
+var tableContent;
 function filterSearch()
 {
+	var filter = $("#searchfilter").val();
 	$("#buscador").autocomplete({
-		source: "busquedatickets/" + $("#searchfilter").val(),
+		source: "busquedatickets/" + filter,
 		minLength: 1,
 		position: { my : "right top", at: "right bottom" },
 		select: function( event, ui ) {
@@ -108,13 +109,17 @@ function filterSearch()
 			$(this).val(ui.item.label);
 			var jqxhr = $.ajax({
 				method: "GET",
-				url: "",
+				url: "cargarticket/" + user,
 				dataType: 'json',
 				data: {usuario: user},
 				success: function(response)
 				{
-					$("#tickets-table").html(response.html);
-
+					if(response.success == 1)
+					{
+						tableContent = $("#tickets-table").html(); 
+						$("#tickets-table").html(response.html);	
+					}
+					
 				}
 			});
 			return false;
@@ -214,6 +219,14 @@ function actualizarRecomendacion(id)
 	});
 }
 
+function restoretable(event)
+{
+	var value = event.target.value;
+	if(value == "")
+	{
+		$("#tickets-table").html(tableContent);	
+	}
+}
 
 filterSearch();
 

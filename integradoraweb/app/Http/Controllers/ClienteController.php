@@ -72,7 +72,7 @@ class ClienteController extends Controller
 		     'fecha_hora' => \Carbon\Carbon::now()
 		    ]
 			);
-			//session(['pendingreview' => session()->get('pendingreview') + 1]);
+			
 			return array("desc_code" => $desc_code, "success" =>1);
 		} catch (\Exception $e) {
 			return array("desc_code" => $desc_code, "success" =>0);

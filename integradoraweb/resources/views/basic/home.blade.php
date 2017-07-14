@@ -59,14 +59,15 @@ filter: blur(2px);*/
 
 }
 #register-buttons-section .panel{
-	height: 400px;
+	min-height: 400px;
 	color: #373737;
 	border-radius: 25px;
+	max-height: 500px;
 }
 
 #register-buttons-section .info-text
 {
-	height: 320px;
+	min-height: 320px;
 }
 .register-text
 {

@@ -59,5 +59,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'myauth' => \App\Http\Middleware\Authenticate::class,
         'sslp' => \App\Http\Middleware\HttpsProtocol::class,
+        "review" => \App\Http\Middleware\CheckReview::class,
     ];
 }
