@@ -37,5 +37,3 @@ Route::get('tallertickets',"WorkshopController@userTickets");
 Route::get('busquedatickets/{opt}',"WorkshopController@busquedaTickets");
 Route::post('cerrarticket',"WorkshopController@cerrarTicket");
 
-/*APPMOVIL*/
-Route::get('marcas',"MovilController@obtenermarcas");

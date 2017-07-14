@@ -13,7 +13,7 @@ import android.widget.Toast;
 public class RegistroPersona extends AppCompatActivity implements View.OnClickListener {
 
     //Definiendo Views
-    private EditText txtnombre, txtapellido, txtcorreo, txtusuario, txtpassword;
+     EditText txtnombre, txtapellido, txtcorreo, txtusuario, txtpassword;
     private Button btnsiguiente;
     //Variable tipo cliente
 
@@ -22,8 +22,6 @@ public class RegistroPersona extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro_persona);
-
-
 
         //Inicializando Views
         txtnombre = (EditText) findViewById(R.id.txtnombre);
@@ -40,15 +38,24 @@ public class RegistroPersona extends AppCompatActivity implements View.OnClickLi
        if (txtnombre.getText().toString().equals("") || txtapellido.getText().toString().equals("") || txtcorreo.getText().toString().equals("") || txtusuario.getText().toString().equals("") || txtpassword.getText().toString().equals("")) {
             Toast.makeText(RegistroPersona.this, "Por favor, llene todos los campos", Toast.LENGTH_LONG).show();
            } else {
-            String name = txtnombre.getText().toString();
-            String apellido = txtapellido.getText().toString();
-            String correo = txtcorreo.getText().toString();
-            String usuario = txtusuario.getText().toString();
-            String password = txtpassword.getText().toString();
+                  String nombre=txtnombre.getText().toString();
+                  String apellido=txtapellido.getText().toString();
+                  String correo=txtcorreo.getText().toString();
+                  String usuario=txtusuario.getText().toString();
+                  String password=txtpassword.getText().toString();
 
-            Intent intent = new Intent(RegistroPersona.this, RegistroVehiculo.class);
-            Bundle extras = new Bundle();
-            startActivity(intent);
+                  Bundle parametros = new Bundle();
+                  parametros.putString("nombre", nombre);
+                  parametros.putString("apellido", apellido);
+                  parametros.putString("correo", correo);
+                  parametros.putString("usuario", usuario);
+                  parametros.putString("password", password);
+
+
+                Intent i = new Intent(this, RegistroVehiculo.class);
+
+                i.putExtras(parametros);
+                startActivity(i);
        }
     }
 }
