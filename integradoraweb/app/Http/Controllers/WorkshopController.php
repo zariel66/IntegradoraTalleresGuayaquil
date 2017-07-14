@@ -60,13 +60,24 @@ class WorkshopController extends Controller
                     }
                 }
                
-                 foreach($resultset as $r){
+                foreach($resultset as $r){
                     $output = array( "label" => $r->nombre ." " . $r->apellido , "value" => $r->id);
                     array_push( $result, $output );
                 }
             }
             else if($opt == 2)
             {
+                $resultset = DB::table('calificacion')
+                ->join('taller', 'calificacion.idtaller', '=', 'taller.id')
+                ->join('usuario', 'calificacion.idusuario', '=', 'usuario.id')
+                ->where('calificacion.desc_code', 'like',  $termino . '%')
+                ->where("taller.idusuario",Auth::user()->id)
+                ->distinct()
+                ->select('usuario.id','usuario.nombre', 'usuario.apellido')->get();
+                foreach($resultset as $r){
+                    $output = array( "label" => $r->nombre ." " . $r->apellido , "value" => $r->id);
+                    array_push( $result, $output );
+                }
 
             }
             
@@ -93,6 +104,7 @@ class WorkshopController extends Controller
                 "descuento"=> $descuento,
                 "total"=> $total,
                 "estado" => 2,
+                'fecha_hora' => \Carbon\Carbon::now()
             ]);
             $output = "<strong>El código de la transacción ha sido confirmado. El usuario evaluará la calidad del servicio en los próximos días</strong>";
 
@@ -101,5 +113,24 @@ class WorkshopController extends Controller
             return response()->json(array('message' => $output , 'success'=> 0 ));
         }
         return response()->json(array('message' => $output , 'success'=> 1 ));
+    }
+
+    public function cargarTicket($id)
+    {
+        try {
+           $result = DB::table('calificacion')
+            ->join('taller', 'calificacion.idtaller', '=', 'taller.id')
+            ->join('usuario', 'calificacion.idusuario', '=', 'usuario.id')
+            ->where("calificacion.idusuario",$id)
+            ->where("taller.idusuario",Auth::user()->id)
+            ->distinct()
+            ->select('calificacion.id','usuario.nombre', 'usuario.apellido','calificacion.desc_code','taller.nombre_taller')->get();
+            $html = view('workshop.snippet.ticketsrow')->with(array('rows' => $result ))->render();
+            return response()->json(array("html"=>$html,"success"=>1));
+        } catch (\Exception $e) {
+            throw $e;
+            
+        }
+        
     }
 }

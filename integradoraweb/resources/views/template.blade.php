@@ -37,6 +37,10 @@
 				<li><a href="#"> Mis vehiculos</a></li>
 				<li><a href="#">Mi perfil</a></li>
 			</ul>
+			@else if(Auth::user()->tipo == 1)
+			<ul class="nav navbar-nav">
+				<li class=""><a href="{{url('tallertickets')}}">Clientes</a></li>
+			</ul>
  			@endif
 			@endif
 			<ul class="nav navbar-nav navbar-right">
