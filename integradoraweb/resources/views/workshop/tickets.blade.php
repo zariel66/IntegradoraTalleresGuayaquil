@@ -99,8 +99,9 @@
 
 function filterSearch()
 {
+	var filter = $("#searchfilter").val();
 	$("#buscador").autocomplete({
-		source: "busquedatickets/" + $("#searchfilter").val(),
+		source: "busquedatickets/" + filter,
 		minLength: 1,
 		position: { my : "right top", at: "right bottom" },
 		select: function( event, ui ) {
