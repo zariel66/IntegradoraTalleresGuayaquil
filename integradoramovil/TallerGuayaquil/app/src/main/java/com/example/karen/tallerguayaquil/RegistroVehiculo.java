@@ -1,6 +1,7 @@
 package com.example.karen.tallerguayaquil;
 
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,7 +10,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -27,10 +32,8 @@ public class RegistroVehiculo extends AppCompatActivity implements Spinner.OnIte
 
     //Declaring an Spinner
       private Spinner spinner;
-
     //An ArrayList for Spinner Items
       ArrayList<String> marcas;
-
      EditText txtmodelo;
      Button btnregistrar;
 
@@ -39,22 +42,22 @@ public class RegistroVehiculo extends AppCompatActivity implements Spinner.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro_vehiculo);
 
+
         //Initializing the ArrayList
         marcas = new ArrayList<String>();
         spinner = (Spinner) findViewById(R.id.spin_marcas);
-        //spinner = (Spinner) findViewById(R.id.spinner1);
         txtmodelo = (EditText) findViewById(R.id.txtmodelo);
         btnregistrar = (Button) findViewById(R.id.btnregistrar);
-        spinner.setOnItemSelectedListener(this);
 
-        getData();
+       // btnregistrar.setOnClickListener(this);
+
+        spinner.setOnItemSelectedListener(this);
+         getData();
     }
 
 
-
     private void getData(){
-        RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="http://192.168.0.4:8000/marcas";
+        String url ="http://192.168.0.4:8000/api/marcas";
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
@@ -88,6 +91,7 @@ public class RegistroVehiculo extends AppCompatActivity implements Spinner.OnIte
         requestQueue.add(stringRequest);
     }
 
+
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
@@ -97,4 +101,55 @@ public class RegistroVehiculo extends AppCompatActivity implements Spinner.OnIte
     public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
+
+
+    private void registerUser( final String nombre, final String apellido, final String username, final String password, final String correo){
+       final String modelo=txtmodelo.getText().toString();
+
+        String url ="http://192.168.0.4:8000/api/clientes";
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(RegistroVehiculo.this,response,Toast.LENGTH_LONG).show();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(RegistroVehiculo.this,error.toString(),Toast.LENGTH_LONG).show();
+                    }
+                }){
+            @Override
+            protected Map<String,String> getParams(){
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("nombre",nombre);
+                params.put("apellido",apellido);
+                params.put("username",username);
+                params.put("password",password);
+                params.put("correo",correo);
+                params.put("modelo",modelo);
+                return params;
+            }
+
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+    public void onClick(View v) {
+        if(v == btnregistrar){
+            Bundle parametros = this.getIntent().getExtras();
+            String nombre = parametros.getString("nombre");
+            String apellido = parametros.getString("apellido");
+            String correo = parametros.getString("correo");
+            String username = parametros.getString("usuario");
+            String password = parametros.getString("password");
+            registerUser(nombre,apellido,username,password,correo);
+        }
+
+    }
+
 }
+
+

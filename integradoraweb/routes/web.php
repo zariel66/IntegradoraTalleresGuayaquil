@@ -42,5 +42,3 @@ Route::get('busquedatickets/{opt}',"WorkshopController@busquedaTickets");
 Route::post('cerrarticket',"WorkshopController@cerrarTicket");
 Route::get('cargarticket/{id}',"WorkshopController@cargarTicket");
 
-/*APPMOVIL*/
-Route::get('marcas',"MovilController@obtenermarcas");
