@@ -132,16 +132,28 @@ function filterSearch()
 
 	});	
 }
-$('.doubleonly').keypress(function(eve) {
-	if ((eve.which != 46 || $(this).val().indexOf('.') != -1) && (eve.which < 48 || eve.which > 57) || (eve.which == 46 && $(this).caret().start == 0) ) {
-		eve.preventDefault();
+// $('.doubleonly').keypress(function(eve) {
+// 	if ((eve.which != 46 || $(this).val().indexOf('.') != -1) && (eve.which < 48 || eve.which > 57) || (eve.which == 46 && $(this).caret().start == 0) ) {
+// 		eve.preventDefault();
+// 	}
+// });
+function doubleOnlyPress(event)
+{
+	if ((event.which != 46 || $(event.target).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57) || (event.which == 46 && $(event.target).caret().start == 0) ) {
+		event.preventDefault();
 	}
-});     
+}     
 // this part is when left part of number is deleted and leaves a . in the leftmost position. For example, 33.25, then 33 is deleted
-$('.doubleonly').keyup(function(eve) {
-	if($(this).val().indexOf('.') == 0) {    $(this).val($(this).val().substring(1));
+// $('.doubleonly').keyup(function(eve) {
+// 	if($(this).val().indexOf('.') == 0) {    $(this).val($(this).val().substring(1));
+// 	}
+// });
+
+function doubleOnlyUp(event)
+{
+	if($(event.target).val().indexOf('.') == 0) {    $(event.target).val($(event.target).val().substring(1));
 	}
-});
+}
 
 function isNumber(evt) {
     evt = (evt) ? evt : window.event;

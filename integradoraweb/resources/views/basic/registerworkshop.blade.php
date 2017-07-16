@@ -204,7 +204,7 @@
 				</div>
 			</div>
 		</div>
-		
+</div>
 		<style type="text/css">
 			#form-section-background
 			{

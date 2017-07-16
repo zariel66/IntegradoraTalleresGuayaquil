@@ -4,7 +4,7 @@
 	<td class="col-md-2 text-center">{{$row->nombre}} {{$row->apellido}}</td>
 	<td class="col-md-3 text-center">{{$row->nombre_taller}}</td>
 	<td class="col-md-2 text-center">
-		<input id="preciooriginal{{$row->id}}" type="text" class="form-control doubleonly" placeholder="$" maxlength="7" oninput="calcTotal({{$row->id}})">
+		<input id="preciooriginal{{$row->id}}" type="text" class="form-control doubleonly" placeholder="$" maxlength="7" oninput="calcTotal({{$row->id}})" onkeypress="doubleOnlyPress(event)" onkeyup="doubleOnlyUp(event)">
 	</td>
 
 	<td class="col-md-1 text-center">

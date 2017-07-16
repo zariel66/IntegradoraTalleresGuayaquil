@@ -22,6 +22,9 @@ Route::get("serverinfo","HomeController@serverInfo");
 Route::get('login',"HomeController@login");
 Route::get('logout',"SesionController@cerrarSesion");
 Route::post('iniciarsesion',"SesionController@iniciarSesion");
+Route::get('forgotpassword',"SesionController@forgotPassword");
+Route::post('forgotpassword',"SesionController@enviarResetToken");
+Route::get('nuevopwd/{pass_token}/{correo}',"SesionController@newPassword");
 
 /*CLIENT*/
 Route::get('busquedataller',"ClienteController@busquedaTaller")->middleware('review');

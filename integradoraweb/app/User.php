@@ -12,7 +12,7 @@ class User extends Authenticatable
     
     protected $table = 'usuario';
     protected $primaryKey = 'id';
-    protected $fillable = array('id', 'nombre', 'apellido', 'cedula', 'tipo', 'username', 'correo', 'password', 'remember_token');
+    protected $fillable = array('id', 'nombre', 'apellido', 'cedula', 'tipo', 'username', 'correo', 'password', 'remember_token','pass_token');
     public $timestamps = false;
     /**
      * The attributes that are mass assignable.

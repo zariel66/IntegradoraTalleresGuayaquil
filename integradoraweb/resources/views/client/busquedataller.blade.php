@@ -1,54 +1,54 @@
 @extends("template")
 @section("content")
 <div id="form-section-background" class="container">
-			<div class="panel col-md-10 col-md-offset-1">
-				<div class="panel-body">
-					
-					<div class="row">
-						<!-- <form> -->
-							<div class="col-md-3">
-								<label>Tipo de Taller Automotriz:</label>
-								<select class="form-control" id="serviceselect">
-									<option value="Carrocería">Carrocería</option>
-									<option value="Electromecánico">Electromecánico</option>
-									<option value="Mecánico">Mecánico</option>
-									<option value="Pintado">Pintado</option>
-									<option value="Tapicería">Tapicería</option>
-									<option value="Vidriería">Vidriería</option>
-								</select>
-							</div>
-							<div class="col-md-3 col-md-offset-2">
-								<label>Vehiculo:</label>
-								<select class="form-control" id="carselect">
-									@foreach(Auth::user()->vehiculos as $v)
-									<option value="{{$v->idmarca}}">{{$v->modelo}} ({{$v->marca->nombre}})</option>
-									@endforeach
-									
-								</select>
-							</div>
-							<div class="col-md-3 col-md-offset-1" style="margin-top:25px">
-								<button class="btn" onclick="searchWorkshops(5)">Buscar Taller</button>
-							</div>
-						<!-- </form> -->
+	<div class="panel col-md-10 col-md-offset-1">
+		<div class="panel-body">
+			
+			<div class="row">
+				<!-- <form> -->
+					<div class="col-md-3">
+						<label>Tipo de Taller Automotriz:</label>
+						<select class="form-control" id="serviceselect">
+							<option value="Carrocería">Carrocería</option>
+							<option value="Electromecánico">Electromecánico</option>
+							<option value="Mecánico">Mecánico</option>
+							<option value="Pintado">Pintado</option>
+							<option value="Tapicería">Tapicería</option>
+							<option value="Vidriería">Vidriería</option>
+						</select>
 					</div>
-					<br>
-					<br>
-					<div class="row">
-						<br>
-						<div class="col-md-7">
-							<div id="map" style="width: 100%; height: 100%; max-height:450px;"></div>
-						</div>
-						<div class="col-md-4 col-md-offset-1">
-							<div class=""><strong>Resultados de la búsqueda:</strong></div>
-							<br>
-							<ul class="list-group" id="search-results">
-								
-							</ul>
-						</div>
+					<div class="col-md-3 col-md-offset-2">
+						<label>Vehiculo:</label>
+						<select class="form-control" id="carselect">
+							@foreach(Auth::user()->vehiculos as $v)
+							<option value="{{$v->idmarca}}">{{$v->modelo}} ({{$v->marca->nombre}})</option>
+							@endforeach
+							
+						</select>
 					</div>
+					<div class="col-md-3 col-md-offset-1" style="margin-top:25px">
+						<button class="btn" onclick="searchWorkshops(5)">Buscar Taller</button>
+					</div>
+				<!-- </form> -->
+			</div>
+			<br>
+			<br>
+			<div class="row">
+				<br>
+				<div class="col-md-7">
+					<div id="map" style="width: 100%; height: 100%; max-height:450px;"></div>
+				</div>
+				<div class="col-md-4 col-md-offset-1">
+					<div class=""><strong>Resultados de la búsqueda:</strong></div>
+					<br>
+					<ul class="list-group" id="search-results">
+						
+					</ul>
 				</div>
 			</div>
-
+		</div>
+	</div>
+</div>
 			<style type="text/css">
 				#form-section-background
 				{
