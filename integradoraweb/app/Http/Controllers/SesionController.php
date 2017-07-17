@@ -17,6 +17,8 @@ class SesionController extends Controller
      *
      * @return Response
      */
+    
+
     public function iniciarSesion()
     {
         if (Auth::attempt(['username' =>  Input::get('username'), 'password' => Input::get('password')])) {
@@ -80,15 +82,60 @@ class SesionController extends Controller
     public function newPassword($pass_token,$correo)
     {
         try {
-            $user = User::where("correo",$correo)->where('pass_token',$pass_token)->first();
-            $user->update(
-            [
-                'pass_token' => str_random(10)
-            ]);
+
+            $user = User::where("correo",$correo)->where('pass_token',$pass_token);
+            //var_dump($user->first());
+            // error_log("CONTADOR: " . count($user));
+            // error_log("id: " . $user->first()->id);
+            if(is_null($user->first()))
+            {
+                throw new \Exception("Error Updating on null", 1);    
+            }
+            
+            
         } catch (\Exception $e) {
-            return view("basic.login")->with(array("mensajet2"=>"El enlace ya ha caducado"));
+            return view("basic.login")->with(array("mensajet2"=>"El enlace es incorrecto o ya ha caducado"));
         }
         
-        return "token: " . $pass_token . "\ncorreo: " . $correo; 
+        return view("basic.newpwd",["pass_token"=>$pass_token,"correo"=> $correo]);
+    }
+
+    public function setNewPassword()
+    {
+        try {
+            $reglas = array(
+                'password' => 'required|min:8',
+                'repeat_password' => 'same:password',
+                
+                );
+            $mensaje = array(
+                "password.required" => "Ambos campos son requeridos y deben coincidir",
+                "repeat_password" => "Ambos campos son requeridos y deben coincidir",
+                "password.min" => "La contraseña debe tener mínimo :min caracteres",
+                );
+            $validation = Validator::make(Input::all(),$reglas,$mensaje);
+
+            if($validation->fails()) {
+                return Redirect::back()->withErrors($validation);
+            }
+            $user = User::where("correo",Input::get('correo'))->where('pass_token',Input::get('pass_token'))->first();
+            if(!is_null($user))
+            {
+                $user->update(
+                [
+                    'pass_token' => str_random(10),
+                    'password' => bcrypt(Input::get('password'))
+                ]);    
+            }
+            else
+            {
+                throw new \Exception("Error Updating on null", 1);
+                                
+            }     
+        } catch (\Exception $e) {
+            return Redirect::back();
+        }
+        return view("basic.login")->with(array("mensajet1"=>"La contraseña se ha restablecido"));
+        
     }
 }

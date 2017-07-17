@@ -99,7 +99,7 @@ class ClienteController extends Controller
 			$taller = $calificacion->taller;
 
 			$rules = array(
-			'comentario' => 'required|min:30',
+			'comentario' => 'required|min:10',
 			
 			); 
 
