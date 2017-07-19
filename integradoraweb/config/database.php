@@ -41,11 +41,11 @@ return [
 
         'mysql' => [
             'driver' => 'mysql',
-            'host' => "127.0.0.1",
+            'host' => "173.199.127.236",
             'port' => "3306",
             'database' => "db_integradora",
-            'username' => "root",
-            'password' => "admin",
+            'username' => "dimitri",
+            'password' => "demo1234",
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
