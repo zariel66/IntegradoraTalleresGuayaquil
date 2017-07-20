@@ -60,5 +60,6 @@ class Kernel extends HttpKernel
         'myauth' => \App\Http\Middleware\Authenticate::class,
         'sslp' => \App\Http\Middleware\HttpsProtocol::class,
         "review" => \App\Http\Middleware\CheckReview::class,
+        "nonsecure" => \App\Http\Middleware\Nonsecure::class,
     ];
 }
