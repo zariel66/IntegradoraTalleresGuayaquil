@@ -19,7 +19,7 @@ Route::get("registroclientesubmit","HomeController@registrarClienteSubmit");
 Route::get("serverinfo","HomeController@serverInfo");
 
 /*SESION*/
-Route::get('login',"HomeController@login")->middleware('guest');
+Route::get('login',"HomeController@login")->middleware('guest','sslp');
 Route::get('logout',"SesionController@cerrarSesion");
 Route::post('iniciarsesion',"SesionController@iniciarSesion");
 Route::get('forgotpassword',"SesionController@forgotPassword")->middleware('guest');
@@ -28,7 +28,7 @@ Route::get('nuevopwd/{pass_token}/{correo}',"SesionController@newPassword")->mid
 Route::post('nuevopwd',"SesionController@setNewPassword");
 
 /*CLIENT*/
-Route::get('busquedataller',"ClienteController@busquedaTaller")->middleware('review');
+Route::get('busquedataller',"ClienteController@busquedaTaller")->middleware('review','sslp');
 Route::post('busquedataller',"ClienteController@busquedaTaller2");
 
 Route::get('perfiltaller/{id}',"ClienteController@perfilTaller")->middleware('review');
