@@ -7,8 +7,8 @@ class Nonsecure {
     public function handle($request, Closure $next)
     {
     	if ($request->secure()) {
-    		//return Redirect::to('http://' . Request::url());
-    		return redirect('http://' . $request->url());
+    		
+    		return redirect(str_replace('https','http',$request->url()));
     	}
     	return $next($request); 
     }
