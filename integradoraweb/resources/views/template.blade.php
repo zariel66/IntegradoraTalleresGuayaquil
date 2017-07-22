@@ -2,7 +2,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
@@ -12,6 +12,7 @@
 	<!-- Optional theme -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
+	<link href="{{ URL::asset('css/non-responsive.css')}}" rel="stylesheet">
 	<!-- Latest compiled and minified JavaScript -->
 	<link href="{{ URL::asset('css/template.css')}}" rel="stylesheet">
 	<link href="{{ URL::asset('css/jquery-ui.min.css')}}" rel="stylesheet">
@@ -45,6 +46,7 @@
 			@endif
 			<ul class="nav navbar-nav navbar-right">
 			@if (Auth::check())
+				<li><a ><span class="glyphicon glyphicon-user"></span>  {{Auth::user()->username}}</a></li>
 				<li><a href="{{url('logout')}}"><span class="glyphicon glyphicon-off"></span> Cerrar Sesión</a></li>
 			@else
 				<li><a href="{{url('registrocliente')}}"><span class="glyphicon glyphicon-user"></span> Regístrate</a></li>
@@ -92,6 +94,18 @@
 		    }
 		});
 	</script>
+	<style type="text/css">
+	body
+	{
+		height: 100%;
+
+	}
+	/*.container
+	{
+		width: 100% !important;
+	}*/
+
+	</style>
 </body>
 
 

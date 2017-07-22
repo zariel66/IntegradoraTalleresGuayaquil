@@ -22,6 +22,21 @@
 	from { opacity: 0; }
 	to   { opacity: 1; }
 }
+
+@keyframes btnbgtrans {
+	from{
+		background-color: #cdc0b7;
+		font-weight: bold;
+		width: 150px;
+		color:black;
+	}
+	to {
+		background-color: #a7968b;
+		font-weight: bold;
+		color: white;
+	}
+}
+
 .footer
 {
 	margin: 0;

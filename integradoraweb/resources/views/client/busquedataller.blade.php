@@ -27,7 +27,7 @@
 						</select>
 					</div>
 					<div class="col-md-3 col-md-offset-1" style="margin-top:25px">
-						<button class="btn" onclick="searchWorkshops(5)">Buscar Taller</button>
+						<button class="btn" id="search-btn" onclick="searchWorkshops(5)">Buscar Taller</button>
 					</div>
 				<!-- </form> -->
 			</div>
@@ -49,35 +49,64 @@
 		</div>
 	</div>
 </div>
-			<style type="text/css">
-				#form-section-background
-				{
-					width: 100%;
-					margin: 0px;
-					min-height: 700px;
-					background-image:  url("{{ URL::asset('imagenes/icons/bgtool.jpg')}}");
-					background-size: 300px 300px;
-					padding: 5%;
+	<style type="text/css">
+		#form-section-background
+		{
+			width: 100%;
+			margin: 0px;
+			min-height: 700px;
+			background-image:  url("{{ URL::asset('imagenes/icons/bgtool.jpg')}}");
+			background-size: 300px 300px;
+			padding: 5%;
 
-				}
-				#form-section-background .panel{
-					border-radius: 25px;
-					animation: fadein 2s;
-				}
+		}
+		#form-section-background .panel{
+			border-radius: 25px;
+			animation: fadein 2s;
+		}
 
 
-				#search-results
-				{
-					cursor: pointer;
-					overflow-y: scroll;
-					max-height: 400px;
-					min-height: 350px;
-				}
-				#search-results a:hover
-				{
-					background-color:#cdc0b7;
-				}
-			</style>
+		#search-results
+		{
+			cursor: pointer;
+			overflow-y: scroll;
+			max-height: 400px;
+			min-height: 350px;
+			border-style: double;
+		}
+		#search-results a:hover
+		{
+			background-color:#cdc0b7;
+		}
+		@keyframes btnbgtrans {
+		    from{
+		    	background-color: #cdc0b7;
+				font-weight: bold;
+				width: 150px;
+				color:black;
+		    }
+		    to {
+		    	background-color: #a7968b;
+				font-weight: bold;
+				color: white;
+		    }
+		}
+		#search-btn
+		{
+			background-color: #cdc0b7;
+			font-weight: bold;
+			width: 150px;
+			
+		}
+		#search-btn:hover
+		{
+			animation-name: btnbgtrans;
+			animation-duration: 1s;
+			-webkit-animation-fill-mode: forwards;
+			animation-fill-mode: forwards;
+	    		
+		}
+	</style>
 	<script>
 	var marker;
 	var posXY;
