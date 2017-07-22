@@ -42,7 +42,8 @@
 .login-section
 {
 	margin: 0px;
-	height: 700px;
+	min-height: 700px;
+	/*min-height: 100%;*/
 	background-image: url("{{ URL::asset('imagenes/icons/bgtool.jpg')}}");
 	background-size: 300px 300px;
 	/*padding-left: 40%;*/

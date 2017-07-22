@@ -5,7 +5,7 @@
 		<div class="panel-body">
 			
 			<div class="row">
-				<h3>Registro de Usuario</h1>
+				<h2 style="font-weight:bold;">Registro de Usuario</h2>
 			</div>
 			<div class="row">
 				<br>
@@ -134,7 +134,7 @@
 	{
 		width: 100%;
 		margin: 0px;
-		height: 700px;
+		min-height: 700px;
 		background-image: url("{{ URL::asset('imagenes/icons/bgtool.jpg')}}");
 		background-size: 300px 300px;
 		padding: 5%;

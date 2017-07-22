@@ -4,7 +4,7 @@
 	<div class="panel col-md-10 col-md-offset-1">
 		<div class="panel-body">
 			<div class="row">
-				<h3>Registro de Taller</h1>
+				<h2 style="font-weight:bold;">Registro de Taller</h2>
 			</div>
 			
 				<div class="row">

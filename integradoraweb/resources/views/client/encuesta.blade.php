@@ -60,7 +60,7 @@
 						</div>
 						<br><br><br><br>
 						<div class="row">
-							<input type="submit" class="btn submit-btn center-block" value="Enviar">
+							<input id="send-btn" type="submit" class="btn submit-btn center-block" value="Enviar">
 						</div>
 						
 					</form>
@@ -134,17 +134,19 @@
 		font-weight: bold;
 		width: 150px;
 	}
-	.submit-btn:hover
-	{
-		background-color: #a7968b;
-		font-weight: bold;
-		color: white;
-
-	}
+	
 	/*.range-input .noUi-connect
 	{
 		background: red;
-	}*/ 
+	}*/
+	#send-btn:hover
+	{
+		animation-name: btnbgtrans;
+		animation-duration: 1s;
+		-webkit-animation-fill-mode: forwards;
+		animation-fill-mode: forwards;
+    		
+	} 
 </style>
 <link href="{{ asset('css/nouislider.min.css') }}" rel="stylesheet">
 
