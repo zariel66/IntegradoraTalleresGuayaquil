@@ -147,6 +147,16 @@
 		animation-fill-mode: forwards;
     		
 	} 
+	@media only screen and (min-width: 640px) and (max-width: 1190px) {
+	    #form-section-background
+		{
+			
+			min-height:1200px;
+			
+			/*padding-top: 20vh;*/
+		}
+	
+	}
 </style>
 <link href="{{ asset('css/nouislider.min.css') }}" rel="stylesheet">
 

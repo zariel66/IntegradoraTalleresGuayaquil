@@ -227,98 +227,108 @@
 	</div>
 </div>
 
-			<style type="text/css">
-				#form-section-background
-				{
-					width: 100%;
-					margin: 0px;
-					min-height: 700px;
-					background-image:  url("{{ URL::asset('imagenes/icons/bgtool.jpg')}}");
-					background-size: 300px 300px;
-					padding: 5%;
+	<style type="text/css">
+		#form-section-background
+		{
+			width: 100%;
+			margin: 0px;
+			min-height: 700px;
+			background-image:  url("{{ URL::asset('imagenes/icons/bgtool.jpg')}}");
+			background-size: 300px 300px;
+			padding: 5%;
 
-				}
-				#form-section-background .panel{
-					border-radius: 25px;
-					animation: fadein 2s;
-				}
+		}
+		#form-section-background .panel{
+			border-radius: 25px;
+			animation: fadein 2s;
+		}
 
-				.bar-label
-				{
-					margin-bottom: 20px;
-				}
-				.low-grade
-				{
-					background-image: linear-gradient(to bottom,#f90505 0,#770404 100%);
-				}
-				.medium-grade
-				{
-					background-image: linear-gradient(to bottom,#acb10c 0,#e4b509 100%);
-				}
-				.high-grade
-				{
-					background-image: linear-gradient(to bottom,#60f906 0,#2c940a 100%);
-				}
-				.user-comment
-				{
-					padding-top: 20px;
-					padding-bottom: 20px;
-					/*background-color: #f1e4dc;*/
-					background-color: #e8f5f7;
-					
-					border: ridge 2px #e4e8e8;
-				}
-				.user-comment:hover
-				{
-					padding-top: 20px;
-					padding-bottom: 20px;
-					background-color:#e6e5e5;
-					
-					
-					border: ridge 2px #afa6a6;
-				}
-				.user-comment-username
-				{
-					margin-bottom: 18px;
-				}
-				.date-comment
-				{
-					font-size: 9px;
-				}
-				.mini-progress
-				{
-					height: 13px;
-					margin: 0;
-				}
-				.bar-label-mini
-				{
-					font-size: 9px;
-				}
-				.progress {
-				    position: relative;
-				}
-				.progress span {
-				    position: absolute;
-				    display: block;
-				    width: 100%;
-				    color: black;
-				    font-weight: bold;
-				 }
-				 #contact-section
-				 {
-				 	display: none;
-				 }
-				 #discount-code span
-				 {
-				 	font-size: 120%;
-				 }
-				 .pagination .active span,.pagination .active span:hover
-				 {
-				 	background-color: #333;
-				 	border-color:#333;
-				 }
+		.bar-label
+		{
+			margin-bottom: 20px;
+		}
+		.low-grade
+		{
+			background-image: linear-gradient(to bottom,#f90505 0,#770404 100%);
+		}
+		.medium-grade
+		{
+			background-image: linear-gradient(to bottom,#acb10c 0,#e4b509 100%);
+		}
+		.high-grade
+		{
+			background-image: linear-gradient(to bottom,#60f906 0,#2c940a 100%);
+		}
+		.user-comment
+		{
+			padding-top: 20px;
+			padding-bottom: 20px;
+			/*background-color: #f1e4dc;*/
+			background-color: #e8f5f7;
+			
+			border: ridge 2px #e4e8e8;
+		}
+		.user-comment:hover
+		{
+			padding-top: 20px;
+			padding-bottom: 20px;
+			background-color:#e6e5e5;
+			
+			
+			border: ridge 2px #afa6a6;
+		}
+		.user-comment-username
+		{
+			margin-bottom: 18px;
+		}
+		.date-comment
+		{
+			font-size: 9px;
+		}
+		.mini-progress
+		{
+			height: 13px;
+			margin: 0;
+		}
+		.bar-label-mini
+		{
+			font-size: 9px;
+		}
+		.progress {
+		    position: relative;
+		}
+		.progress span {
+		    position: absolute;
+		    display: block;
+		    width: 100%;
+		    color: black;
+		    font-weight: bold;
+		 }
+		 #contact-section
+		 {
+		 	display: none;
+		 }
+		 #discount-code span
+		 {
+		 	font-size: 120%;
+		 }
+		 .pagination .active span,.pagination .active span:hover
+		 {
+		 	background-color: #333;
+		 	border-color:#333;
+		 }
+		 @media only screen and (min-width: 640px) and (max-width: 1190px) {
+		    #form-section-background
+			{
+				
+				min-height:85vh;
+				
+				/*padding-top: 20vh;*/
+			}
+		
+		}
 
-			</style>
+	</style>
 	<script type="text/javascript">
 		function getContactInfo()
 		{
