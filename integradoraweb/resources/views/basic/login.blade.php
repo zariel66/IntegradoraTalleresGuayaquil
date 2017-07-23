@@ -1,6 +1,6 @@
 @extends("template")
 @section("content")
-<div id="register-section-background">
+
 			
 	<div class="row login-section">
 		<div class="panel panel-default col-md-offset-4 col-md-4">
@@ -37,7 +37,7 @@
 				</div>
 		</div>
 	</div>
-</div>	
+
 <style type="text/css">
 .login-section
 {
@@ -66,6 +66,17 @@
 	font-weight:bold;
 	color: #373737;
 	background-color:#cdc0b7;
+}
+
+@media only screen and (min-width: 640px) and (max-width: 1190px) {
+   .login-section
+	{
+		
+		height:85vh;
+		
+		padding-top: 20vh;
+	}
+	
 }
 </style>
 @stop

@@ -13,9 +13,9 @@
 /*HOME*/
 Route::get('/',"HomeController@index")->middleware('nonsecure');
 Route::get("registrartaller","HomeController@registrarTaller");
-Route::get("registrotallersubmit","HomeController@registrarTallerSubmit");
+Route::post("registrotallersubmit","HomeController@registrarTallerSubmit");
 Route::get("registrocliente","HomeController@registrarCliente");
-Route::get("registroclientesubmit","HomeController@registrarClienteSubmit");
+Route::post("registroclientesubmit","HomeController@registrarClienteSubmit");
 Route::get("serverinfo","HomeController@serverInfo");
 
 /*SESION*/
