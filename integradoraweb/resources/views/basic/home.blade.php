@@ -2,8 +2,8 @@
 @section("content")
 <div id="register-section-background">
 	<!-- <h1 class="app-body-title">APP NAME HERE</h1> -->
-	<div id="register-buttons-section" >
-		<div class="row">
+	
+		<div id="register-buttons-section" class="row">
 			<div class="panel panel-default col-md-5">
 				<div class="panel-body">
 					<div class="row info-text">
@@ -31,40 +31,35 @@
 			</div>
 		</div>
 
-	</div>
 </div>
 <style type="text/css">
 
-#register-buttons-section
+/*#register-buttons-section
 {
 	width: 100%;
 
 	animation: fadein 2s;
-}
+}*/
 #register-section-background
 {
 	background-image: url("{{ URL::asset('imagenes/icons/bg2.jpg')}}");
 	background-color: #cccccc;
 	/*background-size:  100% 100%;*/
 	background-size: 100% 100%;
-	min-height:700px;
+	/*min-height:700px;*/
+	height:700px;
 	padding-left: 30%;
 	padding-right: 20%;
 	padding-top: 12%;
-/*-webkit-filter: blur(2px);
--moz-filter: blur(2px);
--o-filter: blur(2px);
--ms-filter: blur(2px);
-filter: blur(2px);*/
+
 
 }
 #register-buttons-section .panel{
-	min-height: 400px;
+	height: 400px;
 	color: #373737;
 	border-radius: 25px;
-	max-height: 500px;
+	
 }
-
 #register-buttons-section .info-text
 {
 	min-height: 320px;
@@ -85,7 +80,22 @@ filter: blur(2px);*/
 
 }
 
+@media only screen and (min-width: 640px) and (max-width: 1190px) {
+   #register-section-background
+	{
+		
+		height:85vh;
+		
+		padding-top: 20vh;
 
+
+	}
+	.register-text
+	{
+		font-size: smaller;
+	}
+	
+}
 
 </style>
 @stop

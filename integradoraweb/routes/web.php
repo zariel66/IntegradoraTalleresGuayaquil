@@ -12,10 +12,12 @@
 */
 /*HOME*/
 Route::get('/',"HomeController@index")->middleware('nonsecure');
-Route::get("registrartaller","HomeController@registrarTaller")->middleware('nonsecure');
-Route::get("registrotallersubmit","HomeController@registrarTallerSubmit");
-Route::get("registrocliente","HomeController@registrarCliente")->middleware('nonsecure');
-Route::get("registroclientesubmit","HomeController@registrarClienteSubmit");
+
+Route::get("registrartaller","HomeController@registrarTaller");
+Route::post("registrotallersubmit","HomeController@registrarTallerSubmit");
+Route::get("registrocliente","HomeController@registrarCliente");
+Route::post("registroclientesubmit","HomeController@registrarClienteSubmit");
+
 Route::get("serverinfo","HomeController@serverInfo");
 
 /*SESION*/

@@ -9,8 +9,8 @@
 			</div>
 			<div class="row">
 				<br>
-				<form class="form-inline"  action="registroclientesubmit" method="GET" autocomplete="on">
-					
+				<form class="form-inline"  action="registroclientesubmit" method="POST" autocomplete="on">
+					<input type="hidden" name="_token" value="{{ csrf_token() }}">
 					<div class="row">
 						<div class="col-md-2">
 							<label>Nombres(*): </label>
@@ -23,7 +23,7 @@
 							>
 							<div style="color:red"><small>{{ $errors->first('nombre') }}</small></div>
 						</div>
-						<div class="col-md-2">
+						<div class="col-md-2 col-md-offset-1">
 							<label>Correo(*): </label>
 						</div>
 						<div class="col-md-3">
@@ -48,7 +48,7 @@
 							>
 							<div style="color:red"><small>{{ $errors->first('apellido') }}</small></div>
 						</div>
-						<div class="col-md-2">
+						<div class="col-md-2 col-md-offset-1">
 							<label>Marca del Vehículo(*): </label>
 						</div>
 						<div class="col-md-3">
@@ -72,7 +72,7 @@
 							>
 							<div style="color:red"><small>{{ $errors->first('username') }}</small></div>
 						</div>
-						<div class="col-md-2">
+						<div class="col-md-2 col-md-offset-1">
 							<label>Modelo del vehículo(*): </label>
 						</div>
 						<div class="col-md-3">
@@ -97,7 +97,7 @@
 							>
 							<div style="color:red"><small>{{ $errors->first('password') }}</small></div>
 						</div>
-						<div class="col-md-2"></div>
+						<div class="col-md-2 col-md-offset-1"></div>
 						<div class="col-md-3"></div>
 					</div>
 					<br>
@@ -113,7 +113,7 @@
 							>
 							<div style="color:red"><small>{{ $errors->first('password_confirmation') }}</small></div>
 						</div>
-						<div class="col-md-2"></div>
+						<div class="col-md-2 col-md-offset-1"></div>
 						<div class="col-md-3"></div>
 					</div>
 					<br>
@@ -165,6 +165,17 @@
 		background-color:#cdc0b7;
 
 	}
+	@media only screen and (min-width: 640px) and (max-width: 1190px) {
+	   #form-section-background
+		{
+			
+			height:85vh;
+			
+			padding-top: 20vh;
 
+
+		}
+		
+	}
 	</style>
 @stop	

@@ -92,6 +92,16 @@
 	border-color: white;
 	color:black;
 	}
+	@media only screen and (min-width: 640px) and (max-width: 1190px) {
+		    #form-section-background
+			{
+				
+				min-height:85vh;
+				
+				/*padding-top: 20vh;*/
+			}
+		
+		}
 </style>
 
 
