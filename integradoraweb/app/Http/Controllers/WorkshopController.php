@@ -20,7 +20,7 @@ class WorkshopController extends Controller
 {
 	public function __construct()
 	{
-		$this->middleware('myauth');
+		// $this->middleware('myauth');
 		//$this->middleware('sslp');
 	}
 	public function userTickets()
