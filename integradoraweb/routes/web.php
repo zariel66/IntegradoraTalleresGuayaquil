@@ -11,16 +11,16 @@
 |
 */
 /*HOME*/
-Route::get('/',"HomeController@index")->middleware('nonsecure');
-Route::get("registrartaller","HomeController@registrarTaller");
-Route::post("registrotallersubmit","HomeController@registrarTallerSubmit");
-Route::get("registrocliente","HomeController@registrarCliente");
-Route::post("registroclientesubmit","HomeController@registrarClienteSubmit");
+Route::get('/',"HomeController@index")->middleware('guest','nonsecure');
+Route::get("registrartaller","HomeController@registrarTaller")->middleware('guest');
+Route::post("registrotallersubmit","HomeController@registrarTallerSubmit")->middleware('guest');
+Route::get("registrocliente","HomeController@registrarCliente")->middleware('guest');
+Route::post("registroclientesubmit","HomeController@registrarClienteSubmit")->middleware('guest');
 Route::get("serverinfo","HomeController@serverInfo");
 
 /*SESION*/
 Route::get('login',"HomeController@login")->middleware('guest','sslp');
-Route::get('logout',"SesionController@cerrarSesion");
+Route::get('logout',"SesionController@cerrarSesion")->middleware('myauth');
 Route::post('iniciarsesion',"SesionController@iniciarSesion");
 Route::get('forgotpassword',"SesionController@forgotPassword")->middleware('guest','nonsecure');
 Route::post('forgotpassword',"SesionController@enviarResetToken");
@@ -28,17 +28,17 @@ Route::get('nuevopwd/{pass_token}/{correo}',"SesionController@newPassword")->mid
 Route::post('nuevopwd',"SesionController@setNewPassword");
 
 /*CLIENT*/
-Route::get('busquedataller',"ClienteController@busquedaTaller")->middleware('review');
+Route::get('busquedataller',"ClienteController@busquedaTaller")->middleware('myauth','acm:2','review','sslp');
 Route::post('busquedataller',"ClienteController@busquedaTaller2");
 
-Route::get('perfiltaller/{id}',"ClienteController@perfilTaller")->middleware('review');
+Route::get('perfiltaller/{id}',"ClienteController@perfilTaller")->middleware('myauth','acm:2','review');
 Route::post('crearevaluacion',"ClienteController@nuevaEvaluacion");
 
-Route::get('evaluacionservicio',"ClienteController@evaluacionesRecomendaciones");
+Route::get('evaluacionservicio',"ClienteController@evaluacionesRecomendaciones")->middleware('myauth');
 Route::post('evaluacionservicio',"ClienteController@calificacionNuevaEvaluacion");
 
 /*WORKSHOP*/
-Route::get('tallertickets',"WorkshopController@userTickets");
+Route::get('tallertickets',"WorkshopController@userTickets")->middleware('myauth','acm:1');
 Route::get('busquedatickets/{opt}',"WorkshopController@busquedaTickets");
 Route::post('cerrarticket',"WorkshopController@cerrarTicket");
 Route::get('cargarticket/{id}',"WorkshopController@cargarTicket");

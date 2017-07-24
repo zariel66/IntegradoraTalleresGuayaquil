@@ -21,6 +21,7 @@ class HomeController extends Controller
     }
 	public function index()
 	{
+		
 		return view("basic.home");
 	}
 
@@ -146,7 +147,8 @@ class HomeController extends Controller
 
 		} catch (\Exception $e) {
 			DB::rollback();
-			throw $e;
+			//throw $e;
+			abort(500);
 		}
 		DB::commit();
 
@@ -255,7 +257,8 @@ class HomeController extends Controller
 			error_log($idvehiculo);
 		} catch (\Exception $e) {
 			DB::rollback();
-			throw $e;	
+			// throw $e;
+			abort(500);	
 		}
 
 		DB::commit();

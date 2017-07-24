@@ -61,5 +61,6 @@ class Kernel extends HttpKernel
         'sslp' => \App\Http\Middleware\HttpsProtocol::class,
         "review" => \App\Http\Middleware\CheckReview::class,
         "nonsecure" => \App\Http\Middleware\Nonsecure::class,
+        "acm" => \App\Http\Middleware\AccessControl::class,
     ];
 }
