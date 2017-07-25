@@ -9,3 +9,12 @@
 
 </a>
 @endforeach
+@if(count($results) == 0)
+<a  class="list-group-item align-items-start">
+	<div class="justify-content-between">
+		<h4 class="mb-1" >No se encontraron resultados</h4>
+		
+	</div>
+
+</a>
+@endif

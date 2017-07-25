@@ -272,6 +272,10 @@ class HomeController extends Controller
 
 	public function login()
 	{
+		
+		if(session()->has('mensajet3')) {
+			return view("basic.login",array("mensajet3"=> session()->get('mensajet3')));
+		}
 		return view("basic.login");
 	}
 
