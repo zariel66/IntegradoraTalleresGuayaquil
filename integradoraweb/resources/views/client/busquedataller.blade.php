@@ -192,7 +192,7 @@
 			{
 				setMapOnAll(null);
 				$("#search-results").html(response.html);
-				if(response.html != "")
+				if(response.success != 0)
 				{
 					
 					var workshops = response.workshops;
@@ -217,6 +217,7 @@
 				{
 					if(distancia >= 15)
 					{
+						$("#search-results").html(response.html);
 						return;
 					}
 					searchWorkshops(distancia + 1);

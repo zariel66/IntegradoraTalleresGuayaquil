@@ -18,6 +18,12 @@
 				  <strong>{{ $mensajet2 }}</strong> 
 				</div>
 				@endif
+				@if(isset($mensajet3))
+				<br>
+				<div class="alert alert-danger text-center" style="font-size:12px">
+				  <strong>{{ $mensajet3 }}</strong> 
+				</div>
+				@endif
 				<div class="panel-body">
 					<form method="POST" action="iniciarsesion">
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">

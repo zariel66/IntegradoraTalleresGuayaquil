@@ -46,7 +46,7 @@ class ClienteController extends Controller
 			 having distance< ". $distancia ."
 			 ORDER BY distance limit 10");
 		$html = view('client.snippet.searchresultlist')->with(array('results' => $workshops ))->render();
-		return response()->json(array('workshops' => $workshops, "html" => $html));
+		return response()->json(array('success'=> count($workshops),'workshops' => $workshops, "html" => $html));
 	}
 	
 	public function perfilTaller($id)

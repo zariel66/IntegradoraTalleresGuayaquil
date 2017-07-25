@@ -21,6 +21,7 @@ class SesionController extends Controller
 
     public function iniciarSesion()
     {
+        
         if (Auth::attempt(['username' =>  Input::get('username'), 'password' => Input::get('password')])) {
             // Authentication passed...
             //return redirect()->intended('dashboard');
@@ -29,9 +30,13 @@ class SesionController extends Controller
             {
                 return redirect()->intended('busquedataller');
             }
+            else if($user->tipo == 1)
+            {
+                return redirect()->intended('tallertickets');
+            }
             
         }
-        return redirect("login");
+        return redirect("login")->with("mensajet3","El usuario o la contraseña proporcionados son incorrectas");
     }
 
     public function cerrarSesion()
