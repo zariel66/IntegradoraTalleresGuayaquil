@@ -1,4 +1,4 @@
-package com.example.karen.tallerguayaquil;
+package com.example.karen.tallerguayaquil.activities;
 
 import android.content.Intent;
 
@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.karen.tallerguayaquil.R;
 
 
 public class SignupPersonActivity extends AppCompatActivity implements View.OnClickListener {

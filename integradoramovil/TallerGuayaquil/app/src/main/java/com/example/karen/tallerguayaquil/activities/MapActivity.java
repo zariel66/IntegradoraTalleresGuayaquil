@@ -1,7 +1,9 @@
-package com.example.karen.tallerguayaquil;
+package com.example.karen.tallerguayaquil.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.example.karen.tallerguayaquil.R;
 
 public class MapActivity extends AppCompatActivity {
 
