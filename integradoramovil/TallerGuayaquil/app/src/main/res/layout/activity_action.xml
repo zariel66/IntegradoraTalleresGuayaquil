@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.karen.tallerguayaquil.Principal"
+    tools:context="com.example.karen.tallerguayaquil.ActionActivity"
     tools:layout_editor_absoluteY="81dp"
     tools:layout_editor_absoluteX="0dp">
 
@@ -29,7 +29,7 @@
             android:layout_height="165dp"
             android:fontFamily="serif"
             android:gravity="center"
-            android:text="@string/talleres_guayaquil"
+            android:text="@string/title_activity_action"
             android:textAlignment="center"
             android:textColor="@android:color/holo_green_dark"
             android:textSize="42sp"
@@ -46,7 +46,7 @@
                 android:id="@+id/img_btntaller"
                 android:layout_width="176dp"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/registrar_taller"
+                android:contentDescription="@string/title_activity_presentation_workshop"
                 android:onClick="registrotaller"
                 app:srcCompat="@drawable/mecanico"
                 tools:layout_editor_absoluteX="26dp"
@@ -56,7 +56,7 @@
                 android:id="@+id/img_btncliente"
                 android:layout_width="228dp"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/registrar_usuario"
+                android:contentDescription="@string/title_activity_registration_user"
                 android:onClick="registropersona"
                 app:srcCompat="@drawable/reparacion"
                 tools:layout_editor_absoluteX="0dp"
@@ -76,7 +76,7 @@
                 android:layout_weight="0.86"
                 android:fontFamily="casual"
                 android:gravity="center"
-                android:text="@string/registra_tu_negocio"
+                android:text="@string/action_workshop"
                 android:textAlignment="center"
                 android:textColor="@android:color/holo_green_dark"
                 android:textSize="18sp"
@@ -91,7 +91,7 @@
                 android:layout_weight="0.93"
                 android:fontFamily="casual"
                 android:gravity="center"
-                android:text="@string/encuentra_un_taller"
+                android:text="@string/action_user"
                 android:textAlignment="center"
                 android:textColor="@android:color/holo_green_dark"
                 android:textSize="18sp"
@@ -129,7 +129,7 @@
                 android:background="@android:color/holo_green_dark"
                 android:gravity="center_horizontal|center"
                 android:onClick="credencial"
-                android:text="@string/iniciar_sesi_n"
+                android:text="@string/action_login"
                 android:textColor="@android:color/background_light" />
         </LinearLayout>
 

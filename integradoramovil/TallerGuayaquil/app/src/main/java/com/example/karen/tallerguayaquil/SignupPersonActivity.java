@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 
-public class RegistroPersona extends AppCompatActivity implements View.OnClickListener {
+public class SignupPersonActivity extends AppCompatActivity implements View.OnClickListener {
 
     //Definiendo Views
      EditText txtnombre, txtapellido, txtcorreo, txtusuario, txtpassword;
@@ -21,7 +21,7 @@ public class RegistroPersona extends AppCompatActivity implements View.OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registro_persona);
+        setContentView(R.layout.activity_signup_person);
 
         //Inicializando Views
         txtnombre = (EditText) findViewById(R.id.txtnombre);
@@ -36,7 +36,7 @@ public class RegistroPersona extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
        if (txtnombre.getText().toString().equals("") || txtapellido.getText().toString().equals("") || txtcorreo.getText().toString().equals("") || txtusuario.getText().toString().equals("") || txtpassword.getText().toString().equals("")) {
-            Toast.makeText(RegistroPersona.this, "Por favor, llene todos los campos", Toast.LENGTH_LONG).show();
+            Toast.makeText(SignupPersonActivity.this, "Por favor, llene todos los campos", Toast.LENGTH_LONG).show();
            } else {
                   String nombre=txtnombre.getText().toString();
                   String apellido=txtapellido.getText().toString();
@@ -52,7 +52,7 @@ public class RegistroPersona extends AppCompatActivity implements View.OnClickLi
                   parametros.putString("password", password);
 
 
-                Intent i = new Intent(this, RegistroVehiculo.class);
+                Intent i = new Intent(this, SignupVehicleActivity.class);
 
                 i.putExtras(parametros);
                 startActivity(i);
