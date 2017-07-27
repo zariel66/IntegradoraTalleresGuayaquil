@@ -18,7 +18,7 @@
 						</select>
 					</div>
 					<div class="col-md-3 col-md-offset-2">
-						<label>Vehiculo:</label>
+						<label>Vehículo:</label>
 						<select class="form-control" id="carselect">
 							@foreach(Auth::user()->vehiculos as $v)
 							<option value="{{$v->idmarca}}">{{$v->modelo}} ({{$v->marca->nombre}})</option>

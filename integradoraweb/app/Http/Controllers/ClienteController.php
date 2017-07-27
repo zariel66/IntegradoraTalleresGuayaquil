@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Marca;
 use App\Taller;
 use App\Calificacion;
+use App\Vehiculo;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
@@ -168,5 +169,48 @@ class ClienteController extends Controller
 		{
 			return redirect("perfiltaller/" . $taller->id);
 		}
+	}
+
+	public function miPerfil()
+	{
+		$usuario= Auth::user();
+		$marcas= Marca::orderBy('nombre',"ASC")->get();
+		return view("client.miperfil",array("usuario"=> $usuario,"marcas" => $marcas));
+	}
+
+	public function anadirCarro()
+	{
+		$idmarca = Input::get('idmarca');
+		$modelo = Input::get('modelo');
+		error_log($idmarca);
+		try {
+			$id = DB::table('vehiculo')->insertGetId(
+			    [
+			     'idusuario' => Auth::user()->id,
+			     'modelo' => $modelo,
+			     'idmarca' => $idmarca,
+			    ]
+			);
+			$usuario= Auth::user();
+			$marcas= Marca::orderBy('nombre',"ASC")->get();
+			$html = view('client.snippet.carsrows')->with(array("usuario"=> $usuario,"marcas" => $marcas))->render();
+			return response()->json(array("html"=> $html,"success"=> 1));
+		} catch (\Exception $e) {
+			abort(500);
+		}
+		return response()->json(array("html"=> $html,"success"=> 0));
+	}
+	public function borrarCarro()
+	{
+		try {
+			Vehiculo::destroy(Input::get('idvehiculo'));
+			$usuario= Auth::user();
+			$marcas= Marca::orderBy('nombre',"ASC")->get();
+			$html = view('client.snippet.carsrows')->with(array("usuario"=> $usuario,"marcas" => $marcas))->render();
+			return response()->json(array("html"=> $html,"success"=> 1));
+		} catch (\Exception $e) {
+			abort(500);
+		}
+		return response()->json(array("html"=> $html,"success"=> 0));
 	}
 }

@@ -48,6 +48,11 @@ class Handler extends ExceptionHandler
         {
             return response(view('errors.404',["exception"=>$exception]), 404);
         }
+        if($exception instanceof \Illuminate\Session\TokenMismatchException)
+        {
+            error_log("TokenMismatchException handled");
+            abort(500);
+        }
 
         return parent::render($request, $exception);
     }

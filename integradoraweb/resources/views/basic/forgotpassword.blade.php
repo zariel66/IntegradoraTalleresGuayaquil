@@ -57,7 +57,7 @@
    .forgot-section
 	{
 		
-		height:85vh;
+		min-height:85vh;
 		
 		padding-top: 20vh;
 	}
