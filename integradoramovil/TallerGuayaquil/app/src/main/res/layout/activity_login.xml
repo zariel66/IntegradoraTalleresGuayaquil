@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.karen.tallerguayaquil.Credencial">
+    tools:context="com.example.karen.tallerguayaquil.LoginActivity">
 
     <ScrollView
         android:layout_width="368dp"
@@ -28,7 +28,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="@string/bienvenido"
+                    android:text="@string/action_welcome"
                     android:textColor="@android:color/holo_green_dark"
                     android:textSize="45sp"
                     android:textStyle="bold" />
@@ -70,7 +70,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:text="@string/usuario"
+                    android:text="@string/prompt_user"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
@@ -86,7 +86,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="@string/contrase_a"
+                    android:text="@string/prompt_password"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
@@ -111,7 +111,7 @@
                     android:layout_height="wrap_content"
                     android:background="@android:color/holo_green_dark"
                     android:onClick="categorias"
-                    android:text="@string/ingresar"
+                    android:text="@string/action_sign_in"
                     android:textColor="@android:color/background_light"
                     android:textSize="18sp" />
             </LinearLayout>

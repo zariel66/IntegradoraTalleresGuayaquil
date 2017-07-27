@@ -6,13 +6,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 
-public class RegistroServicios extends AppCompatActivity {
+public class SignupServiceActivity extends AppCompatActivity {
     private Spinner spinner1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registro_servicios);
+        setContentView(R.layout.activity_signup_service);
 
 
         spinner1 = (Spinner) findViewById(R.id.spinner1);

@@ -1,7 +1,6 @@
 package com.example.karen.tallerguayaquil;
 
 
-import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -28,7 +27,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-public class RegistroVehiculo extends AppCompatActivity implements Spinner.OnItemSelectedListener{
+public class SignupVehicleActivity extends AppCompatActivity implements Spinner.OnItemSelectedListener{
 
     //Declaring an Spinner
       private Spinner spinner;
@@ -40,7 +39,7 @@ public class RegistroVehiculo extends AppCompatActivity implements Spinner.OnIte
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registro_vehiculo);
+        setContentView(R.layout.activity_signup_vehicle);
 
 
         //Initializing the ArrayList
@@ -73,7 +72,7 @@ public class RegistroVehiculo extends AppCompatActivity implements Spinner.OnIte
                                 String result = c.getString("nombre");
                                 marcas.add(result);
                             }
-                            spinner.setAdapter(new ArrayAdapter<String>(RegistroVehiculo.this, android.R.layout.simple_spinner_dropdown_item, marcas));
+                            spinner.setAdapter(new ArrayAdapter<String>(SignupVehicleActivity.this, android.R.layout.simple_spinner_dropdown_item, marcas));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -111,13 +110,13 @@ public class RegistroVehiculo extends AppCompatActivity implements Spinner.OnIte
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(RegistroVehiculo.this,response,Toast.LENGTH_LONG).show();
+                        Toast.makeText(SignupVehicleActivity.this,response,Toast.LENGTH_LONG).show();
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(RegistroVehiculo.this,error.toString(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(SignupVehicleActivity.this,error.toString(),Toast.LENGTH_LONG).show();
                     }
                 }){
             @Override

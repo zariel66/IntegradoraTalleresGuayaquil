@@ -12,20 +12,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Principal">
+
+        <activity android:name=".ActionActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegistroPersona" />
-        <activity android:name=".RegistroTaller" />
-        <activity android:name=".RegistroVehiculo" />
-        <activity android:name=".RegistroServicios" />
-        <activity android:name=".Categorias" />
-        <activity android:name=".Mapa" />
-        <activity android:name=".Credencial"></activity>
+
+        <activity android:name=".SignupPersonActivity" />
+        <activity android:name=".SignupWorkshopActivity" />
+        <activity android:name=".SignupVehicleActivity" />
+        <activity android:name=".SignupServiceActivity" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".MapActivity" />
+        <activity android:name=".LoginActivity"></activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
