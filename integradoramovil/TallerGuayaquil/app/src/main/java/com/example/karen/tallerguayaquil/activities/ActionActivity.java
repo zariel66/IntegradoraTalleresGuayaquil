@@ -16,18 +16,18 @@ public class ActionActivity extends AppCompatActivity {
 
     }
 
-    public void registropersona(View view) {
+    public void signupPerson(View view) {
         Intent i = new Intent(this, SignupPersonActivity.class);
         startActivity(i);
     }
 
-    public void registrotaller(View view) {
-        Intent i = new Intent(this, SignupWorkshopActivity.class);
+    public void signupWorkShop(View view) {
+        Intent i = new Intent(this, SignupWorkShopActivity.class);
         startActivity(i);
 
     }
 
-    public void credencial(View view) {
+    public void login(View view) {
         Intent i = new Intent(this, LoginActivity.class);
         startActivity(i);
     }
