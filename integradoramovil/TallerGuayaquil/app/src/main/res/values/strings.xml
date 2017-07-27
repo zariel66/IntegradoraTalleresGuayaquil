@@ -9,6 +9,16 @@
     <string name="title_activity_menu">Menu</string>
 
 
+    <!-- Strings related to  Error fields -->
+    <string name="error_incorrect_text_field">Ingrese un texto válido</string>
+    <string name="error_incorrect_number_field">Ingrese un número válido</string>
+
+
+    <!-- Strings relato to progress message -->
+    <string name="title_progress_validation_message">Verificando...</string>
+    <string name="title_progress_signup_workshop">Registrando Taller... </string>
+    <string name="title_progress_signup_person">Registrando Persona... </string>
+
     <!-- Strings related to registration user -->
     <string name="title_activity_registration_user">Registrar Usuario</string>
 
@@ -21,7 +31,7 @@
     <string name="action_welcome">BIENVENIDO</string>
     <string name="action_user">Encuentra un Taller</string>
     <string name="action_workshop">Registra Tu Negocio</string>
-    <string name="action_login">INICIAR SESIÓN</string>
+    <string name="action_login">Iniciar Sesión</string>
     <string name="title_activity_action">Talleres Guayaquil</string>
 
 
@@ -41,5 +51,9 @@
 
     <!-- Strings related to main -->
     <string name="title_activity_categorias">Categorias</string>
+
+
+    <!-- Strings relalted to preferences -->
+    <string name="preference_user_token">USER_TOKEN</string>
 
 </resources>
