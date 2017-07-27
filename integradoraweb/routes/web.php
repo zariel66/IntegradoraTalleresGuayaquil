@@ -13,9 +13,9 @@
 /*HOME*/
 
 Route::get('/',"HomeController@index")->middleware('guest','nonsecure');
-Route::get("registrartaller","HomeController@registrarTaller")->middleware('guest');
+Route::get("registrartaller","HomeController@registrarTaller")->middleware('guest','sslp');
 Route::post("registrotallersubmit","HomeController@registrarTallerSubmit")->middleware('guest');
-Route::get("registrocliente","HomeController@registrarCliente")->middleware('guest');
+Route::get("registrocliente","HomeController@registrarCliente")->middleware('guest','sslp');
 Route::post("registroclientesubmit","HomeController@registrarClienteSubmit")->middleware('guest');
 Route::get("serverinfo","HomeController@serverInfo");
 
@@ -36,6 +36,9 @@ Route::get('perfiltaller/{id}',"ClienteController@perfilTaller")->middleware('my
 Route::post('crearevaluacion',"ClienteController@nuevaEvaluacion");
 Route::get('evaluacionservicio',"ClienteController@evaluacionesRecomendaciones")->middleware('myauth');
 Route::post('evaluacionservicio',"ClienteController@calificacionNuevaEvaluacion");
+Route::get('perfil',"ClienteController@miPerfil")->middleware('myauth','acm:2','review');
+Route::post('anadircarro',"ClienteController@anadirCarro")->middleware('myauth','acm:2','review');
+Route::post('borrarcarro',"ClienteController@borrarCarro")->middleware('myauth','acm:2','review');
 
 /*WORKSHOP*/
 Route::get('tallertickets',"WorkshopController@userTickets")->middleware('myauth','acm:1');

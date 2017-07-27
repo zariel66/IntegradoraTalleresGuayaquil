@@ -18,6 +18,9 @@
 	<script type="text/javascript" src="{{ URL::asset('js/jquery-ui.min.js')}}"></script>
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<title>Integradora Demo</title>
+	<meta name="description" content="Únete a nuestro sitio y encuentra el taller automotriz ideal que necesitas para el mantenimiento y reparación de tu vehiculo aquí en la ciudad de Guayaquil">
+  	<meta name="keywords" content="skilledev,taller,talleres,guayaquil,Ecuador,reparacion,mantenimiento,gps,geoposicionamiento,vehiculos,busqueda,carroceria,mecanico,tapiceria,vidreria,neumaticos,llantas,cerca,mecanica,reparar,concesionaria,servicio">
+  	<meta name="author" content="Dimitri Laaz">
 </head>
 <body>
 	<nav id="navbar-section" class="navbar navbar-inverse navbar-static-top">
@@ -34,8 +37,7 @@
 				  <span class="badge">{{session()->get('pendingreview')}}</span>
 				@endif  
 				</a></li>
-				<li><a href="#"> Mis vehiculos</a></li>
-				<li><a href="#">Mi perfil</a></li>
+				<li><a href="{{url('perfil')}}">Mi perfil</a></li>
 			</ul>
 			@else if(Auth::user()->tipo == 1)
 			<ul class="nav navbar-nav">
