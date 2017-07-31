@@ -13,10 +13,12 @@ import android.widget.Toast;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Created by julio on 20/02/17.
- */
 public class Util {
+
+    /**
+     * URL
+     **/
+    public static final String API_URL = "http://skilledev.com/api/";
 
     /**
      * UI LOADING
