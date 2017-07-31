@@ -7,9 +7,6 @@ import android.text.TextUtils;
 
 import com.example.karen.tallerguayaquil.R;
 
-/**
- * Created by karen on 25/07/17.
- */
 
 public class SessionManager {
     private Context mContext;
