@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -21,6 +22,13 @@ public class Util {
      * UI LOADING
      */
     private static ProgressDialog mLoading = null;
+    private static Toast mToast = null;
+
+
+    /**
+     * RESULT CODES
+     */
+    public static final int LOCATION_REQUEST_CODE = 003;
 
 
     /**
@@ -85,6 +93,19 @@ public class Util {
             mLoading.dismiss();
             mLoading = null;
         }
+    }
+
+
+    /**
+     *  HANDLER TOAS
+     */
+    public static void showToast(Context context, String msg) {
+        if (mToast != null) {
+            mToast.cancel();
+        }
+
+        mToast = Toast.makeText(context, msg, Toast.LENGTH_LONG);
+        mToast.show();
     }
 
 
