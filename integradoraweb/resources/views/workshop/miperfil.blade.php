@@ -1,11 +1,10 @@
 @extends("template")
 @section("content")
 <div id="form-section-background" class="container">
-	<div class="panel col-md-6 col-md-offset-3">
+	<div class="panel col-md-8 col-md-offset-2">
 		<div class="panel-body">
 			<div class="row">
-
-				<div class="col-md-6 text-left">
+				<div class="col-md-3 text-left">
 					<h1><strong>Mi Perfil</strong></h1>
 				</div>
 				
@@ -39,21 +38,24 @@
 			<div id="user-cars" class="row">
 				<div class="row">
 					<div class="col-md-12 text-left">
-						<h3><strong>Vehículos registrados</strong></h3>
+						<h3><strong>Talleres registrados</strong></h3>
 					</div>
 				</div>
 				<br>
 				<table class="table table-striped table-hover">
 				    <thead>
 				      <tr>
-				        <th class="text-center">Modelo</th>
-				        <th class="text-center">Marca del Vehículo</th>
-				        <th class="text-center"></th>
+				        <th class="text-center">Nombre del Taller</th>
+				        <th class="text-center">Dirección</th>
+				        <th class="text-center">Teléfono</th>
+				        <th class="text-center">Ver</th>
+				        <th class="text-center">Editar</th>
+				        <th class="text-center">Eliminar</th>
 				        
 				      </tr>
 				    </thead>
 				    <tbody  id="car-table">
-				      @include("client.snippet.carsrows")
+				      @include("workshop.snippet.workshopsrows")
 				    </tbody>
 				</table>
 			</div>
@@ -150,4 +152,5 @@
 		});
 	}
 	</script>
+	@include("workshop.snippet.deletemodals")
 @stop

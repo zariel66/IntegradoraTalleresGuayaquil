@@ -20,8 +20,7 @@ class WorkshopController extends Controller
 {
 	public function __construct()
 	{
-		// $this->middleware('myauth');
-		//$this->middleware('sslp');
+		
 	}
 	public function userTickets()
 	{
@@ -34,8 +33,7 @@ class WorkshopController extends Controller
 		->orderBy('usuario.nombre')
 		->distinct()
 		->select('calificacion.id','usuario.nombre', 'usuario.apellido','calificacion.desc_code','taller.nombre_taller')->get();
-		// error_log($current);
-		//var_dump($result->first());
+		
 		return view("workshop.tickets",array('rows' => $result ));
 	}
 
@@ -139,5 +137,231 @@ class WorkshopController extends Controller
 			
 		}
 		
+	}
+
+	public function perfilTaller()
+	{
+		try {
+			$usuario = Auth::user();
+			return view("workshop.miperfil",array("usuario" => $usuario));
+		} catch (\Exception $e) {
+			throw $e;
+			
+		}
+	}
+
+	public function mostrarTaller($id)
+	{
+		try {
+			$taller =  Taller::find($id);
+			if(is_null($taller))
+			{
+				abort(404);
+			}
+			$comentarios = $taller->calificaciones()->where('estado', 1)->orderBy('fecha_hora', 'desc')->paginate(5);
+		return view("workshop.mostrartaller",array("taller" => $taller,"comentarios" => $comentarios));
+		} catch (\Exception $e) {
+			abort(500);
+		}
+	}
+
+	public function editarTaller($id)
+	{
+		try {
+			$taller =  Taller::find($id);
+			if(is_null($taller))
+			{
+				abort(404);
+			}
+			$marcas= Marca::orderBy('nombre',"ASC")->get();
+			return view("workshop.editartaller",array("taller"=> $taller,"marcas" => $marcas));
+		} catch (\Exception $e) {
+			abort(500);
+		}
+	}
+
+	public function editarTallerSubmit($id)
+	{
+		$rules = array(
+			
+			'direccion' => 'required|min:10',
+			'telefono' => 'required|min:6',
+			'nombre_empleado' => 'required|min:10',
+			"marcas" => 'required|array|min:1',
+			"servicios" => 'required|array|min:1',
+			"nombre_taller" => "required|min:6"
+			); 
+
+
+		$custom = array(
+			
+			"telefono.required" => "El teléfono es requerido",
+			"direccion.required" => "La dirección es requerida",
+			"nombre_empleado.required" => "El nombre del empleado es requerido",
+			"marcas.required" => "Debe seleccionar al menos una marca de vehículo con la que trabaja",
+			"servicios.required" => "Debe seleccionar al menos un servicio que ofrece en su taller",
+			"nombre_taller.required" => "El nombre del taller es requerido",
+
+			"telefono.min" => "El teléfono debe tener mínimo :min dígitos",
+			"direccion.min" => "La dirección debe tener mínimo :min caracteres",
+			"nombre_empleado.min" => "El nombre del empleado debe tener mínimo :min caracteres",
+			"nombre_taller.min" => "El nombre del taller debe tener mínimo :min caracteres",
+
+
+			);
+
+		$validation = Validator::make(Input::all(),$rules,$custom);
+
+		if ($validation->fails())
+		{
+
+			return Redirect::back()->withErrors($validation)->withInput(Input::all());
+		}
+		
+		DB::beginTransaction();
+		try {
+			
+			$taller =  Taller::find($id);
+			if(is_null($taller))
+			{
+				abort(404);
+			}
+			$taller->update(
+			[
+			    "telefono"=> Input::get('telefono'),
+			    "nombre_taller"=> Input::get('nombre_taller'),
+			    "nombre_empleado"=> Input::get('nombre_empleado'),
+			    "direccion"=> Input::get('direccion'),
+			    "latitud"=> Input::get('lat'),
+			    "longitud"=> Input::get('lon'),
+			]);
+			error_log(Input::get('nombre_empleado'));
+			DB::table('marca_taller')->where('idtaller',$id)->delete();
+			DB::table('servicio_taller')->where('idtaller',$id)->delete();
+			foreach (Input::get('marcas') as $marca)
+			{
+				$id_marca_taller = DB::table('marca_taller')->insertGetId(
+					array(
+						"idmarca" => $marca,
+						"idtaller" => $id,
+						));
+		
+			}
+			foreach (Input::get('servicios') as $servicio)
+			{
+				$id_servicio_taller = DB::table('servicio_taller')->insertGetId(
+					array(
+						"categoria" => $servicio,
+						"idtaller" => $id,
+						));
+		
+			}
+
+		} catch (\Exception $e) {
+			DB::rollback();
+			error_log("ROLLBACK: ". $e->getMessage());
+			abort(500);
+		}
+		DB::commit();
+		return redirect("mostrartaller/". $id);
+	}
+
+	public function crearTaller()
+	{
+		$marcas= Marca::orderBy('nombre',"ASC")->get();
+		return view("workshop.creartaller",array("marcas" => $marcas));
+	}
+
+	public function crearTallerSubmit()
+	{
+		$rules = array(
+			
+			'direccion' => 'required|min:10',
+			'telefono' => 'required|min:6',
+			'nombre_empleado' => 'required|min:10',
+			"marcas" => 'required|array|min:1',
+			"servicios" => 'required|array|min:1',
+			"nombre_taller" => "required|min:6"
+			); 
+
+
+		$custom = array(
+			
+			"telefono.required" => "El teléfono es requerido",
+			"direccion.required" => "La dirección es requerida",
+			"nombre_empleado.required" => "El nombre del empleado es requerido",
+			"marcas.required" => "Debe seleccionar al menos una marca de vehículo con la que trabaja",
+			"servicios.required" => "Debe seleccionar al menos un servicio que ofrece en su taller",
+			"nombre_taller.required" => "El nombre del taller es requerido",
+
+			"telefono.min" => "El teléfono debe tener mínimo :min dígitos",
+			"direccion.min" => "La dirección debe tener mínimo :min caracteres",
+			"nombre_empleado.min" => "El nombre del empleado debe tener mínimo :min caracteres",
+			"nombre_taller.min" => "El nombre del taller debe tener mínimo :min caracteres",
+
+
+			);
+
+		$validation = Validator::make(Input::all(),$rules,$custom);
+
+		if ($validation->fails())
+		{
+
+			return Redirect::back()->withErrors($validation)->withInput(Input::all());
+		}
+
+		DB::beginTransaction();
+		try {
+			
+
+			$idtaller = DB::table('taller')->insertGetId(
+				array(
+
+					'latitud' => Input::get('lat'),
+					'longitud' => Input::get('lon'),
+					'direccion' => Input::get('direccion'),
+					'idusuario' => Auth::user()->id,
+					'nombre_empleado' => Input::get('nombre_empleado'),
+					'telefono' => Input::get('telefono'),
+					"nombre_taller" => Input::get('nombre_taller'),
+					)
+				);
+			foreach (Input::get('marcas') as $marca)
+			{
+				$id_marca_taller = DB::table('marca_taller')->insertGetId(
+					array(
+						"idmarca" => $marca,
+						"idtaller" => $idtaller
+						));
+		
+			}
+			foreach (Input::get('servicios') as $servicio)
+			{
+				$id_servicio_taller = DB::table('servicio_taller')->insertGetId(
+					array(
+						"categoria" => $servicio,
+						"idtaller" => $idtaller
+						));
+		
+			}
+
+		} catch (\Exception $e) {
+			DB::rollback();
+			//throw $e;
+			abort(500);
+		}
+		DB::commit();
+		return redirect("mostrartaller/". $idtaller);
+	}
+
+	public function eliminarTaller($id)
+	{
+		try {
+			DB::table('taller')->where('idusuario',Auth::user()->id)->where("id",$id)->delete();
+		} catch (\Exception $e) {
+			error_log("MENSAJE EXCEPCION: ". $e->getMessage());
+			abort(500);
+		}
+		return redirect("perfiltallerowner");
 	}
 }

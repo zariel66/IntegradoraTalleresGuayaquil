@@ -11,9 +11,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme.FullScreen">
 
-        <activity android:name=".ActionActivity">
+        <activity android:name=".activities.ActionActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,13 +21,13 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".SignupPersonActivity" />
-        <activity android:name=".SignupWorkshopActivity" />
-        <activity android:name=".SignupVehicleActivity" />
-        <activity android:name=".SignupServiceActivity" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".MapActivity" />
-        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".activities.SignupPersonActivity" />
+        <activity android:name=".activities.SignupWorkShopActivity" />
+        <activity android:name=".activities.SignupVehicleActivity" />
+        <activity android:name=".activities.SignupServiceActivity" />
+        <activity android:name=".activities.MainActivity" />
+        <activity android:name=".activities.MapActivity" />
+        <activity android:name=".activities.LoginActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

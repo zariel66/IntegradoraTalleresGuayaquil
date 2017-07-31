@@ -53,11 +53,19 @@ class ClienteController extends Controller
 	public function perfilTaller($id)
 	{
 		
-		
-		$iduser = Auth::user()->id;
-		$taller =  Taller::find($id);
-		$comentarios = $taller->calificaciones()->where('estado', 1)->orderBy('fecha_hora', 'desc')->paginate(5);
+		try {
+			$iduser = Auth::user()->id;
+			$taller =  Taller::find($id);
+			if(is_null($taller))
+			{
+				abort(404);
+			}
+			$comentarios = $taller->calificaciones()->where('estado', 1)->orderBy('fecha_hora', 'desc')->paginate(5);
 		return view("client.perfiltaller",array("taller" => $taller,"idusuario" => $iduser,"comentarios" => $comentarios));
+		} catch (\Exception $e) {
+			abort(500);
+		}
+		
 	}
 
 	public function nuevaEvaluacion()
