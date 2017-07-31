@@ -80,6 +80,7 @@ class HomeController extends Controller
 			"telefono.min" => "El teléfono debe tener mínimo :min caracteres",
 			"direccion.min" => "La dirección debe tener mínimo :min caracteres",
 			"nombre_empleado.min" => "El nombre del empleado debe tener mínimo :min caracteres",
+			"nombre_taller.min" => "El nombre del taller debe tener mínimo :min caracteres",
 
 
 			);
