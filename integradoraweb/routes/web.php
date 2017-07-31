@@ -45,4 +45,12 @@ Route::get('tallertickets',"WorkshopController@userTickets")->middleware('myauth
 Route::get('busquedatickets/{opt}',"WorkshopController@busquedaTickets");
 Route::post('cerrarticket',"WorkshopController@cerrarTicket");
 Route::get('cargarticket/{id}',"WorkshopController@cargarTicket");
+Route::get('perfiltallerowner',"WorkshopController@perfilTaller")->middleware('myauth','acm:1');
+Route::get('mostrartaller/{id}',"WorkshopController@mostrarTaller")->middleware('myauth','acm:1');
+Route::get('editartaller/{id}',"WorkshopController@editarTaller")->middleware('myauth','acm:1');
+Route::post('editartaller/{id}',"WorkshopController@editarTallerSubmit")->middleware('myauth','acm:1');
+Route::get('creartaller',"WorkshopController@crearTaller")->middleware('myauth','acm:1');
+Route::post('creartallersubmit',"WorkshopController@crearTallerSubmit")->middleware('myauth','acm:1');
+Route::get('eliminartaller/{id}',"WorkshopController@eliminarTaller")->middleware('myauth','acm:1');
+
 

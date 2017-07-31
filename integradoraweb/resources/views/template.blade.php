@@ -42,6 +42,7 @@
 			@else if(Auth::user()->tipo == 1)
 			<ul class="nav navbar-nav">
 				<li class=""><a href="{{url('tallertickets')}}">Clientes</a></li>
+				<li class=""><a href="{{url('perfiltallerowner')}}">Mi Perfil</a></li>
 			</ul>
  			@endif
 			@endif
