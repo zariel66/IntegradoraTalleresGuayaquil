@@ -1,12 +1,14 @@
 package com.example.karen.tallerguayaquil.activities;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.example.karen.tallerguayaquil.R;
 import com.example.karen.tallerguayaquil.models.WorkShop;
@@ -30,9 +32,21 @@ public class SignupWorkShopActivity extends AppCompatActivity {
         mUsernameView = (EditText) findViewById(R.id.txt_username);
         mPasswordView = (EditText) findViewById(R.id.txt_password);
 
+        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
+                if (id == EditorInfo.IME_ACTION_DONE) {
+                    Util.hideSoftKeyboard(getApplicationContext(), getCurrentFocus());
+                    attemptNext(null);
+                    return true;
+                }
+                return false;
+            }
+        });
+
     }
 
-    public void attemptSignUp(View v) {
+    public void attemptNext(View v) {
 
         // Init progress message
         Util.showLoading(SignupWorkShopActivity.this, getString(R.string.title_progress_validation_message));
@@ -111,11 +125,15 @@ public class SignupWorkShopActivity extends AppCompatActivity {
             workShop.setEmail(email);
             workShop.setUsername(username);
             workShop.setPassword(password);
-        }
-    }
 
-    public void signupService(View view) {
-        Intent i = new Intent(this, SignupServiceActivity.class);
-        startActivity(i);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("workshop", workShop);
+
+            Intent i = new Intent(this, SignupServiceActivity.class);
+            i.putExtras(bundle);
+            startActivity(i);
+        }
+
+        Util.hideLoading();
     }
 }
