@@ -10,11 +10,11 @@ public class WorkShop implements Serializable {
     @SerializedName("id")
     private int id;
 
-    @SerializedName("lat")
-    private float latitude;
+    @SerializedName("nombre")
+    private String firstName;
 
-    @SerializedName("lon")
-    private float longitude;
+    @SerializedName("apellido")
+    private String lastName;
 
     @SerializedName("username")
     private String username;
@@ -25,17 +25,14 @@ public class WorkShop implements Serializable {
     @SerializedName("password_confirmation")
     private String passwordConfirmation;
 
-    @SerializedName("direccion")
-    private String address;
-
     @SerializedName("correo")
     private String email;
 
-    @SerializedName("nombre")
-    private String firstName;
+    @SerializedName("nombre_taller")
+    private String workshopName;
 
-    @SerializedName("apellido")
-    private String lastName;
+    @SerializedName("direccion")
+    private String address;
 
     @SerializedName("telefono")
     private String phone;
@@ -43,8 +40,11 @@ public class WorkShop implements Serializable {
     @SerializedName("nombre_empleado")
     private String managerName;
 
-    @SerializedName("nombre_taller")
-    private String workshopName;
+    @SerializedName("lat")
+    private double latitude;
+
+    @SerializedName("lon")
+    private double longitude;
 
     @SerializedName("marcas[]")
     private List<String> brandList;
@@ -60,19 +60,19 @@ public class WorkShop implements Serializable {
         this.id = id;
     }
 
-    public float getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(float latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public float getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(float longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
