@@ -36,7 +36,7 @@ class HomeController extends Controller
 		$rules = array(
 			'nombre' => 'required|regex:/(^[A-Za-záéíóú ]+$)+/|min:3',
 			'apellido' => 'required|regex:/(^[A-Za-záéíóú ]+$)+/|min:3',
-			'username' => 'required|unique:usuario,username|min:5',
+			'username' => 'required|unique:usuario,username|min:3|regex:/(^[A-Za-z][A-Za-z0-9 ]+$)+/|',
 			'correo' => 'required|unique:usuario,correo|email',
 			'password' => 'required|min:8',
 			'password_confirmation' => 'same:password',
@@ -45,7 +45,7 @@ class HomeController extends Controller
 			'nombre_empleado' => 'required|min:10',
 			"marcas" => 'required|array|min:1',
 			"servicios" => 'required|array|min:1',
-			"nombre_taller" => "required|min:6"
+			"nombre_taller" => "required|min:3"
 			); 
 
 
@@ -72,10 +72,11 @@ class HomeController extends Controller
 
 			"nombre.regex" => "El :attribute solo debe contener texto",
 			"apellido.regex" => "El :attribute solo debe contener texto",
+			"username.regex" => "El nombre de usuario debe comenzar con una letra seguido de caracteres alfanuméricos",
 
 			"nombre.min" => "El :attribute debe tener mínimo :min caracteres",
 			"apellido.min" => "El :attribute debe tener mínimo :min caracteres",
-			"username.min" => "El :attribute debe tener mínimo :min caracteres",
+			"username.min" => "El usuario debe tener mínimo :min caracteres",
 			"password.min" => "La contraseña debe tener mínimo :min caracteres",
 			"telefono.min" => "El teléfono debe tener mínimo :min caracteres",
 			"direccion.min" => "La dirección debe tener mínimo :min caracteres",
@@ -110,7 +111,7 @@ class HomeController extends Controller
 					'correo' => Input::get('correo'),
 					'password' => bcrypt(Input::get('password')),
 					'tipo' => 1,
-					'username' => Input::get('username'),
+					'username' => strtolower(Input::get('username')),
 					'api_token' => $api_token
 					)
 				);
@@ -176,7 +177,7 @@ class HomeController extends Controller
 		$rules = array(
 			'nombre' => 'required|regex:/(^[A-Za-záéíóú ]+$)+/|min:3',
 			'apellido' => 'required|regex:/(^[A-Za-záéíóú ]+$)+/|min:3',
-			'username' => 'required|unique:usuario,username|min:5',
+			'username' => 'required|unique:usuario,username|min:3|regex:/(^[A-Za-z][A-Za-z0-9 ]+$)+/|',
 			'correo' => 'required|unique:usuario,correo|email',
 			'password' => 'required|min:8',
 			'password_confirmation' => 'same:password',
@@ -203,10 +204,11 @@ class HomeController extends Controller
 
 			"nombre.regex" => "El :attribute solo debe contener texto",
 			"apellido.regex" => "El :attribute solo debe contener texto",
+			"username.regex" => "El nombre de usuario debe comenzar con una letra seguido de caracteres alfanuméricos",
 
 			"nombre.min" => "El :attribute debe tener mínimo :min caracteres",
 			"apellido.min" => "El :attribute debe tener mínimo :min caracteres",
-			"username.min" => "El :attribute debe tener mínimo :min caracteres",
+			"username.min" => "El usuario debe tener mínimo :min caracteres",
 			"password.min" => "La contraseña debe tener mínimo :min caracteres",
 			
 
@@ -241,7 +243,7 @@ class HomeController extends Controller
 					'correo' => Input::get('correo'),
 					'password' => bcrypt(Input::get('password')),
 					'tipo' => 2,
-					'username' => Input::get('username'),
+					'username' => strtolower(Input::get('username')),
 					'api_token' => $api_token
 					)
 				);

@@ -12,7 +12,7 @@
 					<div class="alert alert-danger text-center">
 					  <h4 style="margin:0px">
 					  	<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-					  	<strong>Hubo un error en nuestros servidores. Espere mientras lo arreglamos.</strong>
+					  	<strong>Hubo un error en nuestros servidores. Espere mientras lo arreglamos. Intente más tarde.</strong>
 					  	<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 					  </h4>
 					</div>
