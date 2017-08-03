@@ -34,6 +34,7 @@
 				  		</div>
 		  				<p>Nombre del empleado: {{$taller->nombre_empleado}}</p>
 		  				<p>Teléfono: {{$taller->telefono}}</p>
+		  				<p>Correo: {{$taller->usuario->correo}}</p>
 		  				
 		  			</div>
 		  			

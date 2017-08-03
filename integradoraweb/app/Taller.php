@@ -24,4 +24,9 @@ class Taller extends Model
 	{
 		return $this->hasMany('App\Calificacion', 'idtaller', 'id');
 	}
+
+	public function usuario()
+	{
+	    return $this->belongsTo('App\User', 'idusuario');
+	}
 }
