@@ -27,6 +27,7 @@ public class ActionActivity extends AppCompatActivity {
         Intent i = new Intent(this, SignupPersonActivity.class);
         i.putExtras(b);
         startActivity(i);
+        finish();
     }
 
     public void signupWorkShop(View view) {
@@ -36,11 +37,13 @@ public class ActionActivity extends AppCompatActivity {
         Intent i = new Intent(this, SignupPersonActivity.class);
         i.putExtras(b);
         startActivity(i);
+        finish();
     }
 
     public void login(View view) {
         Intent i = new Intent(this, LoginActivity.class);
         startActivity(i);
+        finish();
     }
 
 
