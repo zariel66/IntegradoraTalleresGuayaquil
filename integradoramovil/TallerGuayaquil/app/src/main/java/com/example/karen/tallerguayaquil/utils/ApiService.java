@@ -1,5 +1,6 @@
 package com.example.karen.tallerguayaquil.utils;
 
+import com.example.karen.tallerguayaquil.models.Api;
 import com.example.karen.tallerguayaquil.models.Brand;
 import com.example.karen.tallerguayaquil.models.Person;
 import com.example.karen.tallerguayaquil.models.Service;
@@ -28,15 +29,15 @@ public interface ApiService {
 
     /** SignUp**/
     @POST("registrotallersubmit/")
-    Call<Void> signupWorkshop(@Body WorkShop workShop);
+    Call<Api> signupWorkshop(@Body WorkShop workShop);
 
     @POST("registroclientesubmit/")
-    Call<Void> signupPerson(@Body Person person);
+    Call<Api> signupPerson(@Body Person person);
 
 
     /** Login **/
     @FormUrlEncoded
     @POST("iniciarsesion/")
-    Call<Person> login(@FieldMap Map<String, String> params);
+    Call<Api<Person>> login(@FieldMap Map<String, String> params);
 }
 
