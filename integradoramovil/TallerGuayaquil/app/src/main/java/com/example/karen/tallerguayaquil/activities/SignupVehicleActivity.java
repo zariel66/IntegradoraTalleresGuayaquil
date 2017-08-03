@@ -5,19 +5,24 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.example.karen.tallerguayaquil.R;
+import com.example.karen.tallerguayaquil.models.Api;
 import com.example.karen.tallerguayaquil.models.Brand;
 import com.example.karen.tallerguayaquil.models.Person;
+import com.example.karen.tallerguayaquil.models.Vehicle;
 import com.example.karen.tallerguayaquil.models.WorkShop;
 import com.example.karen.tallerguayaquil.utils.ApiService;
 import com.example.karen.tallerguayaquil.utils.ServiceGenerator;
+import com.example.karen.tallerguayaquil.utils.SessionManager;
 import com.example.karen.tallerguayaquil.utils.Util;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -79,7 +84,7 @@ public class SignupVehicleActivity extends AppCompatActivity{
             cancel = true;
         }
 
-        if (brand.getId() != 0){
+        if (brand==null){
             Util.showToast(getApplicationContext(), "Debe seleccionar una marca");
         }
 
@@ -90,17 +95,17 @@ public class SignupVehicleActivity extends AppCompatActivity{
         } else {
             if (Util.isNetworkAvailable(getApplicationContext())) {
 
-                //Util.showLoading(SignupVehicleActivity.this, "Registrando...");
+                Util.showLoading(SignupVehicleActivity.this, "Registrando...");
 
-                person.setModelName(modelName);
-                person.setBrand(brand);
+                List<Vehicle> vehicles = new ArrayList<>();
+                Vehicle vehicle = new Vehicle();
+                vehicle.setModel(modelName);
+                vehicle.setBrand(brand);
+                vehicles.add(vehicle);
 
-                //signupTask(person);
+                person.setVehicles(vehicles);
 
-                // Init Login
-                Intent intent = new Intent(SignupVehicleActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finish();
+                signupTask(person);
 
             } else {
                 Util.showToast(
@@ -140,6 +145,7 @@ public class SignupVehicleActivity extends AppCompatActivity{
 
             @Override
             public void onFailure(Call<List<Brand>> call, Throwable t) {
+                Log.e("Marcas", t.getMessage());
                 Util.showToast(getApplicationContext(), getString(R.string.message_network_local_failed));
                 Util.hideLoading();
             }
@@ -150,29 +156,30 @@ public class SignupVehicleActivity extends AppCompatActivity{
     /**
      * Signup Task
      */
-    private void signupTask(WorkShop workShop){
+    private void signupTask(Person person){
 
         ApiService auth = ServiceGenerator.createApiService();
 
-        Call<Void> call = auth.signupPerson(person);
-        call.enqueue(new Callback<Void>() {
+        Call<Api> call = auth.signupPerson(person);
+        call.enqueue(new Callback<Api>() {
             @Override
-            public void onResponse(@NonNull Call<Void> call, @NonNull retrofit2.Response<Void> response) {
+            public void onResponse(@NonNull Call<Api> call, @NonNull retrofit2.Response<Api> response) {
 
                 if (response.isSuccessful()) {
-                    //if (!userResponse.isError()) {
+                    Api api = response.body();
 
-                    Util.showToast(getApplicationContext(), "Registrado correctamente");
+                    if (!api.isError()) {
+                        Util.showToast(getApplicationContext(), api.getMsg());
+                        
+                        // Init Login
+                        Intent intent = new Intent(SignupVehicleActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        finish();
 
-                    // Init Login
-                    Intent intent = new Intent(SignupVehicleActivity.this, LoginActivity.class);
-                    startActivity(intent);
-                    finish();
-
-                    /*} else {
+                    } else {
                         // Show message error
-                        Util.showToast(getApplicationContext(), "Revise los parametros");
-                    }*/
+                        Util.showToast(getApplicationContext(), api.getMsg());
+                    }
                 } else {
                     Util.showToast(getApplicationContext(),
                             getString(R.string.message_service_server_failed));
@@ -181,7 +188,7 @@ public class SignupVehicleActivity extends AppCompatActivity{
             }
 
             @Override
-            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<Api> call, @NonNull Throwable t) {
 
                 Util.showToast(getApplicationContext(),
                         getString(R.string.message_network_local_failed));
@@ -189,56 +196,6 @@ public class SignupVehicleActivity extends AppCompatActivity{
             }
         });
     }
-
-    /*
-
-    private void registerUser( final String nombre, final String apellido, final String username, final String password, final String correo){
-       final String modelo=txtmodelo.getText().toString();
-
-        String url ="http://192.168.0.4:8000/api/clientes";
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Toast.makeText(SignupVehicleActivity.this,response,Toast.LENGTH_LONG).show();
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(SignupVehicleActivity.this,error.toString(),Toast.LENGTH_LONG).show();
-                    }
-                }){
-            @Override
-            protected Map<String,String> getParams(){
-                Map<String,String> params = new HashMap<String, String>();
-                params.put("nombre",nombre);
-                params.put("apellido",apellido);
-                params.put("username",username);
-                params.put("password",password);
-                params.put("correo",correo);
-                params.put("modelo",modelo);
-                return params;
-            }
-
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
-    }
-
-    public void onClick(View v) {
-        if(v == btnregistrar){
-            Bundle parametros = this.getIntent().getExtras();
-            String nombre = parametros.getString("nombre");
-            String apellido = parametros.getString("apellido");
-            String correo = parametros.getString("correo");
-            String username = parametros.getString("usuario");
-            String password = parametros.getString("password");
-            registerUser(nombre,apellido,username,password,correo);
-        }
-
-    }*/
-
 }
 
 
