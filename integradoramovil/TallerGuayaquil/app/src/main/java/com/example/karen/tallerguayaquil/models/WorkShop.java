@@ -1,29 +1,64 @@
 package com.example.karen.tallerguayaquil.models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.List;
 
-/**
- * Created by karen on 26/07/17.
- */
-
 public class WorkShop implements Serializable {
 
+    @SerializedName("id")
+    private int id;
+
+    @SerializedName("lat")
     private float latitude;
+
+    @SerializedName("lon")
     private float longitude;
 
+    @SerializedName("username")
     private String username;
+
+    @SerializedName("password")
     private String password;
+
+    @SerializedName("password_confirmation")
+    private String passwordConfirmation;
+
+    @SerializedName("direccion")
     private String address;
+
+    @SerializedName("correo")
     private String email;
+
+    @SerializedName("nombre")
     private String firstName;
+
+    @SerializedName("apellido")
     private String lastName;
+
+    @SerializedName("telefono")
     private String phone;
+
+    @SerializedName("nombre_empleado")
     private String managerName;
+
+    @SerializedName("nombre_taller")
     private String workshopName;
 
-    private List<Brand> brandList;
-    private List<Service> serviceList;
+    @SerializedName("marcas[]")
+    private List<String> brandList;
+
+    @SerializedName("servicios[]")
+    private List<String> serviceList;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public float getLatitude() {
         return latitude;
@@ -55,6 +90,15 @@ public class WorkShop implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+        this.passwordConfirmation = password;
+    }
+
+    public String getPasswordConfirmation() {
+        return passwordConfirmation;
+    }
+
+    public void setPasswordConfirmation(String passwordConfirmation) {
+        this.passwordConfirmation = passwordConfirmation;
     }
 
     public String getAddress() {
@@ -113,19 +157,19 @@ public class WorkShop implements Serializable {
         this.workshopName = workshopName;
     }
 
-    public List<Brand> getBrandList() {
+    public List<String> getBrandList() {
         return brandList;
     }
 
-    public void setBrandList(List<Brand> brandList) {
+    public void setBrandList(List<String> brandList) {
         this.brandList = brandList;
     }
 
-    public List<Service> getServiceList() {
+    public List<String> getServiceList() {
         return serviceList;
     }
 
-    public void setServiceList(List<Service> serviceList) {
+    public void setServiceList(List<String> serviceList) {
         this.serviceList = serviceList;
     }
 }
