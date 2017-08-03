@@ -3,12 +3,19 @@ package com.example.karen.tallerguayaquil.models;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.List;
 
 
 public class Person implements Serializable {
 
     @SerializedName("id")
     private int id;
+
+    @SerializedName("nombre")
+    private String firstName;
+
+    @SerializedName("apellido")
+    private String lastName;
 
     @SerializedName("username")
     private String username;
@@ -22,17 +29,11 @@ public class Person implements Serializable {
     @SerializedName("correo")
     private String email;
 
-    @SerializedName("nombre")
-    private String firstName;
+    @SerializedName("vehiculos")
+    private List<Vehicle> vehicles;
 
-    @SerializedName("apellido")
-    private String lastName;
-
-    @SerializedName("modelo")
-    private String modelName;
-
-    @SerializedName("marca")
-    private Brand brand;
+    @SerializedName("api_token")
+    private String token;
 
     public int getId() {
         return id;
@@ -91,19 +92,19 @@ public class Person implements Serializable {
         this.lastName = lastName;
     }
 
-    public String getModelName() {
-        return modelName;
+    public List<Vehicle> getVehicles() {
+        return vehicles;
     }
 
-    public void setModelName(String modelName) {
-        this.modelName = modelName;
+    public void setVehicles(List<Vehicle> vehicles) {
+        this.vehicles = vehicles;
     }
 
-    public Brand getBrand() {
-        return brand;
+    public String getToken() {
+        return token;
     }
 
-    public void setBrand(Brand brand) {
-        this.brand = brand;
+    public void setToken(String token) {
+        this.token = token;
     }
 }
