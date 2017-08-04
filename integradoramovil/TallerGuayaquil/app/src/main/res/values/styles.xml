@@ -50,8 +50,10 @@
         <item name="spn_arrowInterpolator">@android:anim/decelerate_interpolator</item>
     </style>
 
+    -->
 
-
-
--->
+    <style name="MenuLabel">
+        <item name="android:background">@drawable/background_label_fab</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
 </resources>

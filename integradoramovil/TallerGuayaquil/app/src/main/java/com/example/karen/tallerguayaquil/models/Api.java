@@ -11,7 +11,7 @@ public class Api<T> {
     private String msg;
 
     @SerializedName("data")
-    private Person person;
+    private T data;
 
     public boolean isError() {
         return isError;
@@ -29,11 +29,11 @@ public class Api<T> {
         this.msg = msg;
     }
 
-    public Person getPerson() {
-        return person;
+    public T getData() {
+        return data;
     }
 
-    public void setPerson(Person person) {
-        this.person = person;
+    public void setData(T data) {
+        this.data = data;
     }
 }

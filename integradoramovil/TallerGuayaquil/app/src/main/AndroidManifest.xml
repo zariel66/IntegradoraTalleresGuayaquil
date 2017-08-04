@@ -36,7 +36,8 @@
 
         <!-- Main -->
         <activity android:name=".activities.MainActivity" />
-        <activity android:name=".activities.MapActivity" />
+        <activity android:name=".activities.MapActivity">
+        </activity>
 
 
         <meta-data

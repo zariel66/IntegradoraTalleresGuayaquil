@@ -40,6 +40,7 @@ dependencies {
     // External libraries
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+    compile 'com.getbase:floatingactionbutton:1.10.1'
 
     testCompile 'junit:junit:4.12'
 }

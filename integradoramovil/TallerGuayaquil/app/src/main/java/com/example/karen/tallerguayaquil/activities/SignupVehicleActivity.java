@@ -170,11 +170,11 @@ public class SignupVehicleActivity extends AppCompatActivity{
 
                     if (!api.isError()) {
                         Util.showToast(getApplicationContext(), api.getMsg());
-                        
+
                         // Init Login
                         Intent intent = new Intent(SignupVehicleActivity.this, LoginActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
-                        finish();
 
                     } else {
                         // Show message error

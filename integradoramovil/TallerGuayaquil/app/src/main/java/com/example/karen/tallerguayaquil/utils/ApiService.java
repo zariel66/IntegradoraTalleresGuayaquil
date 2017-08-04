@@ -23,10 +23,6 @@ public interface ApiService {
     @GET("marcas/")
     Call<List<Brand>> getBrands();
 
-    @GET("marcas/")
-    Call<List<Service>> getServices();
-
-
     /** SignUp**/
     @POST("registrotallersubmit/")
     Call<Api> signupWorkshop(@Body WorkShop workShop);

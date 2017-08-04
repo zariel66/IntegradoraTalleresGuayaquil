@@ -3,6 +3,7 @@ package com.example.karen.tallerguayaquil.models;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class WorkShop implements Serializable {
@@ -46,11 +47,16 @@ public class WorkShop implements Serializable {
     @SerializedName("lon")
     private double longitude;
 
-    @SerializedName("marcas[]")
-    private List<String> brandList;
+    @SerializedName("marcas")
+    private List<Brand> brandList;
 
-    @SerializedName("servicios[]")
-    private List<String> serviceList;
+    @SerializedName("servicios")
+    private List<Service> serviceList;
+
+    public WorkShop(){
+        this.brandList = new ArrayList<>();
+        this.serviceList = new ArrayList<>();
+    }
 
     public int getId() {
         return id;
@@ -157,19 +163,19 @@ public class WorkShop implements Serializable {
         this.workshopName = workshopName;
     }
 
-    public List<String> getBrandList() {
+    public List<Brand> getBrandList() {
         return brandList;
     }
 
-    public void setBrandList(List<String> brandList) {
+    public void setBrandList(List<Brand> brandList) {
         this.brandList = brandList;
     }
 
-    public List<String> getServiceList() {
+    public List<Service> getServiceList() {
         return serviceList;
     }
 
-    public void setServiceList(List<String> serviceList) {
+    public void setServiceList(List<Service> serviceList) {
         this.serviceList = serviceList;
     }
 }

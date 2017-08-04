@@ -53,10 +53,10 @@ public class MainActivity extends AppCompatActivity {
         }));
     }
     private void populate(List<Category> mCategoryList) {
-
+        /*
         mCategoryList.add(new Category(1,"Mecánica", R.drawable.tallerm));
         mCategoryList.add(new Category(1,"Electrico", R.drawable.bateria));
         mCategoryList.add(new Category(1,"Carrocería", R.drawable.lata));
-        mCategoryList.add(new Category(1,"Tapizado", R.drawable.silla));
+        mCategoryList.add(new Category(1,"Tapizado", R.drawable.silla));*/
     }
 }

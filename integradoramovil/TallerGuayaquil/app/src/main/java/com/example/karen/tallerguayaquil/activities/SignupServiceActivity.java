@@ -8,12 +8,14 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
 import com.example.karen.tallerguayaquil.R;
 import com.example.karen.tallerguayaquil.listeners.SpinnerListener;
+import com.example.karen.tallerguayaquil.models.Api;
 import com.example.karen.tallerguayaquil.models.Brand;
 import com.example.karen.tallerguayaquil.models.KeyPairBoolData;
 import com.example.karen.tallerguayaquil.models.Service;
@@ -45,7 +47,7 @@ public class SignupServiceActivity extends AppCompatActivity
 
     private GoogleMap mMapAddress;
     private Marker marker = null;
-    private EditText mManagerName;
+    private EditText mManagerName, mWorkShopNameView, mAddressView, mPhoneView;
     private MultiSpinnerSearch mWorkshopServices, mVehicleBrands;
     private WorkShop workShop;
 
@@ -61,6 +63,9 @@ public class SignupServiceActivity extends AppCompatActivity
         workShop = (WorkShop) getIntent().getExtras().getSerializable("workshop");
 
         mManagerName = (EditText) findViewById(R.id.txt_managerName);
+        mWorkShopNameView = (EditText) findViewById(R.id.txt_workshop);
+        mAddressView = (EditText) findViewById(R.id.txt_address);
+        mPhoneView = (EditText) findViewById(R.id.txt_phone);
         mWorkshopServices = (MultiSpinnerSearch) findViewById(R.id.spn_workshop_services);
         mVehicleBrands = (MultiSpinnerSearch) findViewById(R.id.spn_vehicle_brands);
 
@@ -79,7 +84,8 @@ public class SignupServiceActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        populate();
+        populateServices();
+        populateBrands();
     }
 
     @Override
@@ -156,26 +162,54 @@ public class SignupServiceActivity extends AppCompatActivity
 
         // Reset errors.
         mManagerName.setError(null);
+        mWorkShopNameView.setError(null);
+        mAddressView.setError(null);
+        mPhoneView.setError(null);
 
         String managerName = mManagerName.getText().toString();
+        String workshopName = mWorkShopNameView.getText().toString();
+        String address = mAddressView.getText().toString();
+        String phone = mPhoneView.getText().toString().trim();
         List<KeyPairBoolData> services = mWorkshopServices.getSelectedItems();
         List<KeyPairBoolData> brands = mVehicleBrands.getSelectedItems();
 
         boolean cancel = false;
         View focusView = null;
 
-        if (!Util.isNameValid(managerName)) {
-            mManagerName.setError(getString(R.string.error_field_required));
-            focusView = mManagerName;
-            cancel = true;
+        if (brands.size() == 0){
+            Util.showToast(getApplicationContext(), "Debe seleccionar por lo menos una marca ");
         }
 
         if (services.size() == 0){
             Util.showToast(getApplicationContext(), "Debe seleccionar por lo menos un servicio");
         }
 
-        if (brands.size() == 0){
-            Util.showToast(getApplicationContext(), "Debe seleccionar por lo menos una marca ");
+        if (TextUtils.isEmpty(phone)) {
+            mPhoneView.setError(getString(R.string.error_field_required));
+            focusView = mPhoneView;
+            cancel = true;
+        } else if (phone.length() < 10) {
+            mPhoneView.setError(getString(R.string.error_incorrect_number_field));
+            focusView = mPhoneView;
+            cancel = true;
+        }
+
+        if (TextUtils.isEmpty(address)) {
+            mAddressView.setError(getString(R.string.error_field_required));
+            focusView = mAddressView;
+            cancel = true;
+        }
+
+        if (TextUtils.isEmpty(workshopName)) {
+            mWorkShopNameView.setError(getString(R.string.error_incorrect_text_field));
+            focusView = mWorkShopNameView;
+            cancel = true;
+        }
+
+        if (TextUtils.isEmpty(managerName)) {
+            mManagerName.setError(getString(R.string.error_field_required));
+            focusView = mManagerName;
+            cancel = true;
         }
 
         if (cancel) {
@@ -185,22 +219,35 @@ public class SignupServiceActivity extends AppCompatActivity
         } else {
             if (Util.isNetworkAvailable(getApplicationContext())) {
 
-                //Util.showLoading(SignupServiceActivity.this, "Registrando...");
+                Util.showLoading(SignupServiceActivity.this, "Registrando Taller...");
 
+                workShop.setManagerName(managerName);
+                workShop.setWorkshopName(workshopName);
+                workShop.setAddress(address);
+                workShop.setPhone(phone);
+
+                // clean for prevent null pointer exception
+                workShop.getBrandList().clear();
+                workShop.getServiceList().clear();
+
+                Log.i("Services", "Init services");
                 for ( KeyPairBoolData data : services) {
-                    workShop.getBrandList().add(String.valueOf(data.getId()));
+                    workShop.getServiceList().add((Service) data.getObject());
                 }
+                Log.i("Services", workShop.getServiceList().toString());
 
-                for ( KeyPairBoolData data : services) {
-                    workShop.getServiceList().add(data.getName());
+                Log.i("Brands", "Init brands");
+                for ( KeyPairBoolData data : brands) {
+                    workShop.getBrandList().add((Brand) data.getObject());
                 }
+                Log.i("Brands", workShop.getBrandList().toString());
 
-                // Init Login
-                Intent intent = new Intent(SignupServiceActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finish();
+                // Get position
+                LatLng latLng = marker.getPosition();
+                workShop.setLatitude(latLng.latitude);
+                workShop.setLongitude(latLng.longitude);
 
-                //signupTask(workShop);
+                signupTask(workShop);
             } else {
                 Util.showToast(
                         getApplicationContext(), getString(R.string.message_network_connectivity_failed));
@@ -208,72 +255,38 @@ public class SignupServiceActivity extends AppCompatActivity
         }
     }
 
-    public void populate() {
+    public void populateServices() {
+        for (Service service : Util.getServices()) {
+            KeyPairBoolData h = new KeyPairBoolData();
+            h.setId(service.getId());
+            h.setName(service.getName());
+            h.setObject(service);
+            h.setSelected(false);
 
-        if (Util.isNetworkAvailable(getApplicationContext())) {
-            Util.showLoading(getApplicationContext(), "Cargando...");
-            brandsTask();
-            servicesTask();
-        } else {
-            Util.showToast(getApplicationContext(), getString(R.string.message_network_connectivity_failed));
+            serviceList.add(h);
         }
-    }
 
-    /**
-     * Brands task
-     */
-    private void servicesTask(){
-        ApiService api = ServiceGenerator.createApiService();
-
-        Call<List<Service>> call = api.getServices();
-        call.enqueue(new Callback<List<Service>>() {
-
+        mWorkshopServices.setItems(serviceList, -1, new SpinnerListener() {
             @Override
-            public void onResponse(Call<List<Service>> call, Response<List<Service>> response) {
-                if (response.isSuccessful()) {
-                    List<Service> services = response.body();
-
-                    if (!services.isEmpty()) {
-                        int i= 1;
-                        for (Service s : services) {
-                            KeyPairBoolData h = new KeyPairBoolData();
-                            h.setId(i);
-                            h.setName(s.getName());
-                            h.setObject(s);
-                            h.setSelected(false);
-
-                            serviceList.add(h);
-                            i++;
-                        }
-
-                        mWorkshopServices.setItems(serviceList, -1, new SpinnerListener() {
-                            @Override
-                            public void onItemsSelected(List<KeyPairBoolData> items) {
-                                for(int i=0; i<items.size(); i++) {
-                                    if(items.get(i).isSelected()) {
-                                        Log.i("TAG", i + " : " + items.get(i).getName() + " : " + items.get(i).isSelected());
-                                    }
-                                }
-                            }
-                        });
-
-                    } else {
-                        Util.showToast(getApplicationContext(), getString(R.string.message_service_server_empty));
+            public void onItemsSelected(List<KeyPairBoolData> items) {
+                for(int i=0; i<items.size(); i++) {
+                    if(items.get(i).isSelected()) {
+                        Log.i("TAG", i + " : " + items.get(i).getName() + " : " + items.get(i).isSelected());
                     }
-                } else {
-                    Util.showToast(getApplicationContext(), getString(R.string.message_service_server_failed));
                 }
-                Util.hideLoading();
-            }
-
-            @Override
-            public void onFailure(Call<List<Service>> call, Throwable t) {
-                Util.showToast(getApplicationContext(), getString(R.string.message_network_local_failed));
-                Util.hideLoading();
             }
         });
     }
 
+    public void populateBrands() {
+
+        if (Util.isNetworkAvailable(getApplicationContext())) {
+            Util.showLoading(SignupServiceActivity.this, "Cargando...");
+            brandsTask();
+        } else {
+            Util.showToast(getApplicationContext(), getString(R.string.message_network_connectivity_failed));
+        }
+    }
 
     /**
      * Brands task
@@ -328,33 +341,33 @@ public class SignupServiceActivity extends AppCompatActivity
         });
     }
 
-
     /**
      * Signup Task
      */
-    private void signupTask(WorkShop workShop){
+    private void signupTask(WorkShop workshop){
 
         ApiService auth = ServiceGenerator.createApiService();
 
-        Call<Void> call = auth.signupWorkshop(workShop);
-        call.enqueue(new Callback<Void>() {
+        Call<Api> call = auth.signupWorkshop(workshop);
+        call.enqueue(new Callback<Api>() {
             @Override
-            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+            public void onResponse(@NonNull Call<Api> call, @NonNull retrofit2.Response<Api> response) {
 
                 if (response.isSuccessful()) {
-                    //if (!userResponse.isError()) {
+                    Api api = response.body();
 
-                    Util.showToast(getApplicationContext(), "Registrado correctamente");
+                    if (!api.isError()) {
+                        Util.showToast(getApplicationContext(), api.getMsg());
 
-                    // Init Login
-                    Intent intent = new Intent(SignupServiceActivity.this, LoginActivity.class);
-                    startActivity(intent);
-                    finish();
+                        // Init Login
+                        Intent intent = new Intent(SignupServiceActivity.this, LoginActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
 
-                    /*} else {
+                    } else {
                         // Show message error
-                        Util.showToast(getApplicationContext(), "Revise los parametros");
-                    }*/
+                        Util.showToast(getApplicationContext(), api.getMsg());
+                    }
                 } else {
                     Util.showToast(getApplicationContext(),
                             getString(R.string.message_service_server_failed));
@@ -363,7 +376,7 @@ public class SignupServiceActivity extends AppCompatActivity
             }
 
             @Override
-            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<Api> call, @NonNull Throwable t) {
 
                 Util.showToast(getApplicationContext(),
                         getString(R.string.message_network_local_failed));
