@@ -31,21 +31,20 @@ public class SessionManager {
         this.mContext = mContext;
         this.mSharedPreferences = mContext.getSharedPreferences("WORKSHOP", Context.MODE_PRIVATE);
         this.mEditor = mSharedPreferences.edit();
-        this. mResources =  mContext.getResources();
+        this.mResources =  mContext.getResources();
     }
 
     public boolean savePerson(Person person){
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
-        SharedPreferences.Editor editor = sharedPref.edit();
 
         // Person
-        editor.putInt(mContext.getString(R.string.preferences_person_id), person.getId());
-        editor.putString(mContext.getString(R.string.preferences_person_first_name), person.getFirstName());
-        editor.putString(mContext.getString(R.string.preferences_person_last_name), person.getLastName());
-        editor.putString(mContext.getString(R.string.preferences_person_username), person.getUsername());
-        editor.putString(mContext.getString(R.string.preferences_person_email), person.getEmail());
-        editor.putString(mContext.getString(R.string.preferences_person_token), person.getToken());
+        mEditor.putInt(mContext.getString(R.string.preferences_person_id), person.getId());
+        mEditor.putString(mContext.getString(R.string.preferences_person_first_name), person.getFirstName());
+        mEditor.putString(mContext.getString(R.string.preferences_person_last_name), person.getLastName());
+        mEditor.putString(mContext.getString(R.string.preferences_person_username), person.getUsername());
+        mEditor.putString(mContext.getString(R.string.preferences_person_email), person.getEmail());
+        mEditor.putString(mContext.getString(R.string.preferences_person_token), person.getToken());
 
+        /*
         Realm realm = Realm.getDefaultInstance();
         try {
             realm.beginTransaction();
@@ -60,22 +59,20 @@ public class SessionManager {
 
         } finally {
             realm.close();
-        }
+        }*/
 
-        return editor.commit();
+        return mEditor.commit();
     }
 
     public Person getPerson(){
 
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
-
         // Person
-        int id = sharedPref.getInt(mContext.getString(R.string.preferences_person_id), 0);
-        String first_name = sharedPref.getString(mContext.getString(R.string.preferences_person_first_name), "");
-        String last_name = sharedPref.getString(mContext.getString(R.string.preferences_person_last_name), "");
-        String username = sharedPref.getString(mContext.getString(R.string.preferences_person_username), "");
-        String email = sharedPref.getString(mContext.getString(R.string.preferences_person_email), "");
-        String token = sharedPref.getString(mContext.getString(R.string.preferences_person_token), "");
+        int id = mSharedPreferences.getInt(mContext.getString(R.string.preferences_person_id), 0);
+        String first_name = mSharedPreferences.getString(mContext.getString(R.string.preferences_person_first_name), "");
+        String last_name = mSharedPreferences.getString(mContext.getString(R.string.preferences_person_last_name), "");
+        String username = mSharedPreferences.getString(mContext.getString(R.string.preferences_person_username), "");
+        String email = mSharedPreferences.getString(mContext.getString(R.string.preferences_person_email), "");
+        String token = mSharedPreferences.getString(mContext.getString(R.string.preferences_person_token), "");
 
         Person person = new Person();
         person.setId(id);
@@ -85,6 +82,7 @@ public class SessionManager {
         person.setEmail(email);
         person.setToken(token);
 
+        /*
         Realm realm = Realm.getDefaultInstance();
         try {
             RealmResults<Vehicle> result = realm.where(Vehicle.class).findAllSorted("id", Sort.DESCENDING);
@@ -96,18 +94,20 @@ public class SessionManager {
 
         } finally {
             realm.close();
-        }
+        }*/
 
         return person;
     }
 
-    public boolean hasToken(){
-        return !TextUtils.isEmpty(mSharedPreferences.getString(mResources.getString(R.string.preferences_person_token), null));
+    public String getToken(){
+        return mSharedPreferences.getString(mResources.getString(R.string.preferences_person_token), null);
     }
 
-    public String getToken(){
-        return "Token " + mSharedPreferences.getString(mResources.getString(R.string.preferences_person_token), null);
+
+    public boolean hasToken(){
+        return !TextUtils.isEmpty(getToken());
     }
+
 
     public void clear(){
         mEditor.clear();
