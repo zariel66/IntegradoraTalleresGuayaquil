@@ -78,7 +78,7 @@ public class SignupVehicleActivity extends AppCompatActivity{
         boolean cancel = false;
         View focusView = null;
 
-        if (!Util.isNameValid(modelName)) {
+        if (modelName.length() < 2) {
             mModelView.setError(getString(R.string.error_field_required));
             focusView = mModelView;
             cancel = true;
