@@ -28,9 +28,40 @@ class MovilController extends Controller
 
   public function obtenerVehiculos()
   {
-    //$user = $return->user();
+    $vehiculos = array();
+    $token = Input::get('api_token');
+    $msg = '';
 
-		return response()->json(Vehicule::all());
+    if ($token)
+    {
+      try {
+        $user = User::where('api_token', $token)->firstOrFail();
+        $user_vehiculos = $user->vehiculos;
+
+        if (!$user_vehiculos) $msg = 'No se encontraron vehiculos';
+        else {
+          foreach ($user_vehiculos as $uv) {
+            $marca = Marca::find($uv->idmarca);
+
+            $vehiculo = array(
+              'id' => $uv->id,
+              'modelo' => $uv->modelo,
+              'marca' => $marca
+            );
+
+            array_push($vehiculos, $vehiculo);
+          }
+        }
+      } catch (\Exception $e) {}
+
+    }
+
+    return response()->json([
+      'is_error' => false,
+      'msg' => $msg,
+      'data' => $vehiculos
+    ]);
+
 	}
 
   public function registrarCliente()
@@ -220,8 +251,8 @@ class MovilController extends Controller
 
       $idtaller = DB::table('taller')->insertGetId(
         array(
-          'latitud' => Input::get('lat'),
-          'longitud' => Input::get('lon'),
+          'latitud' => Input::get('latitud'),
+          'longitud' => Input::get('longitud'),
           'direccion' => Input::get('direccion'),
           'idusuario' => $idusuario,
           'nombre_empleado' => Input::get('nombre_empleado'),
@@ -275,25 +306,48 @@ class MovilController extends Controller
         $user = Auth::user();
         return response()->json([
           'is_error' => false,
-          'msg' => 'Inicio de sesión exitoso',
+          'msg' => 'Inicio de sesion exitoso',
           'data' => $user
         ]);
       }
       return response()->json([
         'is_error' => false,
-        'msg' => 'Usuario o contraseña inválido',
-        'username' => $username,
-        'password' => $password
+        'msg' => 'Usuario o contrasena invalido'
       ]);
 
     } catch (\Exception $e) {
       return response()->json([
-        'error' => $e->getMessage(),
-        'username' => $username,
-        'password' => $password
+        'is_error' => true,
+        'error' => $e->getMessage()
       ]);
-      //abort(500);
     }
   }
+
+
+	public function busquedaTaller()
+  {
+    $msg = '';
+    $isError = false;
+		$servicio = Input::get('servicio');
+		$marca =  Input::get('marca');
+		$latitude = Input::get('latitud');
+		$longitude =  Input::get('longitud');
+    $distancia =  Input::get('distancia');
+
+    $query = "select distinct t.*,6371*2*asin( sqrt( power(sin(((". $latitude ." - t.latitud) * pi()/180) / 2),2)  + cos(". $latitude ." * pi()/180) * cos( t.latitud  *  pi()/180) * power( sin( (". $longitude ." - t.longitud) * pi()/180),2 )) ) as distance from taller as t INNER JOIN servicio_taller as st ON t.id = st.idtaller INNER JOIN marca_taller as mt ON mt.idtaller=t.id INNER JOIN marca as m on mt.idmarca = m.id where st.categoria = '". $servicio ."' and mt.idmarca = ". $marca ." having distance< ". $distancia ." ORDER BY distance limit 10";
+
+    $workshops = DB::select($query);
+
+    if (!$workshops) {
+      $isError = true;
+      $msg = 'No se encontraron talleres cercanos ';
+    }
+
+    return response()->json([
+      'is_error' => $isError,
+      'msg' => $msg,
+      'data' => $workshops
+    ]);
+	}
 
 }
