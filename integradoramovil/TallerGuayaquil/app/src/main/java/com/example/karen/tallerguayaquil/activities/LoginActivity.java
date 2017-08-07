@@ -98,20 +98,7 @@ public class LoginActivity extends AppCompatActivity {
                 params.put("username", username);
                 params.put("password", password);
 
-                new Handler().postDelayed(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        Util.hideLoading();
-                        Util.showToast(getApplicationContext(), "Inicio de Sesión exitoso");
-
-                        Intent intent = new Intent(LoginActivity.this, MapActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent);
-                    }
-                }, 3000);
-
-                //loginTask(params);
+                loginTask(params);
             } else {
                 Util.showToast(getApplicationContext(), getString(R.string.message_network_connectivity_failed));
             }
@@ -133,13 +120,17 @@ public class LoginActivity extends AppCompatActivity {
                         Util.showToast(getApplicationContext(), api.getMsg());
 
                         Person p = api.getData();
+                        if (p!=null) {
 
-                        SessionManager sessionManager = new SessionManager(LoginActivity.this);
-                        if (sessionManager.savePerson(p)) {
-                            // Init Login
-                            Intent intent = new Intent(LoginActivity.this, LoginActivity.class);
-                            startActivity(intent);
-                            finish();
+                            SessionManager sessionManager = new SessionManager(LoginActivity.this);
+                            if (sessionManager.savePerson(p)) {
+                                Intent intent = new Intent(LoginActivity.this, MapActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
+                            }
+                        } else {
+                            Util.showToast(getApplicationContext(),
+                                    getString(R.string.message_service_server_failed));
                         }
 
                     } else {
