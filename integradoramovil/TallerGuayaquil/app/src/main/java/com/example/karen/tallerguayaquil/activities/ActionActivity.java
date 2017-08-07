@@ -10,14 +10,20 @@ import android.view.View;
 import com.example.karen.tallerguayaquil.R;
 import com.example.karen.tallerguayaquil.models.Person;
 import com.example.karen.tallerguayaquil.utils.SessionManager;
+import com.example.karen.tallerguayaquil.utils.Util;
 
 public class ActionActivity extends AppCompatActivity {
 
-        @Override
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initialize();
         setContentView(R.layout.activity_action);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initialize();
     }
 
     public void signupPerson(View view) {
@@ -53,7 +59,7 @@ public class ActionActivity extends AppCompatActivity {
         Intent intent;
 
         if (sessionManager.hasToken()){
-            intent = new Intent(ActionActivity.this, MainActivity.class);
+            intent = new Intent(ActionActivity.this, MapActivity.class);
             startActivity(intent);
             finish();
         }
