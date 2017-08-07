@@ -11,6 +11,9 @@ public class WorkShop implements Serializable {
     @SerializedName("id")
     private int id;
 
+    @SerializedName("distance")
+    private float distance;
+
     @SerializedName("nombre")
     private String firstName;
 
@@ -41,10 +44,10 @@ public class WorkShop implements Serializable {
     @SerializedName("nombre_empleado")
     private String managerName;
 
-    @SerializedName("lat")
+    @SerializedName("latitud")
     private double latitude;
 
-    @SerializedName("lon")
+    @SerializedName("longitud")
     private double longitude;
 
     @SerializedName("marcas")
@@ -64,6 +67,14 @@ public class WorkShop implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public float getDistance() {
+        return distance;
+    }
+
+    public void setDistance(float distance) {
+        this.distance = distance;
     }
 
     public double getLatitude() {
