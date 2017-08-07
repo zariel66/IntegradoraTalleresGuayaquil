@@ -36,6 +36,8 @@ public class Util {
      * RESULT CODES
      */
     public static final int LOCATION_REQUEST_CODE = 003;
+    public static final int PLAY_SERVICES_REQUEST_CODE = 004;
+
 
 
     /**
