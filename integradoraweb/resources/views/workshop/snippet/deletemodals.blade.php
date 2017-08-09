@@ -9,7 +9,9 @@
 	        <h4 class="modal-title">Confirmar Acción</h4>
 	      </div>
 	      <div class="modal-body">
-	        <p>¿Esta seguro que desea eliminar el taller?. Toda la información relacionada será eliminada del sistema</p>
+
+	        <p>¿Está seguro que desea eliminar el taller?. Toda la información relacionada será eliminada del sistema</p>
+
 	      </div>
 	      <div class="modal-footer">
 	      	<a href="{{url('eliminartaller')}}/{{$t->id}}" class="btn btn-danger">Eliminar</a>

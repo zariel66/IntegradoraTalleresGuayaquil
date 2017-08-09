@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+<<<<<<< HEAD
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -21,6 +22,38 @@ public class Util {
      * UI LOADING
      */
     private static ProgressDialog mLoading = null;
+=======
+import android.widget.Toast;
+
+import com.example.karen.tallerguayaquil.models.Service;
+import com.example.karen.tallerguayaquil.models.Vehicle;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class Util {
+
+    /**
+     * URL
+     **/
+    public static final String API_URL = "http://198.211.105.132:9999/api/";
+
+    /**
+     * UI LOADING
+     */
+    private static ProgressDialog mLoading = null;
+    private static Toast mToast = null;
+
+
+    /**
+     * RESULT CODES
+     */
+    public static final int LOCATION_REQUEST_CODE = 003;
+    public static final int PLAY_SERVICES_REQUEST_CODE = 004;
+
+>>>>>>> master
 
 
     /**
@@ -31,6 +64,26 @@ public class Util {
 
 
     /**
+<<<<<<< HEAD
+=======
+     * CATEGORIES/SERVICES
+     */
+
+    public static final List<Service> getServices() {
+        List<Service> services = new ArrayList<>();
+
+        services.add(new Service(1,"Carrocería"));
+        services.add(new Service(2,"Electromecánico"));
+        services.add(new Service(3,"Mecánico"));
+        services.add(new Service(4,"Pintado"));
+        services.add(new Service(5,"Tapicería"));
+        services.add(new Service(6,"Vidriería"));
+
+        return services;
+    }
+
+    /**
+>>>>>>> master
      * PATTERNS
      */
     private static final String EMAIL_PATTERN =
@@ -89,6 +142,22 @@ public class Util {
 
 
     /**
+<<<<<<< HEAD
+=======
+     *  HANDLER TOAS
+     */
+    public static void showToast(Context context, String msg) {
+        if (mToast != null) {
+            mToast.cancel();
+        }
+
+        mToast = Toast.makeText(context, msg, Toast.LENGTH_LONG);
+        mToast.show();
+    }
+
+
+    /**
+>>>>>>> master
      * Hide Softf Keyboard
      **/
     public static void hideSoftKeyboard(Context context, View view) {

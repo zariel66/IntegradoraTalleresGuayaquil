@@ -3,4 +3,16 @@
     <color name="colorPrimary">#08080a</color>
     <color name="colorPrimaryDark">#000</color>
     <color name="colorAccent">#08080a</color>
+<<<<<<< HEAD
+=======
+
+    <color name="red">#FF0000</color>
+
+    <!-- Colors to spinner -->
+    <color name="list_selected">#80000000</color>
+    <color name="list_even">#AAAAAA</color>
+    <color name="list_odd">#E1E2E2</color>
+
+    <color name="black_70">#B2000000</color>
+>>>>>>> master
 </resources>

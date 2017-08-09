@@ -189,7 +189,9 @@ class WorkshopController extends Controller
 			'nombre_empleado' => 'required|min:10',
 			"marcas" => 'required|array|min:1',
 			"servicios" => 'required|array|min:1',
-			"nombre_taller" => "required|min:6"
+
+			"nombre_taller" => "required|min:3"
+
 			); 
 
 
@@ -281,7 +283,7 @@ class WorkshopController extends Controller
 			'nombre_empleado' => 'required|min:10',
 			"marcas" => 'required|array|min:1',
 			"servicios" => 'required|array|min:1',
-			"nombre_taller" => "required|min:6"
+			"nombre_taller" => "required|min:3"
 			); 
 
 

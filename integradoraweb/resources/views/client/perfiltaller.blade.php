@@ -28,13 +28,14 @@
 		  			</p></div>
 		  			<br>
 		  			@if(count($taller->calificaciones->where('estado', 0)->where('idusuario',$idusuario))==0)
-		  			<button id="contact-button" onclick="getContactInfo()" class="btn" style="background-color: #cdc0b7"><strong>Deseo ponerme en contacto</strong></button>
+		  			<button id="contact-button" onclick="getContactInfo()" class="btn" style="background-color:#f3d3be;"><strong>Deseo ponerme en contacto</strong></button>
 		  			<div id="contact-section">
 		  				<div class="">
 				  			<h4><strong>Contacto:</strong></h4> 
 				  		</div>
 		  				<p>Nombre del empleado: {{$taller->nombre_empleado}}</p>
 		  				<p>Teléfono: {{$taller->telefono}}</p>
+		  				<p>Correo: {{$taller->usuario->correo}}</p>
 		  				<p>Al mostrar este código en el taller recibirá un descuento en el servicio:</p>
 		  				<p id="discount-code"><span class="label label-default"></span></p>
 		  			</div>
@@ -46,6 +47,7 @@
 				  		</div>
 		  				<p>Nombre del empleado: {{$taller->nombre_empleado}}</p>
 		  				<p>Teléfono: {{$taller->telefono}}</p>
+		  				<p>Correo: {{$taller->usuario->correo}}</p>
 		  				<p>Al mostrar este código en el taller recibirá un descuento en el servicio:</p>
 		  				<p id="discount-code"><span class="label label-default">{{$taller->calificaciones->where('estado', 0)->where('idusuario',$idusuario)->first()->desc_code}}</span></p>
 		  			</div>

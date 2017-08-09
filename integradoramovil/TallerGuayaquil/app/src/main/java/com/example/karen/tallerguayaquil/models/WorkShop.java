@@ -1,5 +1,6 @@
 package com.example.karen.tallerguayaquil.models;
 
+<<<<<<< HEAD
 import java.io.Serializable;
 import java.util.List;
 
@@ -38,6 +39,98 @@ public class WorkShop implements Serializable {
     }
 
     public void setLongitude(float longitude) {
+=======
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+public class WorkShop implements Serializable {
+
+    @SerializedName("id")
+    private int id;
+
+    @SerializedName("distance")
+    private float distance;
+
+    @SerializedName("nombre")
+    private String firstName;
+
+    @SerializedName("apellido")
+    private String lastName;
+
+    @SerializedName("username")
+    private String username;
+
+    @SerializedName("password")
+    private String password;
+
+    @SerializedName("password_confirmation")
+    private String passwordConfirmation;
+
+    @SerializedName("correo")
+    private String email;
+
+    @SerializedName("nombre_taller")
+    private String workshopName;
+
+    @SerializedName("direccion")
+    private String address;
+
+    @SerializedName("telefono")
+    private String phone;
+
+    @SerializedName("nombre_empleado")
+    private String managerName;
+
+    @SerializedName("latitud")
+    private double latitude;
+
+    @SerializedName("longitud")
+    private double longitude;
+
+    @SerializedName("marcas")
+    private List<Brand> brandList;
+
+    @SerializedName("servicios")
+    private List<Service> serviceList;
+
+    public WorkShop(){
+        this.brandList = new ArrayList<>();
+        this.serviceList = new ArrayList<>();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public float getDistance() {
+        return distance;
+    }
+
+    public void setDistance(float distance) {
+        this.distance = distance;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+>>>>>>> master
         this.longitude = longitude;
     }
 
@@ -55,6 +148,18 @@ public class WorkShop implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+<<<<<<< HEAD
+=======
+        this.passwordConfirmation = password;
+    }
+
+    public String getPasswordConfirmation() {
+        return passwordConfirmation;
+    }
+
+    public void setPasswordConfirmation(String passwordConfirmation) {
+        this.passwordConfirmation = passwordConfirmation;
+>>>>>>> master
     }
 
     public String getAddress() {

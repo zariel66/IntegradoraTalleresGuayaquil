@@ -18,6 +18,7 @@ Route::post("registrotallersubmit","HomeController@registrarTallerSubmit")->midd
 Route::get("registrocliente","HomeController@registrarCliente")->middleware('guest','sslp');
 Route::post("registroclientesubmit","HomeController@registrarClienteSubmit")->middleware('guest');
 Route::get("serverinfo","HomeController@serverInfo");
+Route::get("tokenplz","HomeController@tokengeneration");
 
 /*SESION*/
 Route::get('login',"HomeController@login")->middleware('guest','sslp');

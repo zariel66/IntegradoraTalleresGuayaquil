@@ -4,7 +4,7 @@
 	<div class="panel col-md-10 col-md-offset-1">
 		<div class="panel-body">
 			<div class="row">
-				<h2 style="font-weight:bold;">Registro de Taller</h2>
+				<h2 style="font-weight:bold;">Registro del Taller</h2>
 			</div>
 			
 			<div class="row">
@@ -16,7 +16,7 @@
 							<label>Nombres(*): </label>
 						</div>
 						<div class="col-md-3">
-							<input value="{{old('nombre')}}" class="form-control" type="text" name="nombre"
+							<input maxlength="100" value="{{old('nombre')}}" class="form-control" type="text" name="nombre"
 							@if($errors->has('nombre'))
 							style="border-color:red;"
 							@endif
@@ -27,7 +27,7 @@
 							<label>Correo(*): </label>
 						</div>
 						<div class="col-md-3">
-							<input value="{{old('correo')}}" class="form-control" type="text" name="correo"
+							<input maxlength="100" value="{{old('correo')}}" class="form-control" type="text" name="correo"
 							@if($errors->has('correo'))
 							style="border-color:red;"
 							@endif
@@ -42,7 +42,7 @@
 							<label>Apellidos(*): </label>
 						</div>
 						<div class="col-md-3">
-							<input value="{{old('apellido')}}" class="form-control" type="text" name="apellido"
+							<input maxlength="100" value="{{old('apellido')}}" class="form-control" type="text" name="apellido"
 							@if($errors->has('apellido'))
 							style="border-color:red;"
 							@endif
@@ -53,7 +53,7 @@
 							<label>Nombre del taller(*): </label>
 						</div>
 						<div class="col-md-3">
-							<input value="{{old('nombre_taller')}}" class="form-control" type="text" name="nombre_taller"
+							<input maxlength="100" value="{{old('nombre_taller')}}" class="form-control" type="text" name="nombre_taller"
 							@if($errors->has('nombre_taller'))
 							style="border-color:red;"
 							@endif
@@ -67,7 +67,7 @@
 							<label>Usuario(*): </label>
 						</div>
 						<div class="col-md-3">
-							<input value="{{old('username')}}" class="form-control" type="text" name="username"
+							<input maxlength="32" value="{{old('username')}}" class="form-control" type="text" name="username"
 							@if($errors->has('username'))
 							style="border-color:red;"
 							@endif
@@ -78,7 +78,7 @@
 							<label>Dirección(*): </label>
 						</div>
 						<div class="col-md-3">
-							<input value="{{old('direccion')}}" type="text" class="form-control" name="direccion"
+							<input maxlength="100" value="{{old('direccion')}}" type="text" class="form-control" name="direccion"
 							@if($errors->has('direccion'))
 							style="border-color:red;"
 							@endif
@@ -92,7 +92,7 @@
 							<label>Contraseña(*): </label>
 						</div>
 						<div class="col-md-3">
-							<input value="{{old('password')}}" class="form-control" type="password" name="password"
+							<input  maxlength="100" value="{{old('password')}}" class="form-control" type="password" name="password"
 							@if($errors->has('password'))
 							style="border-color:red;"
 							@endif
@@ -103,7 +103,7 @@
 							<label>Teléfono del establecimiento(*): </label>
 						</div>
 						<div class="col-md-3">
-							<input value="{{old('telefono')}}" class="form-control" type="text" name="telefono"
+							<input maxlength="50" value="{{old('telefono')}}" class="form-control" type="text" name="telefono"
 							@if($errors->has('telefono'))
 							style="border-color:red;"
 							@endif
@@ -117,7 +117,7 @@
 							<label>Confirmar Contraseña(*):</label>
 						</div>
 						<div class="col-md-3">
-							<input class="form-control" type="password" name="password_confirmation"
+							<input maxlength="100" class="form-control" type="password" name="password_confirmation"
 							@if($errors->has('password_confirmation'))
 							style="border-color:red;"
 							@endif
@@ -129,7 +129,7 @@
 							<label>Nombre completo del empleado a cargo(*): </label>
 						</div>
 						<div class="col-md-3">
-							<input value="{{old('nombre_empleado')}}" class="form-control" type="text" name="nombre_empleado"
+							<input maxlength="100" value="{{old('nombre_empleado')}}" class="form-control" type="text" name="nombre_empleado"
 							@if($errors->has('nombre_empleado'))
 							style="border-color:red;"
 							@endif
@@ -240,7 +240,7 @@
 		
 		font-weight:bold;
 		color: #373737;
-		background-color:#cdc0b7;
+		background-color:#f3d3be;
 
 	}
 	.checkbox-list

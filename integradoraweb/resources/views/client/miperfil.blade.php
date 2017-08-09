@@ -4,7 +4,6 @@
 	<div class="panel col-md-6 col-md-offset-3">
 		<div class="panel-body">
 			<div class="row">
-
 				<div class="col-md-6 text-left">
 					<h1><strong>Mi Perfil</strong></h1>
 				</div>

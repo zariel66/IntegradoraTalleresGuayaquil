@@ -71,7 +71,7 @@
 {
 	font-weight:bold;
 	color: #373737;
-	background-color:#cdc0b7;
+	background-color:#f3d3be;
 }
 
 @media only screen and (min-width: 640px) and (max-width: 1190px) {
