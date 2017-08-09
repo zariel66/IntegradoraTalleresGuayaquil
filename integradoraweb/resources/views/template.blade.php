@@ -17,7 +17,7 @@
 	<link href="{{ URL::asset('css/jquery-ui.min.css')}}" rel="stylesheet">
 	<script type="text/javascript" src="{{ URL::asset('js/jquery-ui.min.js')}}"></script>
 	<meta name="csrf-token" content="{{ csrf_token() }}">
-	<title>Integradora Demo</title>
+	<title>{{config("constants.app_name")}}</title>
 	<meta name="description" content="Únete a nuestro sitio y encuentra el taller automotriz ideal que necesitas para el mantenimiento y reparación de tu vehiculo aquí en la ciudad de Guayaquil">
   	<meta name="keywords" content="skilledev,taller,talleres,guayaquil,Ecuador,reparacion,mantenimiento,gps,geoposicionamiento,vehiculos,busqueda,carroceria,mecanico,tapiceria,vidreria,neumaticos,llantas,cerca,mecanica,reparar,concesionaria,servicio">
   	<meta name="author" content="Dimitri Laaz">
@@ -26,18 +26,19 @@
 	<nav id="navbar-section" class="navbar navbar-inverse navbar-static-top">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a class="navbar-brand" href="{{url('/')}}">APPNAME HERE</a>
+				<a class="navbar-brand" href="{{url('/')}}">{{config("constants.app_name")}}</a>
 			</div>
 			@if (Auth::check())
  			@if (Auth::user()->tipo == 2)
 			<ul class="nav navbar-nav">
 				<li class=""><a href="{{url('busquedataller')}}">Busca tu taller</a></li>
-				<li><a href="{{url('evaluacionservicio')}}">Recomienda y evalúa
+				
+				<li><a href="{{url('perfil')}}">Mi perfil</a></li>
+				<li><a href="{{url('evaluacionservicio')}}">Encuestas del servicio
 				@if(session()->has('pendingreview') && session()->get('pendingreview')>0)	
 				  <span class="badge">{{session()->get('pendingreview')}}</span>
 				@endif  
 				</a></li>
-				<li><a href="{{url('perfil')}}">Mi perfil</a></li>
 			</ul>
 			@else if(Auth::user()->tipo == 1)
 			<ul class="nav navbar-nav">
@@ -48,7 +49,13 @@
 			@endif
 			<ul class="nav navbar-nav navbar-right">
 			@if (Auth::check())
-				<li><a ><span class="glyphicon glyphicon-user"></span>  {{Auth::user()->username}}</a></li>
+				<li><a
+					@if (Auth::user()->tipo == 2)
+					 href="{{url('perfil')}}"
+					@else
+					 href="{{url('perfiltallerowner')}}"
+					@endif
+					 ><span class="glyphicon glyphicon-user"></span>  {{Auth::user()->username}}</a></li>
 				<li><a href="{{url('logout')}}"><span class="glyphicon glyphicon-off"></span> Cerrar Sesión</a></li>
 			@else
 				<li><a href="{{url('registrocliente')}}"><span class="glyphicon glyphicon-user"></span> Regístrate</a></li>

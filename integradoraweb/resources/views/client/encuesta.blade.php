@@ -15,7 +15,16 @@
 				</div>
 				<br>
 				<div class="row">
-					Recuerda que recibiste un <strong>descuento</strong> del <strong>{{$review->descuento}}%</strong> en tu última visita
+					Tu <strong>última visita</strong> fue el {{$review->fecha_hora->format('d/m/Y')}}
+				</div>
+				<div class="row">
+					<strong>Precio del servicio recibido:</strong> ${{$review->precio_original}}
+				</div>
+				<div class="row">
+					<strong>Descuento recibido en la última visita: </strong> {{$review->descuento}}%
+				</div>
+				<div class="row">
+					<strong>Total cancelado: </strong> ${{$review->total}}
 				</div>
 				<br><br>
 				<div >
@@ -42,7 +51,7 @@
 						</div>
 						<br><br><br><br><br><br>
 						<div class="row">
-							<label>¿Pudo el taller resolver los problemas de su vehículo?, califique la eficiencia del mismo:</label>
+							<label>¿Pudo el taller resolver los problemas de su vehículo de forma óptima?, califique la eficiencia del mismo:</label>
 							<div id="eficiencia" class="range-input"></div>
 							<input class="form-control" type="hidden" name="eficiencia" value="5">
 							<div class="col-md-4 bad-label"><strong>Poco capacitado</strong></div>
@@ -130,8 +139,9 @@
 	}
 	.submit-btn
 	{
-		background-color: #cdc0b7;
-		font-weight: bold;
+		font-weight:bold;
+		color: #373737;
+		background-color:#f3d3be;
 		width: 150px;
 	}
 	

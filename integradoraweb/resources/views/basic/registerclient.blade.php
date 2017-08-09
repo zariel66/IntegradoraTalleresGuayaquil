@@ -49,7 +49,7 @@
 							<div style="color:red"><small>{{ $errors->first('apellido') }}</small></div>
 						</div>
 						<div class="col-md-2 col-md-offset-1">
-							<label>Marca del Vehículo(*): </label>
+							<label>Marca de su Vehículo(*): </label>
 						</div>
 						<div class="col-md-3">
 							<select class="form-control" name="marca">
@@ -73,7 +73,7 @@
 							<div style="color:red"><small>{{ $errors->first('username') }}</small></div>
 						</div>
 						<div class="col-md-2 col-md-offset-1">
-							<label>Modelo del vehículo(*): </label>
+							<label>Modelo de su vehículo(*): </label>
 						</div>
 						<div class="col-md-3">
 							<input value="{{old('modelo')}}" class="form-control" name="modelo" type="text"
@@ -120,6 +120,7 @@
 					<div class="row">
 						<div class="col-md-3">
 							<input class="btn register-buttons" type="submit" value="Registrar">
+							
 						</div>
 						
 					</div>
@@ -162,7 +163,7 @@
 		
 		font-weight:bold;
 		color: #373737;
-		background-color:#cdc0b7;
+		background-color:#f3d3be;
 
 	}
 	@media only screen and (min-width: 640px) and (max-width: 1190px) {

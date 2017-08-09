@@ -28,7 +28,7 @@
 		  			</p></div>
 		  			<br>
 		  			@if(count($taller->calificaciones->where('estado', 0)->where('idusuario',$idusuario))==0)
-		  			<button id="contact-button" onclick="getContactInfo()" class="btn" style="background-color: #cdc0b7"><strong>Deseo ponerme en contacto</strong></button>
+		  			<button id="contact-button" onclick="getContactInfo()" class="btn" style="background-color:#f3d3be;"><strong>Deseo ponerme en contacto</strong></button>
 		  			<div id="contact-section">
 		  				<div class="">
 				  			<h4><strong>Contacto:</strong></h4> 

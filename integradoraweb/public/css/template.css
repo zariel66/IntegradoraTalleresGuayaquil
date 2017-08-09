@@ -25,15 +25,15 @@
 
 @keyframes btnbgtrans {
 	from{
-		background-color: #cdc0b7;
+		background-color: #f3d3be;
 		font-weight: bold;
 		width: 150px;
 		color:black;
 	}
 	to {
-		background-color: #a7968b;
+		background-color: #f7be98;
 		font-weight: bold;
-		color: white;
+		/*color: white;*/
 	}
 }
 

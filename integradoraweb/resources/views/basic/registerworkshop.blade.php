@@ -4,7 +4,7 @@
 	<div class="panel col-md-10 col-md-offset-1">
 		<div class="panel-body">
 			<div class="row">
-				<h2 style="font-weight:bold;">Registro de Taller</h2>
+				<h2 style="font-weight:bold;">Registro del Taller</h2>
 			</div>
 			
 			<div class="row">
@@ -240,7 +240,7 @@
 		
 		font-weight:bold;
 		color: #373737;
-		background-color:#cdc0b7;
+		background-color:#f3d3be;
 
 	}
 	.checkbox-list

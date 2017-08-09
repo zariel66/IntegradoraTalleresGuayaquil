@@ -3,6 +3,13 @@
 <div id="form-section-background" class="container">
 	<div class="panel col-md-10 col-md-offset-1">
 		<div class="panel-body">
+			<div class="row">
+				<div class="col-md-6 text-left">
+					<h1><strong>Búsqueda del Taller</strong></h1>
+				</div>
+				
+			</div>
+			<hr>
 			
 			<div class="row">
 				<!-- <form> -->
@@ -27,7 +34,7 @@
 						</select>
 					</div>
 					<div class="col-md-3 col-md-offset-1" style="margin-top:25px">
-						<button class="btn" id="search-btn" onclick="searchWorkshops(5)">Buscar Taller</button>
+						<button class="btn" id="search-btn" onclick="searchWorkshops(5)"><span class="glyphicon glyphicon-search"></span> Buscar Taller</button>
 					</div>
 				<!-- </form> -->
 			</div>
@@ -78,22 +85,10 @@
 		{
 			background-color:#cdc0b7;
 		}
-		@keyframes btnbgtrans {
-		    from{
-		    	background-color: #cdc0b7;
-				font-weight: bold;
-				width: 150px;
-				color:black;
-		    }
-		    to {
-		    	background-color: #a7968b;
-				font-weight: bold;
-				color: white;
-		    }
-		}
+		
 		#search-btn
 		{
-			background-color: #cdc0b7;
+			background-color: #f3d3be;
 			font-weight: bold;
 			width: 150px;
 			
