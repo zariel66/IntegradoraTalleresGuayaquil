@@ -3,6 +3,7 @@ package com.example.karen.tallerguayaquil.models;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class WorkShop implements Serializable {
@@ -10,11 +11,14 @@ public class WorkShop implements Serializable {
     @SerializedName("id")
     private int id;
 
-    @SerializedName("lat")
-    private float latitude;
+    @SerializedName("distance")
+    private float distance;
 
-    @SerializedName("lon")
-    private float longitude;
+    @SerializedName("nombre")
+    private String firstName;
+
+    @SerializedName("apellido")
+    private String lastName;
 
     @SerializedName("username")
     private String username;
@@ -25,17 +29,14 @@ public class WorkShop implements Serializable {
     @SerializedName("password_confirmation")
     private String passwordConfirmation;
 
-    @SerializedName("direccion")
-    private String address;
-
     @SerializedName("correo")
     private String email;
 
-    @SerializedName("nombre")
-    private String firstName;
+    @SerializedName("nombre_taller")
+    private String workshopName;
 
-    @SerializedName("apellido")
-    private String lastName;
+    @SerializedName("direccion")
+    private String address;
 
     @SerializedName("telefono")
     private String phone;
@@ -43,14 +44,22 @@ public class WorkShop implements Serializable {
     @SerializedName("nombre_empleado")
     private String managerName;
 
-    @SerializedName("nombre_taller")
-    private String workshopName;
+    @SerializedName("latitud")
+    private double latitude;
 
-    @SerializedName("marcas[]")
-    private List<String> brandList;
+    @SerializedName("longitud")
+    private double longitude;
 
-    @SerializedName("servicios[]")
-    private List<String> serviceList;
+    @SerializedName("marcas")
+    private List<Brand> brandList;
+
+    @SerializedName("servicios")
+    private List<Service> serviceList;
+
+    public WorkShop(){
+        this.brandList = new ArrayList<>();
+        this.serviceList = new ArrayList<>();
+    }
 
     public int getId() {
         return id;
@@ -60,19 +69,27 @@ public class WorkShop implements Serializable {
         this.id = id;
     }
 
-    public float getLatitude() {
+    public float getDistance() {
+        return distance;
+    }
+
+    public void setDistance(float distance) {
+        this.distance = distance;
+    }
+
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(float latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public float getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(float longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
@@ -157,19 +174,19 @@ public class WorkShop implements Serializable {
         this.workshopName = workshopName;
     }
 
-    public List<String> getBrandList() {
+    public List<Brand> getBrandList() {
         return brandList;
     }
 
-    public void setBrandList(List<String> brandList) {
+    public void setBrandList(List<Brand> brandList) {
         this.brandList = brandList;
     }
 
-    public List<String> getServiceList() {
+    public List<Service> getServiceList() {
         return serviceList;
     }
 
-    public void setServiceList(List<String> serviceList) {
+    public void setServiceList(List<Service> serviceList) {
         this.serviceList = serviceList;
     }
 }

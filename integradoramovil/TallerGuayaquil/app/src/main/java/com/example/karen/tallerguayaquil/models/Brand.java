@@ -4,7 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class Brand implements Serializable {
+import io.realm.RealmObject;
+
+public class Brand extends RealmObject implements Serializable {
 
     @SerializedName("id")
     private int id;

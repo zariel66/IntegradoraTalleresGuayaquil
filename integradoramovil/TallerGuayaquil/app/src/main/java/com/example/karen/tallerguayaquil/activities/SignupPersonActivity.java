@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.karen.tallerguayaquil.R;
 import com.example.karen.tallerguayaquil.models.Person;
+import com.example.karen.tallerguayaquil.models.WorkShop;
 import com.example.karen.tallerguayaquil.utils.Util;
 
 
@@ -20,10 +21,15 @@ public class SignupPersonActivity extends AppCompatActivity {
     private EditText mFirstNameView, mLastNameView,
             mEmailView, mUsernameView, mPasswordView;
 
+    private int type;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup_person);
+
+        // Get type
+        type = getIntent().getExtras().getInt("type");
 
         mFirstNameView = (EditText) findViewById(R.id.txt_first_name);
         mLastNameView = (EditText) findViewById(R.id.txt_last_name);
@@ -47,7 +53,7 @@ public class SignupPersonActivity extends AppCompatActivity {
     public void attemptNext(View v) {
 
         // Init progress message
-        Util.showLoading(SignupPersonActivity.this, getString(R.string.title_progress_validation_message));
+        Util.showLoading(this, getString(R.string.title_progress_validation_message));
 
         // Reset errors.
         mFirstNameView.setError(null);
@@ -72,7 +78,7 @@ public class SignupPersonActivity extends AppCompatActivity {
             cancel = true;
         }
 
-        if (TextUtils.isEmpty(password)) {
+        if (TextUtils.isEmpty(password) || password.length() < 8) {
             mPasswordView.setError(getString(R.string.error_field_required));
             focusView = mPasswordView;
             cancel = true;
@@ -88,13 +94,13 @@ public class SignupPersonActivity extends AppCompatActivity {
             cancel = true;
         }
 
-        if (TextUtils.isEmpty(lastName)) {
+        if (TextUtils.isEmpty(lastName) || lastName.length() < 4) {
             mLastNameView.setError(getString(R.string.error_incorrect_text_field));
             focusView = mLastNameView;
             cancel = true;
         }
 
-        if (!Util.isNameValid(firsName)) {
+        if (!Util.isNameValid(firsName) || firsName.length() < 4) {
             mFirstNameView.setError(getString(R.string.error_incorrect_text_field));
             focusView = mFirstNameView;
             cancel = true;
@@ -105,19 +111,35 @@ public class SignupPersonActivity extends AppCompatActivity {
             focusView.requestFocus();
         } else {
 
-            Person person = new Person();
-            person.setFirstName(firsName);
-            person.setLastName(lastName);
-            person.setEmail(email);
-            person.setUsername(username);
-            person.setPassword(password);
+            if ( type ==1 ) {
+                Person person = new Person();
+                person.setFirstName(firsName);
+                person.setLastName(lastName);
+                person.setEmail(email);
+                person.setUsername(username);
+                person.setPassword(password);
 
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("person", person);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("person", person);
 
-            Intent i = new Intent(SignupPersonActivity.this, SignupVehicleActivity.class);
-            i.putExtras(bundle);
-            startActivity(i);
+                Intent i = new Intent(this, SignupVehicleActivity.class);
+                i.putExtras(bundle);
+                startActivity(i);
+            } else {
+                WorkShop workShop = new WorkShop();
+                workShop.setFirstName(firsName);
+                workShop.setLastName(lastName);
+                workShop.setEmail(email);
+                workShop.setUsername(username);
+                workShop.setPassword(password);
+
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("workshop", workShop);
+
+                Intent i = new Intent(this, SignupServiceActivity.class);
+                i.putExtras(bundle);
+                startActivity(i);
+            }
         }
 
         Util.hideLoading();

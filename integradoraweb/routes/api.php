@@ -18,5 +18,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::get('/marcas', 'MovilController@obtenermarcas');
-Route::post('/clientes', 'MovilController@ingresarclientes');
+Route::get('/marcas', 'MovilController@obtenerMarcas');
+
+Route::post('/vehiculos', 'MovilController@obtenerVehiculos');
+Route::post('/registroclientesubmit', 'MovilController@registrarCliente');
+Route::post('/registrotallersubmit', 'MovilController@registrarTaller');
+Route::post('/iniciarsesion', 'MovilController@iniciarSesion');
+Route::post('/busquedataller', 'MovilController@busquedaTaller');

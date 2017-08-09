@@ -53,10 +53,6 @@
     <string name="title_activity_categorias">Categorias</string>
 
 
-    <!-- Strings relalted to preferences -->
-    <string name="preference_user_token">USER_TOKEN</string>
-
-
     <!-- Strings related to map api-->
     <string name="google_android_map_api_key">AIzaSyAmAzTOZRyXsIGG2yWjOoghNJJCuwGX_Bo</string>
 
@@ -72,5 +68,14 @@
     <!-- Strings related to service -->
     <string name="message_service_server_empty">No se encontraron registros</string>
     <string name="message_service_server_failed">Hubo problemas, intente nuevamente en unos minutos</string>
+
+
+    <!-- Strings related to user preferences -->
+    <string name="preferences_person_id">USER_ID</string>
+    <string name="preferences_person_first_name">PERSON_FIRST_NAME</string>
+    <string name="preferences_person_last_name">PERSON_LAST_NAME</string>
+    <string name="preferences_person_username">PERSON_USERNAME</string>
+    <string name="preferences_person_email">PERSON_EMAIL</string>
+    <string name="preferences_person_token">PERSON_TOKEN</string>
 
 </resources>

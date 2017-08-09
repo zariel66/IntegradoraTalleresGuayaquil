@@ -2,6 +2,7 @@ package com.example.karen.tallerguayaquil.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -12,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.karen.tallerguayaquil.R;
+import com.example.karen.tallerguayaquil.models.Api;
 import com.example.karen.tallerguayaquil.models.Person;
 import com.example.karen.tallerguayaquil.utils.ApiService;
 import com.example.karen.tallerguayaquil.utils.ServiceGenerator;
@@ -90,17 +92,13 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             if (Util.isNetworkAvailable(getApplicationContext())) {
 
-                //Util.showLoading(LoginActivity.this, "Iniciando Sesión...");
+                Util.showLoading(LoginActivity.this, "Iniciando Sesión...");
 
                 Map<String, String> params = new HashMap<>();
                 params.put("username", username);
                 params.put("password", password);
 
-                //loginTask(params);
-
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
+                loginTask(params);
             } else {
                 Util.showToast(getApplicationContext(), getString(R.string.message_network_connectivity_failed));
             }
@@ -111,34 +109,43 @@ public class LoginActivity extends AppCompatActivity {
     private void loginTask(Map<String,String> params){
 
         ApiService authService = ServiceGenerator.createApiService();
-        Call<Person> call = authService.login(params);
-
-        call.enqueue(new Callback<Person>() {
+        Call<Api<Person>> call = authService.login(params);
+        call.enqueue(new Callback<Api<Person>>() {
             @Override
-            public void onResponse(@NonNull Call<Person> call, @NonNull Response<Person> response) {
+            public void onResponse(@NonNull Call<Api<Person>> call, @NonNull Response<Api<Person>> response) {
                 if (response.isSuccessful()) {
-                    Person person = response.body();
+                    Api<Person> api = response.body();
 
-                    // Save user in shared preferences
-                    SessionManager sessionManager = new SessionManager(getApplicationContext());
-                    //sessionManager.savePerson(person);
+                    if (!api.isError()) {
+                        Util.showToast(getApplicationContext(), api.getMsg());
 
-                    // Show message success
-                    Util.showToast(getApplicationContext(), "Inicio de Sesión existoso");
+                        Person p = api.getData();
+                        if (p!=null) {
 
-                    // Init Main
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
+                            SessionManager sessionManager = new SessionManager(LoginActivity.this);
+                            if (sessionManager.savePerson(p)) {
+                                Intent intent = new Intent(LoginActivity.this, MapActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
+                            }
+                        } else {
+                            Util.showToast(getApplicationContext(),
+                                    getString(R.string.message_service_server_failed));
+                        }
 
+                    } else {
+                        // Show message error
+                        Util.showToast(getApplicationContext(), api.getMsg());
+                    }
                 } else {
-                    Util.showToast(getApplicationContext(), getString(R.string.message_service_server_failed));
+                    Util.showToast(getApplicationContext(),
+                            getString(R.string.message_service_server_failed));
                 }
                 Util.hideLoading();
             }
 
             @Override
-            public void onFailure(@NonNull Call<Person> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<Api<Person>> call, @NonNull Throwable t) {
                 Util.showToast(getApplicationContext(), getString(R.string.message_network_local_failed));
                 Util.hideLoading();
             }

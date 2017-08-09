@@ -10,6 +10,11 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.example.karen.tallerguayaquil.models.Service;
+import com.example.karen.tallerguayaquil.models.Vehicle;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,7 +23,7 @@ public class Util {
     /**
      * URL
      **/
-    public static final String API_URL = "http://skilledev.com/api/";
+    public static final String API_URL = "http://198.211.105.132:9999/api/";
 
     /**
      * UI LOADING
@@ -31,6 +36,8 @@ public class Util {
      * RESULT CODES
      */
     public static final int LOCATION_REQUEST_CODE = 003;
+    public static final int PLAY_SERVICES_REQUEST_CODE = 004;
+
 
 
     /**
@@ -39,6 +46,23 @@ public class Util {
     public static final String TAG_KEYBOARD = "SM-KEYBOARD";
     public static final String TAG_SIGNUP_WORKSHOP = "SM-SIGNUP-WORKSHOP";
 
+
+    /**
+     * CATEGORIES/SERVICES
+     */
+
+    public static final List<Service> getServices() {
+        List<Service> services = new ArrayList<>();
+
+        services.add(new Service(1,"Carrocería"));
+        services.add(new Service(2,"Electromecánico"));
+        services.add(new Service(3,"Mecánico"));
+        services.add(new Service(4,"Pintado"));
+        services.add(new Service(5,"Tapicería"));
+        services.add(new Service(6,"Vidriería"));
+
+        return services;
+    }
 
     /**
      * PATTERNS
