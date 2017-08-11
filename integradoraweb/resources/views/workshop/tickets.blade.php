@@ -92,6 +92,12 @@
 	border-color: white;
 	color:black;
 	}
+	.sendDiscount
+	{
+		font-weight:bold;
+		color: #373737;
+		background-color:#f3d3be;
+	}
 	@media only screen and (min-width: 640px) and (max-width: 1190px) {
 		    #form-section-background
 			{

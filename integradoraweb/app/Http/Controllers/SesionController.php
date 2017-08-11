@@ -36,7 +36,7 @@ class SesionController extends Controller
             }
             
         }
-        return redirect("login")->with("mensajet3","El usuario o la contraseña proporcionados son incorrectas");
+        return redirect("login")->with("mensajet3","Las credenciales proporcionadas son incorrectas");
     }
 
     public function cerrarSesion()

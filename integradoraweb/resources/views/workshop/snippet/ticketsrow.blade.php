@@ -14,7 +14,8 @@
 		<input id="total{{$row->id}}" type="text" class="form-control" placeholder="$" readonly>
 	</td>
 	<td class="col-md-1  text-center">
-		<input id="btnEnviar{{$row->id}}" type="submit" value="Enviar" class="form-control" onclick="actualizarRecomendacion({{$row->id}})" disabled>
+		<input id="btnEnviar{{$row->id}}" type="submit" value="Enviar" class="form-control sendDiscount" onclick="actualizarRecomendacion({{$row->id}})" disabled>
+		
 	</td>
 </tr>
 @endforeach

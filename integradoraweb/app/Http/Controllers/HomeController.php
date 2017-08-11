@@ -289,4 +289,17 @@ class HomeController extends Controller
 		$version = $laravel::VERSION;
 		return response()->json(array("laravel"=>$version, "PHP"=>phpversion(), "MYSQL" => $results[0]));
 	}
+
+	public function tokengeneration()
+	{
+		$api_token = str_random(60);
+		$input = array('api_token' => $api_token );
+		
+		$reglas  = array('api_token' => "unique:usuario,api_token" );
+		while (Validator::make($input,$reglas,array())->fails()) {
+			$api_token = str_random(60);
+			$input = array('api_token' => $api_token );
+		}
+		return $api_token;
+	}
 }

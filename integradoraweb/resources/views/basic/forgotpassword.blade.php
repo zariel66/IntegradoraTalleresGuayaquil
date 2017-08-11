@@ -15,14 +15,15 @@
 		@endif
 		
 		<div class="panel-body">
-			<form method="POST" action="forgotpassword" autocomplete="on">
+			<form id="olvidePassword" method="POST" action="forgotpassword" autocomplete="on">
 				<input type="hidden" name="_token" value="{{ csrf_token() }}">
 			  <div class="form-group">
 			    <label for="correo">Ingrese el correo de su cuenta registrada:</label>
 			    <input type="text" class="form-control" id="correo" name="correo">
 			  </div>
 			  <br>
-			  <input type="submit" class="btn login-btn center-block" value="Enviar">
+			  <button class="btn login-btn center-block" type="submit" form="olvidePassword" value="Submit"><span class="glyphicon glyphicon-send"></span> Enviar</button>
+			  <!-- <input type="submit" class="btn login-btn center-block" value="Enviar"> -->
 			</form>
 		</div>
 	</div>
@@ -50,7 +51,9 @@
 {
 	font-weight:bold;
 	color: #373737;
-	background-color:#cdc0b7;
+	background-color: #f3d3be;
+	width: 150px;
+
 }
 
 @media only screen and (min-width: 640px) and (max-width: 1190px) {
