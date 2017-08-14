@@ -19,7 +19,7 @@ class CheckReview
         if ($request->session()->has('pendingreview') == false) {
             $user = Auth::user();
             $pendingreview = count($user->calificaciones->where("estado",2));
-            error_log("pendientes: " . $pendingreview);
+            error_log("UNIT TEST: Reviews pendientes-> " . $pendingreview);
             session(['pendingreview' => $pendingreview]);
             if($pendingreview > 0)
             {

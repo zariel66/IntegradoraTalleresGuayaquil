@@ -11,7 +11,7 @@
 |
 */
 /*HOME*/
-Route::get('/',"HomeController@index")->middleware('guest','nonsecure');
+Route::get('/',"HomeController@index")->middleware('guest','sslp');
 Route::get("registrartaller","HomeController@registrarTaller")->middleware('guest','sslp');
 Route::post("registrotallersubmit","HomeController@registrarTallerSubmit")->middleware('guest');
 Route::get("registrocliente","HomeController@registrarCliente")->middleware('guest','sslp');
@@ -23,7 +23,7 @@ Route::get("tokenplz","HomeController@tokengeneration");
 Route::get('login',"HomeController@login")->middleware('guest','sslp');
 Route::get('logout',"SesionController@cerrarSesion")->middleware('myauth');
 Route::post('iniciarsesion',"SesionController@iniciarSesion");
-Route::get('forgotpassword',"SesionController@forgotPassword")->middleware('guest','nonsecure');
+Route::get('forgotpassword',"SesionController@forgotPassword")->middleware('guest');
 Route::post('forgotpassword',"SesionController@enviarResetToken");
 Route::get('nuevopwd/{pass_token}/{correo}',"SesionController@newPassword")->middleware('guest','sslp');
 Route::post('nuevopwd',"SesionController@setNewPassword");
