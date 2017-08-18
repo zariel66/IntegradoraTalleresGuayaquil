@@ -32,22 +32,28 @@ class ClienteController extends Controller
 
 	public function busquedaTaller2()
 	{
-		$servicio = Input::get('servicio');
-		$vehiculo =  Input::get('vehiculo');
-		$latitude = Input::get('latitude');
-		$longitude =  Input::get('longitude');
-		$distancia =  Input::get('distancia');
-		// error_log("servicio " . $servicio);
-		// error_log("lat: " . $latitude);
-		// error_log("lNG: " . $longitude);
-		error_log("distancia: " . $distancia);
-		$workshops = DB::select("select distinct t.*,6371*2*   asin( sqrt( power(sin(((". $latitude ." - t.latitud)*pi()/180) / 2),2)  + cos(". $latitude ." * pi()/180) * cos( t.latitud  *  pi()/180) * power( sin( (". $longitude ." - t.longitud) * pi()/180),2 )) )
-			 as distance
-			 from taller as t INNER JOIN servicio_taller as st ON t.id = st.idtaller INNER JOIN marca_taller as mt ON mt.idtaller=t.id INNER JOIN marca as m on mt.idmarca = m.id where st.categoria = '". $servicio ."' and mt.idmarca = ". $vehiculo ." 
-			 having distance< ". $distancia ."
-			 ORDER BY distance limit 10");
-		$html = view('client.snippet.searchresultlist')->with(array('results' => $workshops ))->render();
-		return response()->json(array('success'=> count($workshops),'workshops' => $workshops, "html" => $html));
+		try {
+			$servicio = Input::get('servicio');
+			$vehiculo =  Input::get('vehiculo');
+			$latitude = Input::get('latitude');
+			$longitude =  Input::get('longitude');
+			$distancia =  Input::get('distancia');
+			// error_log("servicio " . $servicio);
+			// error_log("lat: " . $latitude);
+			// error_log("lonG: " . $longitude);
+			error_log("distancia: " . $distancia);
+			$workshops = DB::select("select distinct t.*,6371*2*   asin( sqrt( power(sin(((". $latitude ." - t.latitud)*pi()/180) / 2),2)  + cos(". $latitude ." * pi()/180) * cos( t.latitud  *  pi()/180) * power( sin( (". $longitude ." - t.longitud) * pi()/180),2 )) )
+				 as distance
+				 from taller as t INNER JOIN servicio_taller as st ON t.id = st.idtaller INNER JOIN marca_taller as mt ON mt.idtaller=t.id INNER JOIN marca as m on mt.idmarca = m.id where st.categoria = '". $servicio ."' and mt.idmarca = ". $vehiculo ." 
+				 having distance< ". $distancia ."
+				 ORDER BY distance limit 10");
+			$html = view('client.snippet.searchresultlist')->with(array('results' => $workshops ))->render();
+		return response()->json(array('success'=> count($workshops),'workshops' => $workshops, "html" => $html));	
+		} catch (\Exception $e) {
+			error_log("UNIT TEST MESSAGE: Exception Busqueda Taller-> " . $e->getMessage());
+			abort(500);
+		}
+		
 	}
 	
 	public function perfilTaller($id)
@@ -72,7 +78,7 @@ class ClienteController extends Controller
 	{
 		$desc_code = str_random(8);
 		try {
-			
+			error_log("UNIT TEST: inputs -> idtaller:". Input::get('idtaller'));
 			$id = DB::table('calificacion')->insertGetId(
 		    ['idusuario' => Auth::user()->id,
 		     'idtaller' => Input::get('idtaller'),
@@ -91,7 +97,6 @@ class ClienteController extends Controller
 
 	public function evaluacionesRecomendaciones()
 	{
-		
 		$reviews = Auth::user()->calificaciones()->where('estado', 2)->paginate(1);
 		return view("client.encuesta", array('reviews' => $reviews ));
 	}
@@ -108,25 +113,26 @@ class ClienteController extends Controller
 			$taller = $calificacion->taller;
 
 			$rules = array(
-			'comentario' => 'required|min:10',
-			
+				'comentario' => 'required|min:10',
+				'honestidad' => 'required|numeric|min:1|max:10',
+				'precio' => 'required|numeric|min:1|max:10',
+				'eficiencia' => 'required|numeric|min:1|max:10',
+				'idcalificacion' => 'required'
 			); 
 
 
 			$custom = array(
+
 				"comentario.required" => "El :attribute es requerido",
 				
 				"comentario.min" => "El :attribute debe tener mínimo :min caracteres",
-				
-
-
 				);
 
 			$validation = Validator::make(Input::all(),$rules,$custom);
 
 			if ($validation->fails())
 			{
-				error_log("entro controller validacion");
+				error_log("UNIT TEST MESSAGE: MESSAGE BAG->" . $validation->getMessageBag()->toJson());
 				return Redirect::back()->withErrors($validation)->withInput(Input::all());
 			}
 
@@ -165,7 +171,7 @@ class ClienteController extends Controller
 
 		} catch (\Exception $e) {
 			DB::rollback();
-			throw $e;
+			abort(500);
 			return redirect("evaluacionservicio");	
 		}
 		DB::commit();
