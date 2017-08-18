@@ -2,7 +2,6 @@ package com.example.karen.tallerguayaquil.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -124,7 +123,14 @@ public class LoginActivity extends AppCompatActivity {
 
                             SessionManager sessionManager = new SessionManager(LoginActivity.this);
                             if (sessionManager.savePerson(p)) {
-                                Intent intent = new Intent(LoginActivity.this, MapActivity.class);
+                                Intent intent;
+
+                                if (p.getType() == 1) { // Taller
+                                    intent = new Intent(LoginActivity.this, ReservationActivity.class);
+                                } else { // Cliente
+                                    intent = new Intent(LoginActivity.this, MapActivity.class);
+                                }
+
                                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(intent);
                             }

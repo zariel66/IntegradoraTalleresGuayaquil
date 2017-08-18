@@ -16,10 +16,8 @@ import com.example.karen.tallerguayaquil.models.Api;
 import com.example.karen.tallerguayaquil.models.Brand;
 import com.example.karen.tallerguayaquil.models.Person;
 import com.example.karen.tallerguayaquil.models.Vehicle;
-import com.example.karen.tallerguayaquil.models.WorkShop;
 import com.example.karen.tallerguayaquil.utils.ApiService;
 import com.example.karen.tallerguayaquil.utils.ServiceGenerator;
-import com.example.karen.tallerguayaquil.utils.SessionManager;
 import com.example.karen.tallerguayaquil.utils.Util;
 
 import java.util.ArrayList;

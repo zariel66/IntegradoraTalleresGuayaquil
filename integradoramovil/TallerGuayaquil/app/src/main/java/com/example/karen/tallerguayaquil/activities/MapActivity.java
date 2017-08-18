@@ -1,12 +1,10 @@
 package com.example.karen.tallerguayaquil.activities;
 
-import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,17 +14,20 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
+import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.karen.tallerguayaquil.R;
+import com.example.karen.tallerguayaquil.listeners.OnInfoWindowElemTouchListener;
 import com.example.karen.tallerguayaquil.models.Api;
-import com.example.karen.tallerguayaquil.models.Brand;
+import com.example.karen.tallerguayaquil.models.Person;
 import com.example.karen.tallerguayaquil.models.Service;
 import com.example.karen.tallerguayaquil.models.Vehicle;
 import com.example.karen.tallerguayaquil.models.WorkShop;
@@ -34,6 +35,7 @@ import com.example.karen.tallerguayaquil.utils.ApiService;
 import com.example.karen.tallerguayaquil.utils.ServiceGenerator;
 import com.example.karen.tallerguayaquil.utils.SessionManager;
 import com.example.karen.tallerguayaquil.utils.Util;
+import com.example.karen.tallerguayaquil.widgets.MapWrapperLayout;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.google.android.gms.common.ConnectionResult;
@@ -53,20 +55,15 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import io.realm.Realm;
-import io.realm.RealmResults;
-import io.realm.Sort;
 import retrofit2.Call;
 import retrofit2.Callback;
 
@@ -78,6 +75,12 @@ public class MapActivity extends AppCompatActivity
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener{
+
+    private ViewGroup infoWindow;
+    private TextView infoTitle;
+    private TextView infoSnippet;
+    private Button infoButton;
+    private OnInfoWindowElemTouchListener infoButtonListener;
 
     private GoogleMap mMap;
     private GoogleApiClient mGoogleApiClient = null;
@@ -91,14 +94,25 @@ public class MapActivity extends AppCompatActivity
     private double lastLat=0, lastLong=0;
     private int distance = 5;
 
+    private int idWorkShop;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
         final FloatingActionsMenu menu_fab = (FloatingActionsMenu) findViewById(R.id.menu_fab);
+        FloatingActionButton fab_radio = (FloatingActionButton) findViewById(R.id.fab_radio);
         FloatingActionButton fab_route = (FloatingActionButton) findViewById(R.id.fab_route);
         FloatingActionButton fab_stop = (FloatingActionButton) findViewById(R.id.fab_stop);
+
+        fab_radio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                menu_fab.collapse();
+                showRadiusPicker();
+            }
+        });
         fab_route.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -114,6 +128,7 @@ public class MapActivity extends AppCompatActivity
             }
         });
 
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -121,6 +136,9 @@ public class MapActivity extends AppCompatActivity
 
         // Markers
         markerList = new ArrayList<>();
+
+        // Default id
+        idWorkShop = 0;
     }
 
 
@@ -145,42 +163,55 @@ public class MapActivity extends AppCompatActivity
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+        // Initial location
         mMap.setMyLocationEnabled(true);
-
         LatLng guayaquil = new LatLng(-2.203816, -79.897453);
-        /*Marker marker = mMap.addMarker(
-                new MarkerOptions()
-                        .position(guayaquil)
-                        .draggable(true));*/
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(guayaquil, 10));
 
-        mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+        // Obtain wrapper
+        final MapWrapperLayout mapWrapperLayout = (MapWrapperLayout) findViewById(R.id.map_relative_layout);
+        mapWrapperLayout.init(mMap, getPixelsFromDp(this, 39 + 20));
 
+        this.infoWindow = (ViewGroup) getLayoutInflater().inflate(R.layout.info_window, null);
+        this.infoTitle = (TextView) infoWindow.findViewById(R.id.title);
+        this.infoSnippet = (TextView) infoWindow.findViewById(R.id.snippet);
+        this.infoButton = (Button) infoWindow.findViewById(R.id.button);
+
+        this.infoButtonListener = new OnInfoWindowElemTouchListener(infoButton,
+                getResources().getDrawable(R.drawable.round_but_green_sel), //btn_default_normal_holo_light
+                getResources().getDrawable(R.drawable.round_but_red_sel)) //btn_default_pressed_holo_light
+        {
             @Override
-            public View getInfoWindow(Marker arg0) {
+            protected void onClickConfirmed(View v, Marker marker) {
+                if (idWorkShop != 0) {
+                    workshopEvaluation(idWorkShop);
+                } else {
+                    Util.showToast(getApplicationContext(), "Ha ocurrido un error, intentelo nuevamente");
+                }
+            }
+        };
+        this.infoButton.setOnTouchListener(infoButtonListener);
+
+
+        mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+            @Override
+            public View getInfoWindow(Marker marker) {
                 return null;
             }
 
             @Override
             public View getInfoContents(Marker marker) {
+                // Setting up the infoWindow with current's marker info
+                String title[] = marker.getTitle().split(",");
+                idWorkShop = Integer.valueOf(title[1]);
+                infoTitle.setText(title[0]);
+                infoSnippet.setText(marker.getSnippet());
+                infoButtonListener.setMarker(marker);
 
-                LinearLayout info = new LinearLayout(getApplicationContext());
-                info.setOrientation(LinearLayout.VERTICAL);
-
-                TextView title = new TextView(getApplicationContext());
-                title.setTextColor(Color.BLACK);
-                title.setGravity(Gravity.CENTER);
-                title.setTypeface(null, Typeface.BOLD);
-                title.setText(marker.getTitle());
-
-                TextView snippet = new TextView(getApplicationContext());
-                snippet.setTextColor(Color.GRAY);
-                snippet.setText(marker.getSnippet());
-
-                info.addView(title);
-                info.addView(snippet);
-
-                return info;
+                // We must call this to set the current marker and infoWindow references
+                // to the MapWrapperLayout
+                mapWrapperLayout.setMarkerWithInfoWindow(marker, infoWindow);
+                return infoWindow;
             }
         });
     }
@@ -196,6 +227,74 @@ public class MapActivity extends AppCompatActivity
                 mayRequestLocation();
             }
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_about) {
+            showAbout();
+            return true;
+        }else if (id == R.id.action_logout) {
+            showLogOut();
+            return true;
+        }
+
+        return false;
+    }
+
+    private void showAbout(){
+        AlertDialog alert = new AlertDialog.Builder(MapActivity.this)
+                .create();
+
+        // Setting Dialog Title
+        alert.setTitle("Acerca De");
+        // Setting Dialog Message
+        alert.setMessage("Esta aplicación es un demo del grupo 2 de la integradora.\nKaren Ponce y Dimitri Laaz\n\nTodos los derechos reservados");
+        // Setting Icon to Dialog
+        alert.setIcon(R.drawable.workshop_marker);
+        // Showing Alert Message
+        alert.show();
+    }
+
+    private void showLogOut(){
+        AlertDialog.Builder alert = new AlertDialog.Builder(MapActivity.this);
+        alert.setTitle("Taller Guayaquil");
+        alert.setMessage("Desea cerrar sesión?");
+        alert.setIcon(R.drawable.workshop_marker);
+
+        alert.setPositiveButton("Aceptar", new DialogInterface.OnClickListener(){
+            public void onClick(DialogInterface dialog, int whichButton) {
+                SessionManager sessionManager = new SessionManager(getApplicationContext());
+                sessionManager.clear();
+
+                Util.showToast(getApplicationContext(), "Sesion cerrada correctamente");
+                Intent i = new Intent(MapActivity.this,ActionActivity.class);
+                dialog.dismiss();
+                startActivity(i);
+                finish();
+
+            }
+        });
+
+        alert.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                dialog.dismiss();
+
+            }
+        });
+
+        AlertDialog ad = alert.create();
+        ad.show();
+
     }
 
     private boolean mayRequestLocation() {
@@ -253,8 +352,13 @@ public class MapActivity extends AppCompatActivity
                         } else {
                             vehicleArrayAdapter.addAll(api.getData());
 
-                            // Select first vehicle by default;
-                            vehicle = vehicleArrayAdapter.getItem(0);
+                            if (vehicleArrayAdapter.getCount() > 0) {
+                                // Select first vehicle by default;
+                                vehicle = vehicleArrayAdapter.getItem(0);
+                            } else {
+                                Util.showToast(getApplicationContext(),
+                                        getString(R.string.message_service_server_failed));
+                            }
                         }
                     } else {
                         Util.showToast(getApplicationContext(),
@@ -275,23 +379,6 @@ public class MapActivity extends AppCompatActivity
             Util.showToast(
                     getApplicationContext(), getString(R.string.message_network_connectivity_failed));
         }
-
-        /*
-        Realm realm = Realm.getDefaultInstance();
-        try {
-            RealmResults<Vehicle> result = realm.where(Vehicle.class).findAllSorted("id", Sort.DESCENDING);
-            if(!result.isEmpty()){
-                vehicleArrayAdapter.addAll(realm.copyFromRealm(result));
-
-                // Select first vehicle by default;
-                vehicle = vehicleArrayAdapter.getItem(0);
-            } else {
-                Util.showToast(getApplicationContext(), "Problemas en la BD, intente nuevamente");
-            }
-
-        } finally {
-            realm.close();
-        }*/
     }
 
     private void showServices(){
@@ -311,7 +398,7 @@ public class MapActivity extends AppCompatActivity
                             service = serviceArrayAdapter.getItem(which);
 
                             // Search workshops in radius
-                            search();
+                            startSearch();
                         }
                     });
             alert.show();
@@ -335,7 +422,7 @@ public class MapActivity extends AppCompatActivity
                             vehicle = vehicleArrayAdapter.getItem(which);
 
                             // Search workshops in radius
-                            search();
+                            startSearch();
                         }
                     });
             alert.show();
@@ -346,7 +433,7 @@ public class MapActivity extends AppCompatActivity
 
         // Build picker
         final NumberPicker np = new NumberPicker(getApplicationContext());
-        np.setMaxValue(50); // max value 100
+        np.setMaxValue(15); // max value 15
         np.setMinValue(1);   // min value 0
         np.setWrapSelectorWheel(false);
         np.setBackgroundColor(R.color.colorAccent);
@@ -358,27 +445,28 @@ public class MapActivity extends AppCompatActivity
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 distance = np.getValue();
-                Util.showToast(getApplicationContext(),
-                        "Buscando talleres de " + service.toString() +
-                                " para " + vehicle.toString() +
-                                " en " + distance + "Km de radio");
-
-                searchWorkshops();
+                startSearch();
             }
         });
         alert.setView(np);
         alert.show();
     }
 
-    private void search() {
+    private void startSearch() {
         if (lastLat==0 && lastLong==0) {
             Util.showToast(getApplicationContext(), "Estamos buscando su posición, intente en unos minutos\n" + lastLat + " " + lastLong);
         } else if (vehicle != null && service != null) {
-            showRadiusPicker();
+            Util.showToast(getApplicationContext(),
+                    "Buscando talleres de " + service.toString() +
+                            " para " + vehicle.toString() +
+                            " en " + distance + "Km de radio");
+
+            searchWorkshops();
         } else {
             Util.showToast(getApplicationContext(), "Hubo problemas, cierre y vuelva abrir la aplicación");
         }
     }
+
 
     /* Tracking */
 
@@ -531,7 +619,7 @@ public class MapActivity extends AppCompatActivity
                     .position(position)
                     .snippet(workShop.getAddress() +
                             "\nSe encuentra ha " + String.format("%.2f", workShop.getDistance()) +"Km")
-                    .title(workShop.getWorkshopName());
+                    .title(workShop.getWorkshopName() + ',' + workShop.getId());
 
             Marker marker = mMap.addMarker(markerOptions);
             markerList.add(marker);
@@ -587,6 +675,124 @@ public class MapActivity extends AppCompatActivity
             Util.showToast(
                     getApplicationContext(), getString(R.string.message_network_connectivity_failed));
         }
+    }
+
+
+    void workshopEvaluation(final int id){
+
+        if (Util.isNetworkAvailable(getApplicationContext())) {
+            Util.showLoading(MapActivity.this, "Solicitando visita...");
+
+            SessionManager sessionManager = new SessionManager(getApplicationContext());
+            Person person = sessionManager.getPerson();
+
+            Map<String, String> params = new HashMap<>();
+            params.put("api_token", person.getToken());
+
+            ApiService auth = ServiceGenerator.createApiService();
+            String url = String.format("/api/nuevaevaluacion/%s", id);
+
+            Call<Api<WorkShop>> call = auth.createEvaluation(url, params);
+            call.enqueue(new Callback<Api<WorkShop>>() {
+                @Override
+                public void onResponse(@NonNull Call<Api<WorkShop>> call,
+                                       @NonNull retrofit2.Response<Api<WorkShop>> response) {
+
+                    Log.e("Evaluation", response.toString());
+                    if (response.isSuccessful()) {
+                        Api<WorkShop> api = response.body();
+
+                        if (api.isError()) {
+                            // Show message error
+                            Util.showToast(getApplicationContext(), api.getMsg());
+                        } else {
+                            Util.showToast(getApplicationContext(), api.getMsg());
+                            workshopProfile(id);
+                        }
+                    } else {
+                        Util.showToast(getApplicationContext(),
+                                getString(R.string.message_service_server_failed));
+                    }
+                    Util.hideLoading();
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<Api<WorkShop>> call, @NonNull Throwable t) {
+
+                    Util.showToast(getApplicationContext(),
+                            getString(R.string.message_network_local_failed));
+                    Util.hideLoading();
+                }
+            });
+        } else {
+            Util.showToast(
+                    getApplicationContext(), getString(R.string.message_network_connectivity_failed));
+        }
+    }
+
+
+    void workshopProfile(int id){
+
+        if (Util.isNetworkAvailable(getApplicationContext())) {
+            Util.showLoading(MapActivity.this, "Buscando perfil taller...");
+
+            SessionManager sessionManager = new SessionManager(getApplicationContext());
+            Person person = sessionManager.getPerson();
+
+            Map<String, String> params = new HashMap<>();
+            params.put("api_token", person.getToken());
+
+            ApiService auth = ServiceGenerator.createApiService();
+            String url = String.format("perfiltaller/%s", id);
+
+            Call<Api<WorkShop>> call = auth.getWorkshopProfile(url, params);
+            call.enqueue(new Callback<Api<WorkShop>>() {
+                @Override
+                public void onResponse(@NonNull Call<Api<WorkShop>> call,
+                                       @NonNull retrofit2.Response<Api<WorkShop>> response) {
+
+                    if (response.isSuccessful()) {
+                        Api<WorkShop> api = response.body();
+
+                        if (api.isError()) {
+                            // Show message error
+                            Util.showToast(getApplicationContext(), api.getMsg());
+                        } else {
+                            WorkShop workShop = api.getData();
+
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("profile", workShop);
+
+                            Intent i = new Intent(MapActivity.this, WorkShopProfileActivity.class);
+                            i.putExtras(bundle);
+                            startActivity(i);
+                        }
+                    } else {
+                        Util.showToast(getApplicationContext(),
+                                getString(R.string.message_service_server_failed));
+                    }
+                    Util.hideLoading();
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<Api<WorkShop>> call, @NonNull Throwable t) {
+
+                    Util.showToast(getApplicationContext(),
+                            getString(R.string.message_network_local_failed));
+                    Util.hideLoading();
+                }
+            });
+        } else {
+            Util.showToast(
+                    getApplicationContext(), getString(R.string.message_network_connectivity_failed));
+        }
+    }
+
+
+
+    private int getPixelsFromDp(Context context, float dp) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int)(dp * scale + 0.5f);
     }
 
 }

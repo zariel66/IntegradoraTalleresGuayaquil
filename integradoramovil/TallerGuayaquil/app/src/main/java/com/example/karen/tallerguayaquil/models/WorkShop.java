@@ -44,6 +44,9 @@ public class WorkShop implements Serializable {
     @SerializedName("nombre_empleado")
     private String managerName;
 
+    @SerializedName("code")
+    private String codeDesc;
+
     @SerializedName("latitud")
     private double latitude;
 
@@ -172,6 +175,14 @@ public class WorkShop implements Serializable {
 
     public void setWorkshopName(String workshopName) {
         this.workshopName = workshopName;
+    }
+
+    public String getCodeDesc() {
+        return codeDesc;
+    }
+
+    public void setCodeDesc(String codeDesc) {
+        this.codeDesc = codeDesc;
     }
 
     public List<Brand> getBrandList() {

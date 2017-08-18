@@ -12,6 +12,9 @@ public class Service implements Serializable {
     @SerializedName("nombre")
     private String name;
 
+    @SerializedName("categoria")
+    private String category;
+
     public Service(int id, String name) {
         this.id = id;
         this.name = name;
@@ -31,6 +34,14 @@ public class Service implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     @Override
