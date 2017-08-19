@@ -47,7 +47,7 @@
 	/*background-size:  100% 100%;*/
 	background-size: 100% 100%;
 	/*min-height:700px;*/
-	height:700px;
+	min-height:700px;
 	padding-left: 30%;
 	padding-right: 20%;
 	padding-top: 12%;
