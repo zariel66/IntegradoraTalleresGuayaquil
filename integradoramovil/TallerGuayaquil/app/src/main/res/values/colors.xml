@@ -14,5 +14,10 @@
     <color name="list_odd">#E1E2E2</color>
 
     <color name="black_70">#B2000000</color>
+<<<<<<< HEAD
+>>>>>>> master
+=======
+
+    <color name="grey_70">#80aaaaaa</color>
 >>>>>>> master
 </resources>

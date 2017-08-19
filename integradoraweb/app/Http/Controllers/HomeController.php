@@ -21,7 +21,6 @@ class HomeController extends Controller
     }
 	public function index()
 	{
-		
 		return view("basic.home");
 	}
 
@@ -33,6 +32,7 @@ class HomeController extends Controller
 
 	public function registrarTallerSubmit()
 	{
+
 		$rules = array(
 			'nombre' => 'required|regex:/(^[A-Za-záéíóú ]+$)+/|min:3',
 			'apellido' => 'required|regex:/(^[A-Za-záéíóú ]+$)+/|min:3',
@@ -89,7 +89,7 @@ class HomeController extends Controller
 
 		if ($validation->fails())
 		{
-
+			error_log("UNIT TEST MESSAGE: MESSAGE BAG->" . $validation->getMessageBag()->toJson());
 			return Redirect::back()->withErrors($validation)->withInput(Input::all());
 		}
 		$api_token = str_random(60);
@@ -100,7 +100,7 @@ class HomeController extends Controller
 			$api_token = str_random(60);
 			$input = array('api_token' => $api_token );
 		}
-		error_log("api_token: ". $api_token);
+		error_log("UNIT TEST MESSAGE: api_token-> ". $api_token);
 		DB::beginTransaction();
 		try {
 			$idusuario = DB::table('usuario')->insertGetId(
@@ -149,14 +149,14 @@ class HomeController extends Controller
 
 		} catch (\Exception $e) {
 			DB::rollback();
-			//throw $e;
+			error_log("UNIT TEST MESSAGE: Exception Registro Taller-> " . $e->getMessage());
 			abort(500);
 		}
 		DB::commit();
 
 
 		if(Auth::attempt(['username' =>  Input::get('username'), 'password' => Input::get('password')]))
-			return redirect("/");
+			return redirect("tallertickets");
 		else
 			return redirect("login");
 
@@ -301,5 +301,10 @@ class HomeController extends Controller
 			$input = array('api_token' => $api_token );
 		}
 		return $api_token;
+	}
+
+	public function knowmore()
+	{
+		return view("basic.knowmore");
 	}
 }

@@ -9,7 +9,19 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+<<<<<<< HEAD
 import android.widget.Toast;
+=======
+
+import com.example.karen.tallerguayaquil.R;
+import com.example.karen.tallerguayaquil.models.Api;
+import com.example.karen.tallerguayaquil.models.Brand;
+import com.example.karen.tallerguayaquil.models.Person;
+import com.example.karen.tallerguayaquil.models.Vehicle;
+import com.example.karen.tallerguayaquil.utils.ApiService;
+import com.example.karen.tallerguayaquil.utils.ServiceGenerator;
+import com.example.karen.tallerguayaquil.utils.Util;
+>>>>>>> master
 
 import java.util.ArrayList;
 import java.util.HashMap;

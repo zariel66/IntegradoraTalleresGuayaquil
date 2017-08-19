@@ -70,6 +70,7 @@ class WorkshopController extends Controller
 				->join('taller', 'calificacion.idtaller', '=', 'taller.id')
 				->join('usuario', 'calificacion.idusuario', '=', 'usuario.id')
 				->where('calificacion.desc_code', 'like',  $termino . '%')
+				->where('calificacion.estado', 0)
 				->where("taller.idusuario",Auth::user()->id)
 				->distinct()
 				->select('usuario.id','usuario.nombre', 'usuario.apellido')->get();
@@ -96,6 +97,21 @@ class WorkshopController extends Controller
 		$descuento = Input::get('descuento');
 		$total = Input::get('total');
 		try {
+			$rules = array(
+			
+			'precio' => 'required|numeric|min:0',
+			'descuento' => 'required|numeric|min:1|max:100',
+			'total' => 'required|numeric|min:0',
+			
+			); 
+			$validation = Validator::make(Input::all(),$rules,array());
+
+			if ($validation->fails())
+			{
+				error_log("UNIT TEST MESSAGE: MESSAGE BAG->" . $validation->getMessageBag()->toJson());
+				throw new \Exception("Error Processing Request", 1);
+				
+			}
 			$calificacion = Calificacion::find($id);
 			$calificacion->update(
 			[
@@ -112,7 +128,7 @@ class WorkshopController extends Controller
 	            $m->to($calificacion->user->correo, $calificacion->user->nombre)->subject('Ayúdanos evaluando la calidad del servicio');
 	        });
 		} catch (\Exception $e) {
-			throw $e;
+			//throw $e;
 			
 			$output = "<strong>Hubo un error al procesar los datos intente después</strong>";
 			return response()->json(array('message' => $output , 'success'=> 0 ));

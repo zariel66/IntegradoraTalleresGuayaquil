@@ -3,7 +3,6 @@ package com.example.karen.tallerguayaquil.utils;
 import com.example.karen.tallerguayaquil.models.Api;
 import com.example.karen.tallerguayaquil.models.Brand;
 import com.example.karen.tallerguayaquil.models.Person;
-import com.example.karen.tallerguayaquil.models.Service;
 import com.example.karen.tallerguayaquil.models.Vehicle;
 import com.example.karen.tallerguayaquil.models.WorkShop;
 
@@ -12,11 +11,12 @@ import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.Url;
 
 public interface ApiService {
 
@@ -31,6 +31,14 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("busquedataller/")
     Call<Api<List<WorkShop>>> searchWorkshops(@FieldMap Map<String, String> params);
+
+    @FormUrlEncoded
+    @POST
+    Call<Api<WorkShop>> getWorkshopProfile(@Url String url, @FieldMap Map<String, String> params);
+
+    @FormUrlEncoded
+    @POST
+    Call<Api<WorkShop>> createEvaluation(@Url String url, @FieldMap Map<String, String> params);
 
 
     /** SignUp**/

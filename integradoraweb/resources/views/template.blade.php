@@ -9,6 +9,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="icon" href="{{ URL::asset('imagenes/icons/logo.png')}}">
 
 	<!-- Optional theme -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
@@ -27,6 +28,7 @@
 	<nav id="navbar-section" class="navbar navbar-inverse navbar-static-top">
 		<div class="container-fluid">
 			<div class="navbar-header">
+				<img class="navbar-left" src="{{ URL::asset('imagenes/icons/logo.png')}}" style="width:40px;height:40px;margin-top:8px">
 				<a class="navbar-brand" href="{{url('/')}}">{{config("constants.app_name")}}</a>
 			</div>
 			@if (Auth::check())
@@ -47,6 +49,12 @@
 				<li class=""><a href="{{url('perfiltallerowner')}}">Mi Perfil</a></li>
 			</ul>
  			@endif
+ 			@else
+ 			<!--<ul class="nav navbar-nav">
+				<li class=""><a href="{{url('knowmore')}}">Conoce Más</a></li>
+				<li class=""><a href="{{url('aboutus')}}">Acerca De</a></li>
+				
+			</ul>-->
 			@endif
 			<ul class="nav navbar-nav navbar-right">
 			@if (Auth::check())
@@ -77,11 +85,11 @@
 				
 			</div>
 			<div class="col-md-3  col-md-offset-3">
-				<p>Contacto: 04-22920556</p>
+				<p>Contacto: (04) 226-9269</p>
 				<p>Dirección:  Km 30., Vía Perimetral 5, Guayaquil</p>
 			</div>
 			<div class="col-md-3">
-				<p>Email: integradoragrupo2@espol.edu.ec</p>
+				<p>Email: mind.coder.66@gmail.com</p>
 				<p>Powered by <a href="http://getbootstrap.com/css/" target="_blank">Bootstrap</a> </p>
 			</div>
 
