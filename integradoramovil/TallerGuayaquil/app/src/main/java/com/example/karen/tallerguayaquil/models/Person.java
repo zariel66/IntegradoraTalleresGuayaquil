@@ -11,6 +11,9 @@ public class Person implements Serializable {
     @SerializedName("id")
     private int id;
 
+    @SerializedName("tipo")
+    private int type;
+
     @SerializedName("nombre")
     private String firstName;
 
@@ -41,6 +44,14 @@ public class Person implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     public String getUsername() {

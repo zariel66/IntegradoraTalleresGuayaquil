@@ -318,7 +318,7 @@ class MovilController extends Controller
     } catch (\Exception $e) {
       return response()->json([
         'is_error' => true,
-        'error' => $e->getMessage()
+        'msg' => $e->getMessage()
       ]);
     }
   }
@@ -348,6 +348,72 @@ class MovilController extends Controller
       'msg' => $msg,
       'data' => $workshops
     ]);
+  }
+
+
+	public function perfilTaller($id_taller)
+  {
+    try {
+      $token = Input::get('api_token');
+
+      $user = User::where('api_token', $token)->firstOrFail();
+      $taller =  Taller::find($id_taller);
+
+			if(!is_null($taller))
+      {
+        $servicios = $taller->servicios;
+        $marcas = $taller->marcas;
+
+        $taller['servicios'] = $servicios;
+        $taller['marcas'] = $marcas;
+        $taller['code'] = $taller->calificaciones->where('estado', 0)->where('idusuario',$user->id)->first()->desc_code;
+			}
+
+      //$comentarios = $taller->calificaciones()->where('estado', 1)->orderBy('fecha_hora', 'desc')->paginate(5);
+
+      return response()->json([
+        'is_error' => false,
+        'data' => $taller
+      ]);
+
+    } catch (\Exception $e) {
+      return response()->json([
+        'is_error' => true,
+        'msg' => $e->getMessage()
+      ]);
+		}
+
+  }
+
+	public function nuevaEvaluacion($id_taller)
+	{
+		$desc_code = str_random(8);
+    try {
+      $token = Input::get('api_token');
+      $user = User::where('api_token', $token)->firstOrFail();
+
+			$id = DB::table('calificacion')->insertGetId(
+		    ['idusuario' => $user->id,
+		     'idtaller' => $id_taller,
+		     'estado' => 0,
+		     'desc_code' => $desc_code,
+		     'fecha_hora' => \Carbon\Carbon::now()
+		    ]
+      );
+
+      return response()->json([
+        'is_error' => false,
+        'msg' => 'Visita creada correctamente'
+      ]);
+
+    } catch (\Exception $e) {
+      return response()->json([
+        'is_error' => true,
+        'msg' => $e->getMessage()
+      ]);
+		}
 	}
+
+
 
 }

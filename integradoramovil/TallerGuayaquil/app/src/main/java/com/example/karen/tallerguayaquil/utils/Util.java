@@ -11,7 +11,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.example.karen.tallerguayaquil.models.Service;
-import com.example.karen.tallerguayaquil.models.Vehicle;
 
 import java.util.ArrayList;
 import java.util.List;

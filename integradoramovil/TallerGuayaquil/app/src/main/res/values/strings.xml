@@ -72,6 +72,7 @@
 
     <!-- Strings related to user preferences -->
     <string name="preferences_person_id">USER_ID</string>
+    <string name="preferences_person_type">USER_TYPE</string>
     <string name="preferences_person_first_name">PERSON_FIRST_NAME</string>
     <string name="preferences_person_last_name">PERSON_LAST_NAME</string>
     <string name="preferences_person_username">PERSON_USERNAME</string>

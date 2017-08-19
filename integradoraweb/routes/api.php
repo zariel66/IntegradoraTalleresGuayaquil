@@ -25,3 +25,5 @@ Route::post('/registroclientesubmit', 'MovilController@registrarCliente');
 Route::post('/registrotallersubmit', 'MovilController@registrarTaller');
 Route::post('/iniciarsesion', 'MovilController@iniciarSesion');
 Route::post('/busquedataller', 'MovilController@busquedaTaller');
+Route::post('/perfiltaller/{id_taller}', 'MovilController@perfilTaller');
+Route::post('/nuevaevaluacion/{id_taller}', 'MovilController@nuevaEvaluacion');
