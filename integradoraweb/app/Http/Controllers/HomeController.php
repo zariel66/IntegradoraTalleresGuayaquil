@@ -302,4 +302,9 @@ class HomeController extends Controller
 		}
 		return $api_token;
 	}
+
+	public function knowmore()
+	{
+		return view("basic.knowmore");
+	}
 }
