@@ -22,14 +22,14 @@ public interface ApiService {
 
     /** Services **/
 
-    @GET("marcas/")
+    @GET("marcas")
     Call<List<Brand>> getBrands();
 
-    @POST("vehiculos/")
+    @POST("vehiculos")
     Call<Api<List<Vehicle>>> getVehicles(@Body Person person);
 
     @FormUrlEncoded
-    @POST("busquedataller/")
+    @POST("busquedataller")
     Call<Api<List<WorkShop>>> searchWorkshops(@FieldMap Map<String, String> params);
 
     @FormUrlEncoded
@@ -42,16 +42,16 @@ public interface ApiService {
 
 
     /** SignUp**/
-    @POST("registrotallersubmit/")
+    @POST("registrotallersubmit")
     Call<Api> signupWorkshop(@Body WorkShop workShop);
 
-    @POST("registroclientesubmit/")
+    @POST("registroclientesubmit")
     Call<Api> signupPerson(@Body Person person);
 
 
     /** Login **/
     @FormUrlEncoded
-    @POST("iniciarsesion/")
+    @POST("iniciarsesion")
     Call<Api<Person>> login(@FieldMap Map<String, String> params);
 
 }
