@@ -19,7 +19,7 @@ class HomeController extends Controller
     {
         $this->middleware('guest');
     }
-	public function index()
+	public function register()
 	{
 		return view("basic.home");
 	}
@@ -303,8 +303,8 @@ class HomeController extends Controller
 		return $api_token;
 	}
 
-	public function knowmore()
+	public function index()
 	{
-		return view("basic.knowmore");
+		return view("basic.index");
 	}
 }
