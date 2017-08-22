@@ -7,6 +7,7 @@
 			<div class="panel panel-default col-md-5">
 				<div class="panel-body">
 					<div class="row info-text">
+						<h3 style="margin-top:0px;" class="text-center">Usuario</h3>
 						<img src="{{ URL::asset('imagenes/icons/usericon.png')}}" alt="imagen"  class="center-block" style="width:130px;height:130px">
 						<p class="register-text">Únete a nuestro sitio y encuentra el taller automotriz ideal que necesitas para el mantenimiento y reparación de tu vehiculo aquí en la ciudad de Guayaquil. Podrás encontrar un servicio de calidad basado en tu opinión y la de los demás. Qué esperas regístrate ya</p>
 					</div>
@@ -19,6 +20,7 @@
 			<div class="panel panel-default col-md-5 col-md-offset-1">
 				<div class="panel-body">
 					<div class="row info-text">
+						<h3 style="margin-top:0px;" class="text-center">Taller</h3>
 						<img src="{{ URL::asset('imagenes/icons/tallericon.png')}}" alt="imagen" class="center-block" style="width:130px;height:130px">
 						<p class="register-text">Registra la información de tus talleres automotrices en nuestra plataforma de forma gratuita y nuestros usuarios podrán contactarte por tus servicios. No pierdas la oportunidad de ganar clientes y de que tu negocio crezca.</p>
 
@@ -55,14 +57,14 @@
 
 }
 #register-buttons-section .panel{
-	height: 400px;
+	height: 430px;
 	color: #373737;
 	border-radius: 25px;
 	
 }
 #register-buttons-section .info-text
 {
-	min-height: 320px;
+	min-height: 350px;
 }
 .register-text
 {

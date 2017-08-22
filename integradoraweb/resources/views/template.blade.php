@@ -49,11 +49,11 @@
 			</ul>
  			@endif
  			@else
- 			<!--<ul class="nav navbar-nav">
-				<li class=""><a href="{{url('knowmore')}}">Conoce Más</a></li>
-				<li class=""><a href="{{url('aboutus')}}">Acerca De</a></li>
+ 			<ul class="nav navbar-nav">
+				<li class=""><a href="{{url('/')}}">Inicio</a></li>
+				<!-- <li class=""><a href="{{url('aboutus')}}">Acerca De</a></li> -->
 				
-			</ul>-->
+			</ul>
 			@endif
 			<ul class="nav navbar-nav navbar-right">
 			@if (Auth::check())
@@ -66,7 +66,7 @@
 					 ><span class="glyphicon glyphicon-user"></span>  {{Auth::user()->username}}</a></li>
 				<li><a href="{{url('logout')}}"><span class="glyphicon glyphicon-off"></span> Cerrar Sesión</a></li>
 			@else
-				<li><a href="{{url('registrocliente')}}"><span class="glyphicon glyphicon-user"></span> Regístrate</a></li>
+				<li><a href="{{url('register')}}"><span class="glyphicon glyphicon-user"></span> Regístrate</a></li>
 				<li><a href="{{url('login')}}"><span class="glyphicon glyphicon-log-in"></span> Iniciar Sesión</a></li>
 			@endif
 			</ul>
@@ -89,7 +89,7 @@
 			</div>
 			<div class="col-md-3">
 				<p>Email: mind.coder.66@gmail.com</p>
-				<p>Powered by <a href="http://getbootstrap.com/css/" target="_blank">Bootstrap</a> </p>
+				<p>Powered by <a rel="nofollow" href="http://getbootstrap.com/css/" target="_blank">Bootstrap</a> </p>
 			</div>
 
 		</div>
