@@ -17,6 +17,7 @@ use App\Marca;
 use App\Taller;
 use App\Calificacion;
 use App\Vehiculo;
+use Illuminate\Support\Facades\Mail;
 
 
 class MovilController extends Controller
@@ -359,18 +360,13 @@ class MovilController extends Controller
       $user = User::where('api_token', $token)->firstOrFail();
       $taller =  Taller::find($id_taller);
 
-			if(!is_null($taller))
+      if(!is_null($taller))
       {
-        $servicios = $taller->servicios;
-        $marcas = $taller->marcas;
         $code = $taller->calificaciones->where('estado', 0)->where('idusuario',$user->id)->first()->desc_code;
-        $comentarios = $taller->calificaciones()->where('estado', 1)->orderBy('fecha_hora', 'desc');
-
-        $taller['servicios'] = $servicios;
-        $taller['marcas'] = $marcas;
         $taller['code'] = $code;
-        $taller['evaluaciones'] = $comentarios;
-			}
+        $taller['servicios'] = $taller->servicios;
+        $taller['marcas'] = $taller->marcas;
+       }
 
       return response()->json([
         'is_error' => false,
@@ -382,25 +378,32 @@ class MovilController extends Controller
         'is_error' => true,
         'msg' => $e->getMessage()
       ]);
-		}
+    }
 
   }
 
-	public function nuevaEvaluacion($id_taller)
-	{
-		$desc_code = str_random(8);
-    try {
-      $token = Input::get('api_token');
-      $user = User::where('api_token', $token)->firstOrFail();
+  public function nuevaEvaluacion($id_taller)
+  {
+     try {
+	    $desc_code = str_random(8);
+            $token = Input::get('api_token');
+            $user = User::where('api_token', $token)->firstOrFail();
 
-			$id = DB::table('calificacion')->insertGetId(
-		    ['idusuario' => $user->id,
-		     'idtaller' => $id_taller,
-		     'estado' => 0,
-		     'desc_code' => $desc_code,
-		     'fecha_hora' => \Carbon\Carbon::now()
-		    ]
-      );
+	    try {
+              $calificacion = Calificacion::where([
+                ['idtaller', $id_taller],
+                ['idusuario', $user->id],
+                ['estado', 0],
+              ])->firstOrFail();
+	    } catch (\Exception $e) {
+	      $id = DB::table('calificacion')->insertGetId([
+                'idusuario' => $user->id,
+                'idtaller' => $id_taller,
+                'estado' => 0,
+                'desc_code' => $desc_code,
+                'fecha_hora' => \Carbon\Carbon::now()
+              ]);
+	    }
 
       return response()->json([
         'is_error' => false,
@@ -412,9 +415,131 @@ class MovilController extends Controller
         'is_error' => true,
         'msg' => $e->getMessage()
       ]);
-		}
-	}
+    }
+  }
+
+  public function getCalificaciones($id_taller)
+  {
+    try {
+      $token = Input::get('api_token');
+      $user = User::where('api_token', $token)->firstOrFail();
+      $calificaciones = Calificacion::where([
+          ['idtaller', $id_taller],
+          ['estado', 1],
+      ])->with('user')->get();
+
+      return response()->json([
+        'is_error' => false,
+        'data' => $calificaciones
+      ]);
+
+    } catch (\Exception $e) {
+      return response()->json([
+        'is_error' => true,
+        'msg' => $e->getMessage()
+      ]);
+    }
+
+  }
 
 
+  public function getReservaciones()
+  {
+    try {
+      $token = Input::get('api_token');
+      $user = User::where('api_token', $token)->firstOrFail();
+      $taller =  Taller::where('idusuario', $user->id)->firstOrFail();;
+      $reservaciones = Calificacion::where([
+          ['idtaller', $taller->id],
+          ['estado', 0],
+      ])->with('user')->get();
+
+      return response()->json([
+        'is_error' => false,
+        'data' => $reservaciones
+      ]);
+
+    } catch (\Exception $e) {
+      return response()->json([
+        'is_error' => true,
+        'msg' => $e->getMessage()
+      ]);
+    }
+
+  }
+
+  public function getReservacion()
+  {
+    try {
+      $token = Input::get('api_token');
+      $code = Input::get('code');
+
+      $user = User::where('api_token', $token)->firstOrFail();
+      $reservacion = Calificacion::where([
+          ['desc_code', $code],
+      ])->with('user')->firstOrFail();
+
+      return response()->json([
+        'is_error' => false,
+        'data' => $reservacion
+      ]);
+
+    } catch (\Exception $e) {
+      return response()->json([
+        'is_error' => true,
+        'msg' => $e->getMessage()
+      ]);
+    }
+
+  }
+
+
+  public function cerrarTicket()
+  {
+    $id = Input::get('id');
+    $precio = Input::get('precio');
+    $descuento = Input::get('descuento');
+    $total = Input::get('total');
+    try {
+        $rules = array(
+            'precio' => 'required|numeric|min:0',
+            'descuento' => 'required|numeric|min:1|max:100',
+            'total' => 'required|numeric|min:0',
+        ); 
+
+        $validation = Validator::make(Input::all(),$rules,array());       
+        $calificacion = Calificacion::find($id);
+        $calificacion->update(
+        [
+            "precio_original"=> $precio,
+            "descuento"=> $descuento,
+            "total"=> $total,
+            "estado" => 2,
+            'fecha_hora' => \Carbon\Carbon::now()
+        ]);
+
+        Mail::send('emails.reminder', ['calificacion' => $calificacion], function ($m) use ($calificacion) {
+            $m->from(config("constants.emails.from"), config("constants.app_name"));
+        
+            $m->to($calificacion->user->correo, $calificacion->user->nombre)->subject('Ayúdanos evaluando la calidad del servicio');
+        });
+
+        $output = "El código de la transacción ha sido confirmado. El usuario evaluará la calidad del servicio en los próximos días";
+
+        return response()->json([
+          'is_error' => false,
+          'msg' => $output
+        ]);
+
+    } catch (\Exception $e) {
+        $output = "Hubo un error al procesar los datos intente después";
+
+        return response()->json([
+          'is_error' => true,
+          'msg' => $output
+        ]);
+			
+    }
+  }
 
 }
