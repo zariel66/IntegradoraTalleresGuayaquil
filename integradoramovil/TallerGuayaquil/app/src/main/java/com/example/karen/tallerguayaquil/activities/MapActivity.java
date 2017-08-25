@@ -91,7 +91,8 @@ public class MapActivity extends AppCompatActivity
 
     private Vehicle vehicle = null;
     private Service service = null;
-    private double lastLat=0, lastLong=0;
+    //private double lastLat=0, lastLong=0;
+    private double lastLat=-2.151868, lastLong=-79.925051;
     private int distance = 5;
 
     private int idWorkShop;
@@ -677,7 +678,6 @@ public class MapActivity extends AppCompatActivity
         }
     }
 
-
     void workshopEvaluation(final int id){
 
         if (Util.isNetworkAvailable(getApplicationContext())) {
@@ -690,7 +690,7 @@ public class MapActivity extends AppCompatActivity
             params.put("api_token", person.getToken());
 
             ApiService auth = ServiceGenerator.createApiService();
-            String url = String.format("/api/nuevaevaluacion/%s", id);
+            String url = String.format("nuevaevaluacion/%s", id);
 
             Call<Api<WorkShop>> call = auth.createEvaluation(url, params);
             call.enqueue(new Callback<Api<WorkShop>>() {
@@ -712,13 +712,14 @@ public class MapActivity extends AppCompatActivity
                     } else {
                         Util.showToast(getApplicationContext(),
                                 getString(R.string.message_service_server_failed));
+                        Util.hideLoading();
                     }
-                    Util.hideLoading();
                 }
 
                 @Override
                 public void onFailure(@NonNull Call<Api<WorkShop>> call, @NonNull Throwable t) {
-
+                    Log.e("workshop-evaluation", t.toString());
+                    t.printStackTrace();
                     Util.showToast(getApplicationContext(),
                             getString(R.string.message_network_local_failed));
                     Util.hideLoading();
@@ -729,7 +730,6 @@ public class MapActivity extends AppCompatActivity
                     getApplicationContext(), getString(R.string.message_network_connectivity_failed));
         }
     }
-
 
     void workshopProfile(int id){
 
@@ -768,6 +768,7 @@ public class MapActivity extends AppCompatActivity
                             startActivity(i);
                         }
                     } else {
+                        Log.e("workshop-profile", response.toString());
                         Util.showToast(getApplicationContext(),
                                 getString(R.string.message_service_server_failed));
                     }
@@ -776,7 +777,8 @@ public class MapActivity extends AppCompatActivity
 
                 @Override
                 public void onFailure(@NonNull Call<Api<WorkShop>> call, @NonNull Throwable t) {
-
+                    Log.e("workshop-profile", t.toString());
+                    t.printStackTrace();
                     Util.showToast(getApplicationContext(),
                             getString(R.string.message_network_local_failed));
                     Util.hideLoading();
