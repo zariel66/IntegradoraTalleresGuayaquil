@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -112,6 +113,8 @@ public class LoginActivity extends AppCompatActivity {
         call.enqueue(new Callback<Api<Person>>() {
             @Override
             public void onResponse(@NonNull Call<Api<Person>> call, @NonNull Response<Api<Person>> response) {
+                Log.e("Login", response.toString());
+
                 if (response.isSuccessful()) {
                     Api<Person> api = response.body();
 

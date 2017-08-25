@@ -91,7 +91,8 @@ public class MapActivity extends AppCompatActivity
 
     private Vehicle vehicle = null;
     private Service service = null;
-    private double lastLat=0, lastLong=0;
+    //private double lastLat=0, lastLong=0;
+    private double lastLat=-2.151868, lastLong=-79.925051;
     private int distance = 5;
 
     private int idWorkShop;

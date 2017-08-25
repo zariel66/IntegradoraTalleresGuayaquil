@@ -59,6 +59,9 @@ public class WorkShop implements Serializable {
     @SerializedName("servicios")
     private List<Service> serviceList;
 
+    @SerializedName("evaluaciones")
+    private List<Evaluation> evaluationList;
+
     public WorkShop(){
         this.brandList = new ArrayList<>();
         this.serviceList = new ArrayList<>();
@@ -199,5 +202,13 @@ public class WorkShop implements Serializable {
 
     public void setServiceList(List<Service> serviceList) {
         this.serviceList = serviceList;
+    }
+
+    public List<Evaluation> getEvaluationList() {
+        return evaluationList;
+    }
+
+    public void setEvaluationList(List<Evaluation> evaluationList) {
+        this.evaluationList = evaluationList;
     }
 }
