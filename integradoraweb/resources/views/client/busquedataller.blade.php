@@ -203,9 +203,13 @@
 						  position: {lat: workshops[i].latitud,lng: workshops[i].longitud},
 						  map: map,
 						  title: workshops[i].nombre_taller,
-						  icon: icono
+						  icon: icono,
+						  url: "perfiltaller/" + workshops[i].id
 						});
 						markers.push(workshoposXY);
+						google.maps.event.addListener(workshoposXY, 'click', function() {
+						    window.location.href = this.url;
+						});
 					};
 				}
 				else

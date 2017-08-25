@@ -100,7 +100,7 @@
 							<div style="color:red"><small>{{ $errors->first('password') }}</small></div>
 						</div>
 						<div class="col-md-2 col-md-offset-1">
-							<label>Teléfono del establecimiento(*): </label>
+							<label>Teléfonos del establecimiento(*): </label>
 						</div>
 						<div class="col-md-3">
 							<input maxlength="50" value="{{old('telefono')}}" class="form-control" type="text" name="telefono"

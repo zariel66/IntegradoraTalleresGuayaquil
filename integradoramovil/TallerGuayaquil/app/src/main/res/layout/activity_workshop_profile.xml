@@ -237,6 +237,7 @@
                 android:gravity="center"
                 tools:text="0 usuarios han comentado eso" />
 
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -368,6 +369,7 @@
                 android:textSize="14sp"
                 android:text="No tiene ningún comentario"
                 android:visibility="gone"/>
+
 
         </LinearLayout>
     </ScrollView>
