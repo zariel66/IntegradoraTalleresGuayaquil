@@ -363,13 +363,14 @@ class MovilController extends Controller
       {
         $servicios = $taller->servicios;
         $marcas = $taller->marcas;
+        $code = $taller->calificaciones->where('estado', 0)->where('idusuario',$user->id)->first()->desc_code;
+        $comentarios = $taller->calificaciones()->where('estado', 1)->orderBy('fecha_hora', 'desc');
 
         $taller['servicios'] = $servicios;
         $taller['marcas'] = $marcas;
-        $taller['code'] = $taller->calificaciones->where('estado', 0)->where('idusuario',$user->id)->first()->desc_code;
+        $taller['code'] = $code;
+        $taller['evaluaciones'] = $comentarios;
 			}
-
-      //$comentarios = $taller->calificaciones()->where('estado', 1)->orderBy('fecha_hora', 'desc')->paginate(5);
 
       return response()->json([
         'is_error' => false,

@@ -37,7 +37,7 @@
 				<table class="table table-striped table-hover">
 					<thead>
 					  <tr>
-						<th class="text-center">Codigo</th>
+						<th class="text-center">Código</th>
 						<th class="text-center">Nombre</th>
 						<th class="text-center">Taller</th>
 						<th class="text-center">Precio Normal</th>
