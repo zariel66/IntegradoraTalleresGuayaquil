@@ -33,7 +33,7 @@
 				  			<h4><strong>Contacto:</strong></h4> 
 				  		</div>
 		  				<p>Nombre del empleado: {{$taller->nombre_empleado}}</p>
-		  				<p>Teléfono: {{$taller->telefono}}</p>
+		  				<p>Teléfonos: {{$taller->telefono}}</p>
 		  				<p>Correo: {{$taller->usuario->correo}}</p>
 		  				
 		  			</div>
@@ -143,7 +143,7 @@
 		  			@foreach($comentarios as $calificacion)
 		  			<div class="user-comment row">
 		  				<div class="col-md-8">
-		  					<p class="user-comment-username"><strong>{{$calificacion->user->username}}</strong> comento:</p>
+		  					<p class="user-comment-username"><strong>{{$calificacion->user->username}}</strong> comentó:</p>
 		  					<p>{{$calificacion->comentario}}</p>
 		  					<p class="date-comment text-left">{{$calificacion->fecha_hora}}</p>
 		  				</div>

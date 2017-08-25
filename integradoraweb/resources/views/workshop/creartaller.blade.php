@@ -40,7 +40,7 @@
 					<br>
 					<div class="row">
 						<div class="col-md-2">
-							<label>Teléfono del establecimiento(*): </label>
+							<label>Teléfonos del establecimiento(*): </label>
 						</div>
 						<div class="col-md-3">
 							<input maxlength="50" class="form-control" name="telefono" type="text" value="{{old('telefono')}}"
