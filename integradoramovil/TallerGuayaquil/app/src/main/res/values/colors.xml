@@ -15,8 +15,12 @@
 
     <color name="black_70">#B2000000</color>
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> master
 =======
+=======
+    <color name="black_50">#80000000</color>
+>>>>>>> master
 
     <color name="grey_70">#80aaaaaa</color>
 >>>>>>> master

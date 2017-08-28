@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.karen.tallerguayaquil">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -63,6 +65,19 @@
             android:name=".activities.WorkShopProfileActivity"
             android:theme="@style/AppTheme" />
 
+<<<<<<< HEAD
+>>>>>>> master
+=======
+        <activity
+            android:name=".activities.ScannerActivity"
+            android:clearTaskOnLaunch="true"
+            android:screenOrientation="portrait"
+            android:stateNotNeeded="true"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+
+        <activity
+            android:name=".activities.CompleteActivity"
+            android:theme="@style/AppTheme" />
 >>>>>>> master
 
         <meta-data

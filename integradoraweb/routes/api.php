@@ -27,3 +27,7 @@ Route::post('/iniciarsesion', 'MovilController@iniciarSesion');
 Route::post('/busquedataller', 'MovilController@busquedaTaller');
 Route::post('/perfiltaller/{id_taller}', 'MovilController@perfilTaller');
 Route::post('/nuevaevaluacion/{id_taller}', 'MovilController@nuevaEvaluacion');
+Route::post('/calificaciones/{id_taller}', 'MovilController@getCalificaciones');
+Route::post('/reservaciones', 'MovilController@getReservaciones');
+Route::post('/reservacion', 'MovilController@getReservacion');
+Route::post('/cerrarticket', 'MovilController@cerrarTicket');

@@ -93,11 +93,23 @@ public class WorkShop implements Serializable {
     @SerializedName("longitud")
     private double longitude;
 
+    @SerializedName("honestidad")
+    private double honesty;
+
+    @SerializedName("eficiencia")
+    private double efficiency;
+
+    @SerializedName("precio")
+    private double coste;
+
     @SerializedName("marcas")
     private List<Brand> brandList;
 
     @SerializedName("servicios")
     private List<Service> serviceList;
+
+    @SerializedName("calificaciones")
+    private List<Evaluation> evaluationList;
 
     public WorkShop(){
         this.brandList = new ArrayList<>();
@@ -135,6 +147,30 @@ public class WorkShop implements Serializable {
     public void setLongitude(double longitude) {
 >>>>>>> master
         this.longitude = longitude;
+    }
+
+    public double getHonesty() {
+        return honesty;
+    }
+
+    public void setHonesty(double honesty) {
+        this.honesty = honesty;
+    }
+
+    public double getEfficiency() {
+        return efficiency;
+    }
+
+    public void setEfficiency(double efficiency) {
+        this.efficiency = efficiency;
+    }
+
+    public double getCoste() {
+        return coste;
+    }
+
+    public void setCoste(double coste) {
+        this.coste = coste;
     }
 
     public String getUsername() {
@@ -243,5 +279,13 @@ public class WorkShop implements Serializable {
 
     public void setServiceList(List<Service> serviceList) {
         this.serviceList = serviceList;
+    }
+
+    public List<Evaluation> getEvaluationList() {
+        return evaluationList;
+    }
+
+    public void setEvaluationList(List<Evaluation> evaluationList) {
+        this.evaluationList = evaluationList;
     }
 }

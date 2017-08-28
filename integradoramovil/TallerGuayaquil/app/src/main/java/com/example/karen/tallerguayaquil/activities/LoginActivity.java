@@ -7,7 +7,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 >>>>>>> master
 import android.support.v7.app.AppCompatActivity;
+<<<<<<< HEAD
 import android.os.Bundle;
+=======
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.KeyEvent;
+>>>>>>> master
 import android.view.View;
 
 import com.example.karen.tallerguayaquil.R;
@@ -33,6 +39,8 @@ public class LoginActivity extends AppCompatActivity {
         call.enqueue(new Callback<Api<Person>>() {
             @Override
             public void onResponse(@NonNull Call<Api<Person>> call, @NonNull Response<Api<Person>> response) {
+                Log.e("Login", response.toString());
+
                 if (response.isSuccessful()) {
                     Api<Person> api = response.body();
 
