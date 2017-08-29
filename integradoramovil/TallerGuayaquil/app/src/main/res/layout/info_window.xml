@@ -26,7 +26,7 @@
         android:layout_height="20dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/round_but_green_sel"
-        android:text="Contactar"
+        android:text="VER MAS"
         android:textSize="10sp" />
 
 </LinearLayout>

@@ -1,55 +1,34 @@
 package com.example.karen.tallerguayaquil.activities;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.karen.tallerguayaquil.R;
 import com.example.karen.tallerguayaquil.adapters.CommentAdapter;
 import com.example.karen.tallerguayaquil.models.Api;
-import com.example.karen.tallerguayaquil.models.Brand;
 import com.example.karen.tallerguayaquil.models.Evaluation;
-import com.example.karen.tallerguayaquil.models.Service;
-import com.example.karen.tallerguayaquil.models.WorkShop;
 import com.example.karen.tallerguayaquil.utils.ApiService;
 import com.example.karen.tallerguayaquil.utils.ServiceGenerator;
 import com.example.karen.tallerguayaquil.utils.SessionManager;
 import com.example.karen.tallerguayaquil.utils.Util;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import me.gujun.android.taggroup.TagGroup;
 import retrofit2.Call;
 import retrofit2.Callback;
 
@@ -77,7 +56,7 @@ public class ReservationActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> arg0, View arg1,int position, long arg3)
             {
                 Evaluation evaluation = evaluations.get(position);
-                Util.showToast(getApplicationContext(), evaluation.getCode());
+                getReservation(evaluation.getCode());
             }
         });
 
@@ -223,6 +202,65 @@ public class ReservationActivity extends AppCompatActivity {
         } else {
             evaluations.clear();
             commentAdapter.notifyDataSetChanged();
+            Util.showToast(
+                    getApplicationContext(), getString(R.string.message_network_connectivity_failed));
+        }
+
+    }
+
+    private void getReservation(String code) {
+
+        if (Util.isNetworkAvailable(getApplicationContext())) {
+            Util.showLoading(ReservationActivity.this, "Buscando reservación...");
+
+            SessionManager sessionManager = new SessionManager(getApplicationContext());
+            ApiService auth = ServiceGenerator.createApiService();
+
+            Map<String, String> params = new HashMap<>();
+            params.put("api_token", sessionManager.getToken());
+            params.put("code", code);
+
+            Call<Api<Evaluation>> call = auth.getReservation(params);
+            call.enqueue(new Callback<Api<Evaluation>>() {
+                @Override
+                public void onResponse(@NonNull Call<Api<Evaluation>> call,
+                                       @NonNull retrofit2.Response<Api<Evaluation>> response) {
+
+                    if (response.isSuccessful()) {
+                        Api<Evaluation> api = response.body();
+
+                        if (api.isError()) {
+                            // Show message error
+                            Util.showToast(getApplicationContext(), api.getMsg());
+                        } else {
+                            Evaluation evaluation = api.getData();
+
+                            if (evaluation!=null) {
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable("evaluation", evaluation);
+
+                                Intent i = new Intent(ReservationActivity.this, CompleteActivity.class);
+                                i.putExtras(bundle);
+                                startActivity(i);
+                            }
+                        }
+                    } else {
+                        Util.showToast(getApplicationContext(),
+                                getString(R.string.message_service_server_failed));
+                    }
+                    Util.hideLoading();
+                    finish();
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<Api<Evaluation>> call, @NonNull Throwable t) {
+
+                    Util.showToast(getApplicationContext(),
+                            getString(R.string.message_network_local_failed));
+                    Util.hideLoading();
+                }
+            });
+        } else {
             Util.showToast(
                     getApplicationContext(), getString(R.string.message_network_connectivity_failed));
         }

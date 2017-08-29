@@ -15,10 +15,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -29,6 +31,7 @@ import com.example.karen.tallerguayaquil.R;
 import com.example.karen.tallerguayaquil.models.Api;
 import com.example.karen.tallerguayaquil.models.Brand;
 import com.example.karen.tallerguayaquil.models.Evaluation;
+import com.example.karen.tallerguayaquil.models.Person;
 import com.example.karen.tallerguayaquil.models.Service;
 import com.example.karen.tallerguayaquil.models.WorkShop;
 import com.example.karen.tallerguayaquil.utils.ApiService;
@@ -52,7 +55,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import me.gujun.android.taggroup.TagGroup;
+import co.lujun.androidtagview.TagContainerLayout;
 import retrofit2.Call;
 import retrofit2.Callback;
 
@@ -60,20 +63,18 @@ import retrofit2.Callback;
 public class WorkShopProfileActivity extends AppCompatActivity
         implements OnMapReadyCallback {
 
+    private LinearLayout mEvaluationView, mLyDescountCodeView, mLyCommentView;
     private RelativeLayout mContainerView;
     private WorkShop workShop;
     private TextView mTitleView, mAddressView, mPhoneView, mNameView, mCodeTextView,
-            mTotalHonestyView, mTotalEfficiencyView, mTotalCosteView, mTotalView;
+            mTotalHonestyView, mTotalEfficiencyView, mTotalCosteView, mTotalView, mEmptyText;
     private ImageView mCodeView;
-    private TagGroup mServicesView, mBrandsView;
+    private TagContainerLayout mServicesView, mBrandsView;
     private ProgressBar mHonestyView, mEfficiencyView, mCosteView;
+    private Button mRequestView;
 
     private GoogleMap mMap;
-
-    private LinearLayout mEvaluationView;
-    private TextView mEmptyText;
     private Bitmap bitmap;
-
     private Animator mCurrentAnimator;
     private PhotoView mImageZoomView;
     private int mShortAnimationDuration;
@@ -102,15 +103,17 @@ public class WorkShopProfileActivity extends AppCompatActivity
         mImageZoomView = (PhotoView) findViewById(R.id.img_zoom);
         mNameView = (TextView) findViewById(R.id.txt_name);
 
-        mServicesView = (TagGroup) findViewById(R.id.tag_services);
-        mBrandsView = (TagGroup) findViewById(R.id.tag_brands);
+        mLyDescountCodeView = (LinearLayout) findViewById(R.id.ly_descount_code);
+        mLyCommentView = (LinearLayout) findViewById(R.id.ly_comments);
+
+        mServicesView = (TagContainerLayout) findViewById(R.id.tag_services);
+        mBrandsView = (TagContainerLayout) findViewById(R.id.tag_brands);
 
 
         mTitleView.setText(workShop.getWorkshopName());
         mAddressView.setText(workShop.getAddress());
         mPhoneView.setText(workShop.getPhone());
         mNameView.setText(workShop.getManagerName());
-        mCodeTextView.setText(workShop.getCodeDesc());
 
         mHonestyView = (ProgressBar) findViewById(R.id.pb_honesty);
         mEfficiencyView = (ProgressBar) findViewById(R.id.pb_efficiency);
@@ -125,26 +128,24 @@ public class WorkShopProfileActivity extends AppCompatActivity
         mEvaluationView = (LinearLayout) findViewById(R.id.list);
         mEmptyText = (TextView) findViewById(R.id.empty);
 
+        mRequestView = (Button) findViewById(R.id.btn_request);
+        mRequestView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                requestVisit(workShop.getId());
+            }
+        });
+
         populateServices();
         populateBrands();
-        populateComments();
-        populateEvaluations();
 
-        try {
-            bitmap = encodeAsBitmap(workShop.getCodeDesc());
-            /*bitmap = mergeBitmaps(
-                    BitmapFactory.decodeResource(getResources(), R.drawable.workshop_marker),
-                    bitmap);*/
-            mCodeView.setImageBitmap(bitmap);
+        if (!TextUtils.isEmpty(workShop.getCodeDesc())) {
+            populateCode();
+            populateComments();
+            populateEvaluations();
 
-            // QR Code
-            mCodeView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    zoomImageFromThumb(view, bitmap);
-                }
-            });
-        } catch (Exception ignore){}
+            showEvaAndCom();
+        }
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -319,6 +320,28 @@ public class WorkShopProfileActivity extends AppCompatActivity
         }
     }
 
+    private void populateCode() {
+        mCodeTextView.setText(workShop.getCodeDesc());
+        try {
+            bitmap = encodeAsBitmap(workShop.getCodeDesc());
+            mCodeView.setImageBitmap(bitmap);
+
+            // QR Code
+            mCodeView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    zoomImageFromThumb(view, bitmap);
+                }
+            });
+        } catch (Exception ignore){}
+    }
+
+    private void showEvaAndCom() {
+        mRequestView.setVisibility(View.GONE);
+        mLyDescountCodeView.setVisibility(View.VISIBLE);
+        mLyCommentView.setVisibility(View.VISIBLE);
+    }
+
     public View getEvaluationView(Evaluation evaluation) {
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.comment_item, null, false);
@@ -376,7 +399,7 @@ public class WorkShopProfileActivity extends AppCompatActivity
         return color;
     }
 
-    Bitmap encodeAsBitmap(String str) throws WriterException {
+    private Bitmap encodeAsBitmap(String str) throws WriterException {
         BitMatrix result;
         Bitmap bitmap=null;
         try {
@@ -401,7 +424,7 @@ public class WorkShopProfileActivity extends AppCompatActivity
         return bitmap;
     }
 
-    public Bitmap mergeBitmaps(Bitmap logo, Bitmap qrcode) {
+    private Bitmap mergeBitmaps(Bitmap logo, Bitmap qrcode) {
 
         Bitmap combined = Bitmap.createBitmap(qrcode.getWidth(), qrcode.getHeight(), qrcode.getConfig());
         Canvas canvas = new Canvas(combined);
@@ -416,7 +439,6 @@ public class WorkShopProfileActivity extends AppCompatActivity
 
         return combined;
     }
-
 
     /** Image Zoom **/
     private void zoomImageFromThumb(final View thumbView, Bitmap bitmap) {
@@ -510,5 +532,64 @@ public class WorkShopProfileActivity extends AppCompatActivity
         // to the original bounds and show the thumbnail instead of
         // the expanded image.
         startScaleFinal = startScale;
+    }
+
+    void requestVisit(final int id){
+
+        if (Util.isNetworkAvailable(getApplicationContext())) {
+            Util.showLoading(WorkShopProfileActivity.this, "Solicitando visita...");
+
+            SessionManager sessionManager = new SessionManager(getApplicationContext());
+            Person person = sessionManager.getPerson();
+
+            Map<String, String> params = new HashMap<>();
+            params.put("api_token", person.getToken());
+
+            ApiService auth = ServiceGenerator.createApiService();
+            String url = String.format("nuevaevaluacion/%s", id);
+
+            Call<Api<WorkShop>> call = auth.createEvaluation(url, params);
+            call.enqueue(new Callback<Api<WorkShop>>() {
+                @Override
+                public void onResponse(@NonNull Call<Api<WorkShop>> call,
+                                       @NonNull retrofit2.Response<Api<WorkShop>> response) {
+
+                    if (response.isSuccessful()) {
+                        Api<WorkShop> api = response.body();
+
+                        if (api.isError()) {
+                            // Show message error
+                            Util.showToast(getApplicationContext(), api.getMsg());
+                        } else {
+                            Util.showToast(getApplicationContext(), api.getMsg());
+
+                            workShop = api.getData();
+
+                            populateCode();
+                            populateComments();
+                            populateEvaluations();
+
+                            showEvaAndCom();
+                        }
+                    } else {
+                        Util.showToast(getApplicationContext(),
+                                getString(R.string.message_service_server_failed));
+                        Util.hideLoading();
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<Api<WorkShop>> call, @NonNull Throwable t) {
+                    Log.e("workshop-evaluation", t.toString());
+                    t.printStackTrace();
+                    Util.showToast(getApplicationContext(),
+                            getString(R.string.message_network_local_failed));
+                    Util.hideLoading();
+                }
+            });
+        } else {
+            Util.showToast(
+                    getApplicationContext(), getString(R.string.message_network_connectivity_failed));
+        }
     }
 }
