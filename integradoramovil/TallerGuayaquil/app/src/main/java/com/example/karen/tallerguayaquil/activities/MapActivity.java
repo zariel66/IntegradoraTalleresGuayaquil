@@ -185,7 +185,7 @@ public class MapActivity extends AppCompatActivity
             @Override
             protected void onClickConfirmed(View v, Marker marker) {
                 if (idWorkShop != 0) {
-                    workshopEvaluation(idWorkShop);
+                    workshopProfile(idWorkShop);
                 } else {
                     Util.showToast(getApplicationContext(), "Ha ocurrido un error, intentelo nuevamente");
                 }
@@ -678,60 +678,6 @@ public class MapActivity extends AppCompatActivity
         }
     }
 
-
-    void workshopEvaluation(final int id){
-
-        if (Util.isNetworkAvailable(getApplicationContext())) {
-            Util.showLoading(MapActivity.this, "Solicitando visita...");
-
-            SessionManager sessionManager = new SessionManager(getApplicationContext());
-            Person person = sessionManager.getPerson();
-
-            Map<String, String> params = new HashMap<>();
-            params.put("api_token", person.getToken());
-
-            ApiService auth = ServiceGenerator.createApiService();
-            String url = String.format("/api/nuevaevaluacion/%s", id);
-
-            Call<Api<WorkShop>> call = auth.createEvaluation(url, params);
-            call.enqueue(new Callback<Api<WorkShop>>() {
-                @Override
-                public void onResponse(@NonNull Call<Api<WorkShop>> call,
-                                       @NonNull retrofit2.Response<Api<WorkShop>> response) {
-
-                    Log.e("Evaluation", response.toString());
-                    if (response.isSuccessful()) {
-                        Api<WorkShop> api = response.body();
-
-                        if (api.isError()) {
-                            // Show message error
-                            Util.showToast(getApplicationContext(), api.getMsg());
-                        } else {
-                            Util.showToast(getApplicationContext(), api.getMsg());
-                            workshopProfile(id);
-                        }
-                    } else {
-                        Util.showToast(getApplicationContext(),
-                                getString(R.string.message_service_server_failed));
-                    }
-                    Util.hideLoading();
-                }
-
-                @Override
-                public void onFailure(@NonNull Call<Api<WorkShop>> call, @NonNull Throwable t) {
-
-                    Util.showToast(getApplicationContext(),
-                            getString(R.string.message_network_local_failed));
-                    Util.hideLoading();
-                }
-            });
-        } else {
-            Util.showToast(
-                    getApplicationContext(), getString(R.string.message_network_connectivity_failed));
-        }
-    }
-
-
     void workshopProfile(int id){
 
         if (Util.isNetworkAvailable(getApplicationContext())) {
@@ -769,6 +715,7 @@ public class MapActivity extends AppCompatActivity
                             startActivity(i);
                         }
                     } else {
+                        Log.e("workshop-profile", response.toString());
                         Util.showToast(getApplicationContext(),
                                 getString(R.string.message_service_server_failed));
                     }
@@ -777,7 +724,8 @@ public class MapActivity extends AppCompatActivity
 
                 @Override
                 public void onFailure(@NonNull Call<Api<WorkShop>> call, @NonNull Throwable t) {
-
+                    Log.e("workshop-profile", t.toString());
+                    t.printStackTrace();
                     Util.showToast(getApplicationContext(),
                             getString(R.string.message_network_local_failed));
                     Util.hideLoading();
@@ -788,8 +736,6 @@ public class MapActivity extends AppCompatActivity
                     getApplicationContext(), getString(R.string.message_network_connectivity_failed));
         }
     }
-
-
 
     private int getPixelsFromDp(Context context, float dp) {
         final float scale = context.getResources().getDisplayMetrics().density;

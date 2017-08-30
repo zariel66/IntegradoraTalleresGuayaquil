@@ -241,7 +241,7 @@ public class MultiSpinnerSearch extends AppCompatSpinner implements OnCancelList
 
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
-            Log.i(TAG, "getView() enter");
+            Log.i(TAG, "getEvaluationView() enter");
             ViewHolder holder;
 
             if (convertView == null) {

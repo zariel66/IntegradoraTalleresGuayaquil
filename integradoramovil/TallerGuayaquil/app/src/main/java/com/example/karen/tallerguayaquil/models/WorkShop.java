@@ -53,13 +53,22 @@ public class WorkShop implements Serializable {
     @SerializedName("longitud")
     private double longitude;
 
+    @SerializedName("honestidad")
+    private double honesty;
+
+    @SerializedName("eficiencia")
+    private double efficiency;
+
+    @SerializedName("precio")
+    private double coste;
+
     @SerializedName("marcas")
     private List<Brand> brandList;
 
     @SerializedName("servicios")
     private List<Service> serviceList;
 
-    @SerializedName("evaluaciones")
+    @SerializedName("calificaciones")
     private List<Evaluation> evaluationList;
 
     public WorkShop(){
@@ -97,6 +106,30 @@ public class WorkShop implements Serializable {
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    public double getHonesty() {
+        return honesty;
+    }
+
+    public void setHonesty(double honesty) {
+        this.honesty = honesty;
+    }
+
+    public double getEfficiency() {
+        return efficiency;
+    }
+
+    public void setEfficiency(double efficiency) {
+        this.efficiency = efficiency;
+    }
+
+    public double getCoste() {
+        return coste;
+    }
+
+    public void setCoste(double coste) {
+        this.coste = coste;
     }
 
     public String getUsername() {

@@ -2,6 +2,7 @@ package com.example.karen.tallerguayaquil.utils;
 
 import com.example.karen.tallerguayaquil.models.Api;
 import com.example.karen.tallerguayaquil.models.Brand;
+import com.example.karen.tallerguayaquil.models.Evaluation;
 import com.example.karen.tallerguayaquil.models.Person;
 import com.example.karen.tallerguayaquil.models.Vehicle;
 import com.example.karen.tallerguayaquil.models.WorkShop;
@@ -14,7 +15,6 @@ import retrofit2.http.Body;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Url;
 
@@ -39,6 +39,22 @@ public interface ApiService {
     @FormUrlEncoded
     @POST
     Call<Api<WorkShop>> createEvaluation(@Url String url, @FieldMap Map<String, String> params);
+
+    @FormUrlEncoded
+    @POST
+    Call<Api<List<Evaluation>>> getComments(@Url String url, @FieldMap Map<String, String> params);
+
+    @FormUrlEncoded
+    @POST("reservaciones")
+    Call<Api<List<Evaluation>>> getReservations(@FieldMap Map<String, String> params);
+
+    @FormUrlEncoded
+    @POST("reservacion")
+    Call<Api<Evaluation>> getReservation(@FieldMap Map<String, String> params);
+
+    @FormUrlEncoded
+    @POST("cerrarticket")
+    Call<Api> closeTicket(@FieldMap Map<String, String> params);
 
 
     /** SignUp**/

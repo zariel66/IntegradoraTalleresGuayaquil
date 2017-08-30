@@ -1,66 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
+    android:id="@+id/rl_container"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/activity_vertical_margin"
     android:orientation="vertical" >
-
-    <TextView
-        android:id="@+id/txt_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:gravity="center_vertical"
-        tools:text="Titulos"
-        android:textAlignment="center"
-        android:textSize="28sp"
-        android:textStyle="bold" />
 
     <ScrollView
         android:id="@+id/sv_signup"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_above="@+id/map_address"
-        android:layout_below="@+id/txt_title">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:padding="@dimen/activity_vertical_margin"
             android:gravity="center"
             android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                tools:text="Titulos"
+                android:textAlignment="center"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/textView1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Información"
-                    android:textColorLink="@android:color/black"
-                    android:textSize="22sp"
-                    android:textStyle="bold" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginStart="20dp">
-
                     <TextView
-                        android:id="@+id/textView28"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/textView1"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="10dp"
-                        android:text="Dirección:"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
+                        android:text="Información"
+                        android:textColorLink="@android:color/black"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginStart="20dp">
+
+                        <TextView
+                            android:id="@+id/textView28"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            android:text="Dirección:"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/txt_address"
@@ -85,15 +85,22 @@
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
-                    <me.gujun.android.taggroup.TagGroup
+                    <co.lujun.androidtagview.TagContainerLayout
                         android:id="@+id/tag_services"
-                        style="@style/TagGroup" />
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="0dp"
+                        app:container_background_color="@android:color/transparent"
+                        app:container_border_color="@android:color/transparent"
+                        app:tag_theme="random" />
+
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:layout_marginTop="5dp"
                     android:layout_marginStart="20dp">
 
                     <TextView
@@ -105,9 +112,15 @@
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
-                    <me.gujun.android.taggroup.TagGroup
+                    <co.lujun.androidtagview.TagContainerLayout
                         android:id="@+id/tag_brands"
-                        style="@style/TagGroup" />
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="0dp"
+                        app:container_background_color="@android:color/transparent"
+                        app:container_border_color="@android:color/transparent"
+                        app:tag_theme="random" />
+
                 </LinearLayout>
             </LinearLayout>
 
@@ -119,7 +132,8 @@
                 android:text="Contacto"
                 android:textColorLink="@android:color/black"
                 android:textSize="22sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="@android:color/black"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -167,12 +181,42 @@
                     tools:text="2223332" />
             </LinearLayout>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Ubicación"
+                android:textColorLink="@android:color/black"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"/>
+
+            <fragment
+                android:id="@+id/map_address"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginTop="20dp"
+                android:layout_alignParentBottom="true" />
+
+            <Button
+                android:id="@+id/btn_request"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@android:color/black"
+                android:textColor="@android:color/white"
+                android:text="Contactar"/>
+
+            <!-- Descount Code -->
             <LinearLayout
+                android:id="@+id/ly_descount_code"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:orientation="vertical"
-                android:gravity="center">
+                android:gravity="center"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/textView42"
@@ -181,7 +225,8 @@
                     android:gravity="center"
                     android:text="Código Descuento"
                     android:textSize="22sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black"/>
 
                 <TextView
                     android:id="@+id/txt_code"
@@ -195,108 +240,185 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_marginTop="10dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="10sp"
+                    android:text="Click para expandir"/>
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/textView43"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Comentarios"
-                android:textColorLink="@android:color/black"
-                android:textSize="22sp"
-                android:textStyle="bold" />
-
-            <ListView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
+            <!-- Comments -->
             <LinearLayout
+                android:id="@+id/ly_comments"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginStart="20dp">
+                android:orientation="vertical"
+                android:visibility="gone">
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_marginTop="20dp"
+                    android:text="Comentarios y Evaluaciones"
+                    android:textColorLink="@android:color/black"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black"/>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Honestidad:"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/txt_total"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center"
+                    tools:text="0 usuarios han comentado eso" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Eficiencia:"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Costo:"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:orientation="vertical">
+                    android:orientation="horizontal"
+                    android:layout_marginStart="20dp">
 
-                    <ProgressBar
-                        android:id="@+id/pb_honesty"
-                        style="?android:attr/progressBarStyleHorizontal"
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Honestidad:"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Eficiencia:"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Costo:"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="10dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginEnd="10dp"
-                        android:max="10"
-                        android:progress="5"
-                        android:progressDrawable="@drawable/round_progress"/>
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:orientation="vertical">
 
-                    <ProgressBar
-                        android:id="@+id/pb_efficiency"
-                        style="?android:attr/progressBarStyleHorizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="10dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginEnd="10dp"
-                        android:max="10"
-                        android:progress="5"
-                        android:progressDrawable="@drawable/round_progress"/>
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
 
-                    <ProgressBar
-                        android:id="@+id/pb_coste"
-                        style="?android:attr/progressBarStyleHorizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="10dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginEnd="10dp"
-                        android:max="10"
-                        android:progress="5"
-                        android:progressDrawable="@drawable/round_progress"/>
+                            <ProgressBar
+                                android:id="@+id/pb_honesty"
+                                style="?android:attr/progressBarStyleHorizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="10dp"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginBottom="5dp"
+                                android:layout_marginEnd="10dp"
+                                android:alpha="0.8"
+                                android:max="10"
+                                tools:progress="8"/>
 
+                            <TextView
+                                android:id="@+id/txt_honesty"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:textSize="12sp"
+                                android:textStyle="bold"/>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <ProgressBar
+                                android:id="@+id/pb_efficiency"
+                                style="?android:attr/progressBarStyleHorizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="10dp"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginBottom="5dp"
+                                android:layout_marginEnd="10dp"
+                                android:max="10"
+                                tools:progress="5"/>
+
+                            <TextView
+                                android:id="@+id/txt_efficiency"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:textSize="12sp"
+                                android:textStyle="bold"/>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <ProgressBar
+                                android:id="@+id/pb_coste"
+                                style="?android:attr/progressBarStyleHorizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="10dp"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginBottom="5dp"
+                                android:layout_marginEnd="10dp"
+                                android:max="10"
+                                tools:progress="5"/>
+                            <TextView
+                                android:id="@+id/txt_coste"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:textSize="12sp"
+                                android:textStyle="bold"/>
+                        </RelativeLayout>
+                    </LinearLayout>
                 </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:dividerHeight="1dp"
+                    android:orientation="vertical">
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/empty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textSize="14sp"
+                    android:text="No tiene ningún comentario"
+                    android:visibility="gone"/>
             </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 
-    <fragment
-        android:id="@+id/map_address"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
+    <com.github.chrisbanes.photoview.PhotoView
+        android:id="@+id/img_zoom"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginTop="20dp"
-        android:layout_alignParentBottom="true" />
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        tools:src="@drawable/reparacion"
+        android:background="@color/black_50"/>
 </RelativeLayout>

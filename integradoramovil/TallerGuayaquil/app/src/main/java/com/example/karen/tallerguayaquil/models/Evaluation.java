@@ -2,17 +2,17 @@ package com.example.karen.tallerguayaquil.models;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.Date;
+import java.io.Serializable;
 
-public class Evaluation {
+public class Evaluation implements Serializable {
 
     @SerializedName("id")
     private int id;
 
-    @SerializedName("honesty")
+    @SerializedName("honestidad")
     private double honesty;
 
-    @SerializedName("efficiency")
+    @SerializedName("eficiencia")
     private double efficiency;
 
     @SerializedName("precio")
@@ -31,10 +31,10 @@ public class Evaluation {
     private int status;
 
     @SerializedName("fecha_hora")
-    private Date dateCreated;
+    private String dateCreated;
 
     @SerializedName("desc_code")
-    private double code;
+    private String code;
 
     @SerializedName("precio_original")
     private double price;
@@ -45,6 +45,8 @@ public class Evaluation {
     @SerializedName("total")
     private double total;
 
+    @SerializedName("user")
+    private Person user;
 
     public int getId() {
         return id;
@@ -110,19 +112,19 @@ public class Evaluation {
         this.status = status;
     }
 
-    public Date getDateCreated() {
+    public String getDateCreated() {
         return dateCreated;
     }
 
-    public void setDateCreated(Date dateCreated) {
+    public void setDateCreated(String dateCreated) {
         this.dateCreated = dateCreated;
     }
 
-    public double getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(double code) {
+    public void setCode(String code) {
         this.code = code;
     }
 
@@ -148,5 +150,13 @@ public class Evaluation {
 
     public void setTotal(double total) {
         this.total = total;
+    }
+
+    public Person getUser() {
+        return user;
+    }
+
+    public void setUser(Person user) {
+        this.user = user;
     }
 }
