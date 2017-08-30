@@ -43,6 +43,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -65,7 +66,6 @@ public class WorkShopProfileActivity extends AppCompatActivity
 
     private LinearLayout mEvaluationView, mLyDescountCodeView, mLyCommentView;
     private RelativeLayout mContainerView;
-    private WorkShop workShop;
     private TextView mTitleView, mAddressView, mPhoneView, mNameView, mCodeTextView,
             mTotalHonestyView, mTotalEfficiencyView, mTotalCosteView, mTotalView, mEmptyText;
     private ImageView mCodeView;
@@ -87,12 +87,16 @@ public class WorkShopProfileActivity extends AppCompatActivity
     private Point globalOffset;
     private float startScaleFinal;
 
+    private WorkShop workShop;
+    private String serviceSelected;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workshop_profile);
 
         workShop = (WorkShop) getIntent().getExtras().getSerializable("profile");
+        serviceSelected = getIntent().getExtras().getString("service");
 
         mContainerView = (RelativeLayout) findViewById(R.id.rl_container);
         mTitleView = (TextView) findViewById(R.id.txt_title);
@@ -158,7 +162,9 @@ public class WorkShopProfileActivity extends AppCompatActivity
         mMap = googleMap;
 
         LatLng position = new LatLng(workShop.getLatitude(), workShop.getLongitude());
-        MarkerOptions markerOptions = new MarkerOptions().position(position);
+        MarkerOptions markerOptions = new MarkerOptions()
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.tallericon))
+                .position(position);
 
         Marker marker = mMap.addMarker(markerOptions);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 16));
@@ -217,7 +223,17 @@ public class WorkShopProfileActivity extends AppCompatActivity
         String services[] = new String[servicesList.size()];
         for (int i=0; i<servicesList.size(); i++) {
             Service service = servicesList.get(i);
-            services[i] = service.getCategory();
+            String s = service.getCategory();
+
+            Log.i("", "**************");
+            Log.i("serviceSelected", serviceSelected);
+            Log.i("service", s.toLowerCase());
+            Log.i("", "**************");
+
+            if (s.toLowerCase().equals(serviceSelected.toLowerCase()))
+                services[i] = s.toUpperCase();
+            else
+                services[i] = s;
         }
 
         mServicesView.setTags(services);
@@ -307,15 +323,15 @@ public class WorkShopProfileActivity extends AppCompatActivity
             mTotalView.setText(total + " usuarios han comentado eso");
 
             mTotalHonestyView.setText(String.valueOf(honestyCount));
-            mHonestyView.setProgressDrawable(getDrawable(getColorRange(honestyCount)));
+            mHonestyView.setProgressDrawable(getResources().getDrawable(getColorRange(honestyCount)));
             mHonestyView.setProgress((int)honestyCount);
 
             mTotalEfficiencyView.setText(String.valueOf(efficiencyCount));
-            mEfficiencyView.setProgressDrawable(getDrawable(getColorRange(efficiencyCount)));
+            mEfficiencyView.setProgressDrawable(getResources().getDrawable(getColorRange(efficiencyCount)));
             mEfficiencyView.setProgress((int)efficiencyCount);
 
             mTotalCosteView.setText(String.valueOf(costeCount));
-            mCosteView.setProgressDrawable(getDrawable(getColorRange(costeCount)));
+            mCosteView.setProgressDrawable(getResources().getDrawable(getColorRange(costeCount)));
             mCosteView.setProgress((int)costeCount);
         }
     }

@@ -50,6 +50,8 @@ public class ReservationActivity extends AppCompatActivity {
         mEmptyTextView = (TextView) findViewById(R.id.txt_empty);
         mSearchView = (FloatingActionButton) findViewById(R.id.btn_search);
 
+        mReservationView.setEmptyView(mSearchView);
+
         mReservationView.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             @Override

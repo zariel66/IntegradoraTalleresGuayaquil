@@ -55,6 +55,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -147,11 +148,11 @@ public class MapActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
 
-        if (mayRequestLocation())
-            connectAPIGoogle();
-
         populateServices();
         populateVehicles();
+
+        if (mayRequestLocation())
+            connectAPIGoogle();
     }
 
     @Override
@@ -616,7 +617,7 @@ public class MapActivity extends AppCompatActivity
         for (WorkShop workShop : workShops) {
             LatLng position = new LatLng(workShop.getLatitude(), workShop.getLongitude());
             MarkerOptions markerOptions = new MarkerOptions()
-                    //.icon(BitmapDescriptorFactory.fromResource(R.drawable.workshop_marker))
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.tallericon))
                     .position(position)
                     .snippet(workShop.getAddress() +
                             "\nSe encuentra ha " + String.format("%.2f", workShop.getDistance()) +"Km")
@@ -625,6 +626,9 @@ public class MapActivity extends AppCompatActivity
             Marker marker = mMap.addMarker(markerOptions);
             markerList.add(marker);
         }
+
+        LatLng guayaquil = new LatLng(-2.203816, -79.897453);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(guayaquil, 12));
     }
 
     void searchWorkshops(){
@@ -653,6 +657,7 @@ public class MapActivity extends AppCompatActivity
                         if (api.isError()) {
                             // Show message error
                             Util.showToast(getApplicationContext(), api.getMsg());
+                            removeWorkshops();
                         } else {
                             List<WorkShop> workShopList = api.getData();
                             addWorkshops(workShopList);
@@ -709,6 +714,7 @@ public class MapActivity extends AppCompatActivity
 
                             Bundle bundle = new Bundle();
                             bundle.putSerializable("profile", workShop);
+                            bundle.putString("service", service.getName());
 
                             Intent i = new Intent(MapActivity.this, WorkShopProfileActivity.class);
                             i.putExtras(bundle);
