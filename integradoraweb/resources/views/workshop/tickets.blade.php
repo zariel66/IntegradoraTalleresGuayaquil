@@ -9,6 +9,12 @@
 			<div class="row">
 				<br>
 				<br>
+				@if(count($rows) == 0)
+				<div class="alert alert-info text-center alert col-md-6 col-md-offset-3 alert-dismissable">
+					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<strong>Al momento no tienes clientes interesados. Pronto se pondrán en contacto contigo</strong>
+				</div>
+				@endif
 				<div id="opmessage" class=" text-center alert col-md-6 col-md-offset-3" style="display:none;">
 				  <strong>Success!</strong> Indicates a successful or positive action.
 				</div>

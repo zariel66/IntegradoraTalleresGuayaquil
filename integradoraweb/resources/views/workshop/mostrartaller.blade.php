@@ -32,7 +32,7 @@
 		  				<div class="">
 				  			<h4><strong>Contacto:</strong></h4> 
 				  		</div>
-		  				<p>Nombre del empleado: {{$taller->nombre_empleado}}</p>
+		  				<p>Nombre del maestro: {{$taller->nombre_empleado}}</p>
 		  				<p>Teléfonos: {{$taller->telefono}}</p>
 		  				<p>Correo: {{$taller->usuario->correo}}</p>
 		  				

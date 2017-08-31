@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-	<link rel="icon" href="{{ URL::asset('imagenes/icons/logo.png')}}">
+	<link rel="icon" href="{{ URL::asset('imagenes/icons/autoshop.png')}}">
 
 	<!-- Optional theme -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
@@ -27,13 +27,13 @@
 	<nav id="navbar-section" class="navbar navbar-inverse navbar-static-top">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<img class="navbar-left" src="{{ URL::asset('imagenes/icons/logo.png')}}" style="width:40px;height:40px;margin-top:8px">
+				<img class="navbar-left" src="{{ URL::asset('imagenes/icons/autoshop2.png')}}" style="width:40px;height:40px;margin-top:5px">
 				<a class="navbar-brand" href="{{url('/')}}">{{config("constants.app_name")}}</a>
 			</div>
 			@if (Auth::check())
  			@if (Auth::user()->tipo == 2)
 			<ul class="nav navbar-nav">
-				<li class=""><a href="{{url('busquedataller')}}">Busca tu taller</a></li>
+				<li class=""><a href="{{url('busquedataller')}}">Buscar taller</a></li>
 				
 				<li><a href="{{url('perfil')}}">Mi perfil</a></li>
 				<li><a href="{{url('evaluacionservicio')}}">Encuestas del servicio

@@ -85,4 +85,7 @@
 	
 }
 </style>
+<script type="text/javascript">
+window.localStorage.clear();
+</script>
 @stop

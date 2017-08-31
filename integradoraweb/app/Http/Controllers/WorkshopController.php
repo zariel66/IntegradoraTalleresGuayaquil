@@ -122,11 +122,11 @@ class WorkshopController extends Controller
 			    'fecha_hora' => \Carbon\Carbon::now()
 			]);
 			$output = "<strong>El código de la transacción ha sido confirmado. El usuario evaluará la calidad del servicio en los próximos días</strong>";
-			Mail::send('emails.reminder', ['calificacion' => $calificacion], function ($m) use ($calificacion) {
-	            $m->from(config("constants.emails.from"), config("constants.app_name"));
+			// Mail::send('emails.reminder', ['calificacion' => $calificacion], function ($m) use ($calificacion) {
+	  //           $m->from(config("constants.emails.from"), config("constants.app_name"));
 
-	            $m->to($calificacion->user->correo, $calificacion->user->nombre)->subject('Ayúdanos evaluando la calidad del servicio');
-	        });
+	  //           $m->to($calificacion->user->correo, $calificacion->user->nombre)->subject('Ayúdanos evaluando la calidad del servicio');
+	  //       });
 		} catch (\Exception $e) {
 			//throw $e;
 			
