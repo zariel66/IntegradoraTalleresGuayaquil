@@ -51,7 +51,7 @@
 							<div style="color:red"><small>{{ $errors->first('telefono') }}</small></div>
 						</div>
 						<div class="col-md-2 col-md-offset-1">
-							<label>Nombre completo del empleado a cargo(*): </label>
+							<label>Nombre del maestro(*): </label>
 						</div>
 						<div class="col-md-3">
 							<input maxlength="100" class="form-control" name="nombre_empleado" type="text" value="{{old('nombre_empleado')}}"

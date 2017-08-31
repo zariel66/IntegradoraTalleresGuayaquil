@@ -8,8 +8,8 @@
 				<div class="panel-body">
 					<div class="row info-text">
 						<h3 style="margin-top:0px;" class="text-center">Usuario</h3>
-						<img src="{{ URL::asset('imagenes/icons/usericon.png')}}" alt="imagen"  class="center-block" style="width:130px;height:130px">
-						<p class="register-text">Únete a nuestro sitio y encuentra el taller automotriz ideal que necesitas para el mantenimiento y reparación de tu vehiculo aquí en la ciudad de Guayaquil. Podrás encontrar un servicio de calidad basado en tu opinión y la de los demás. Qué esperas regístrate ya</p>
+						<img src="{{ URL::asset('imagenes/icons/vehiculo.png')}}" alt="imagen"  class="center-block" style="width:130px;height:130px">
+						<p class="register-text">Únete a nuestro sitio y encuentra el taller automotriz ideal que necesitas para el mantenimiento y reparación de tú vehículo aquí en la ciudad de Guayaquil. Podrás encontrar un servicio de calidad basado en tú opinión y la de los demás. Qué esperas regístrate ya.</p>
 					</div>
 					<div class="row">
 						<a href="{{url('registrocliente')}}" class="btn register-buttons center-block">Regístrate</a>
@@ -21,12 +21,12 @@
 				<div class="panel-body">
 					<div class="row info-text">
 						<h3 style="margin-top:0px;" class="text-center">Taller</h3>
-						<img src="{{ URL::asset('imagenes/icons/tallericon.png')}}" alt="imagen" class="center-block" style="width:130px;height:130px">
-						<p class="register-text">Registra la información de tus talleres automotrices en nuestra plataforma de forma gratuita y nuestros usuarios podrán contactarte por tus servicios. No pierdas la oportunidad de ganar clientes y de que tu negocio crezca.</p>
+						<img src="{{ URL::asset('imagenes/icons/mecanico.png')}}" alt="imagen" class="center-block" style="width:130px;height:130px">
+						<p class="register-text">Registra la información de tú taller automotriz en nuestra plataforma de forma gratuita y nuestros usuarios podrán contactarte por tus servicios. No pierdas la oportunidad de ganar clientes y que tú negocio crezca.</p>
 
 					</div>
 					<div class="row">
-						<a href="{{url('registrartaller')}}" class="btn register-buttons center-block">Registra tu taller</a>
+						<a href="{{url('registrartaller')}}" class="btn register-buttons center-block">Registra tú taller</a>
 					</div>
 
 				</div>

@@ -46,7 +46,7 @@ class ClienteController extends Controller
 				 as distance
 				 from taller as t INNER JOIN servicio_taller as st ON t.id = st.idtaller INNER JOIN marca_taller as mt ON mt.idtaller=t.id INNER JOIN marca as m on mt.idmarca = m.id where st.categoria = '". $servicio ."' and mt.idmarca = ". $vehiculo ." 
 				 having distance< ". $distancia ."
-				 ORDER BY distance limit 10");
+				 ORDER BY distance");
 			$html = view('client.snippet.searchresultlist')->with(array('results' => $workshops ))->render();
 		return response()->json(array('success'=> count($workshops),'workshops' => $workshops, "html" => $html));	
 		} catch (\Exception $e) {

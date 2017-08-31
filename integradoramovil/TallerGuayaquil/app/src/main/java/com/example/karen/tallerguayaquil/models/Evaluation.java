@@ -3,7 +3,6 @@ package com.example.karen.tallerguayaquil.models;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class Evaluation implements Serializable {
 

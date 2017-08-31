@@ -5,7 +5,7 @@
 		<div class="panel-body">
 			<div class="row">
 				<div class="col-md-6 text-left">
-					<h1><strong>Búsqueda del Taller</strong></h1>
+					<h1><strong>Buscar Taller</strong></h1>
 				</div>
 				
 			</div>
@@ -16,16 +16,17 @@
 					<div class="col-md-3">
 						<label>Tipo de Taller Automotriz:</label>
 						<select class="form-control" id="serviceselect">
-							<option value="Carrocería">Carrocería</option>
-							<option value="Electromecánico">Electromecánico</option>
+							
 							<option value="Mecánico">Mecánico</option>
+							<option value="Electromecánico">Electromecánico</option>
+							<option value="Carrocería">Carrocería</option>
 							<option value="Pintado">Pintado</option>
 							<option value="Tapicería">Tapicería</option>
 							<option value="Vidriería">Vidriería</option>
 						</select>
 					</div>
 					<div class="col-md-3 col-md-offset-2">
-						<label>Vehículo:</label>
+						<label>Tú Vehículo:</label>
 						<select class="form-control" id="carselect">
 							@foreach(Auth::user()->vehiculos as $v)
 							<option value="{{$v->idmarca}}">{{$v->modelo}} ({{$v->marca->nombre}})</option>
@@ -34,7 +35,7 @@
 						</select>
 					</div>
 					<div class="col-md-3 col-md-offset-1" style="margin-top:25px">
-						<button class="btn" id="search-btn" onclick="searchWorkshops(5)"><span class="glyphicon glyphicon-search"></span> Buscar Taller</button>
+						<button class="btn" id="search-btn" onclick="searchWorkshops(15)"><span class="glyphicon glyphicon-search"></span> Buscar Taller</button>
 					</div>
 				<!-- </form> -->
 			</div>
@@ -125,8 +126,47 @@
 			disableDefaultUI: true
 		});
 
-
-		
+		google.maps.event.addListener(map, 'click', function( event ){
+			
+			var lati =  event.latLng.lat();
+			var longi = event.latLng.lng();
+			posXY = {lat: lati,lng:longi};
+			if(marker != null)
+			{
+				marker.setMap(null);
+			}
+			marker = new google.maps.Marker({
+				  position: posXY,
+				  map: map
+				});
+			map.panTo(posXY);
+			
+		});
+		if (typeof(window.localStorage) !== "undefined") {
+		    if (window.localStorage.getItem("resultadosbusqueda") !== null) {
+				$("#search-results").html(window.localStorage.getItem("resultadosbusqueda"));
+				var talleres= JSON.parse(window.localStorage.getItem("marcadores"));
+				var icono = {
+					    url: "{{ URL::asset('imagenes/icons/tallericon.png')}}",
+					    scaledSize: new google.maps.Size(35, 35), // scaled size
+					    origin: new google.maps.Point(0,0), // origin
+					    anchor: new google.maps.Point(0, 0) // anchor
+					};
+				for (var i = 0; i < talleres.length; i++) {
+					var workshoposXY = new google.maps.Marker({
+						  position: {lat: talleres[i].latitud,lng: talleres[i].longitud},
+						  map: map,
+						  title: talleres[i].nombre_taller,
+						  icon: icono,
+						  url: "perfiltaller/" + talleres[i].id
+						});
+					google.maps.event.addListener(workshoposXY, 'click', function() {
+						    window.location.href = this.url;
+						});
+					markers.push(workshoposXY);
+				}
+			}
+		} 
 
 	}
 
@@ -134,8 +174,9 @@
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(showPosition, showError,{timeout:30000, enableHighAccuracy: true});
 		} else { 
-			alert("Geolocation is not supported by this browser.");
+			alert("Geolocalización no es soportada por tu navegador.");
 		}
+
 	}
 
 	function showPosition(position) {
@@ -158,16 +199,16 @@
 	function showError(error) {
 		switch(error.code) {
 			case error.PERMISSION_DENIED:
-			alert("User denied the request for Geolocation.");
+			alert("El usuario nego el permiso de Geolocalización.");
 			break;
 			case error.POSITION_UNAVAILABLE:
-			alert("Location information is unavailable.");
+			alert("La información de la ubicación no esta disponible.");
 			break;
 			case error.TIMEOUT:
-			alert("The request to get user location timed out.");
+			alert("La petición expiró");
 			break;
 			case error.UNKNOWN_ERROR:
-			alert("An unknown error occurred.");
+			alert("Un error desconocido ocurrio.");
 			break;
 		}
 	}
@@ -187,6 +228,7 @@
 			{
 				setMapOnAll(null);
 				$("#search-results").html(response.html);
+				
 				if(response.success != 0)
 				{
 					
@@ -211,6 +253,10 @@
 						    window.location.href = this.url;
 						});
 					};
+					if (typeof(window.localStorage) !== "undefined") {
+					    window.localStorage.setItem("resultadosbusqueda", response.html );
+					    window.localStorage.setItem("marcadores", JSON.stringify(workshops) );
+					} 
 				}
 				else
 				{

@@ -126,7 +126,7 @@
 							
 						</div>
 						<div class="col-md-2 col-md-offset-1">
-							<label>Nombre completo del empleado a cargo(*): </label>
+							<label>Nombre del maestro(*): </label>
 						</div>
 						<div class="col-md-3">
 							<input maxlength="100" value="{{old('nombre_empleado')}}" class="form-control" type="text" name="nombre_empleado"
@@ -160,13 +160,13 @@
 						<div class="col-md-3">
 							<ul class="list-group checkbox-list" >
 								<div  class="list-group-item">
-									<input type="checkbox" value="Carrocería" name="servicios[]"> Carrocería
+									<input type="checkbox" value="Mecánico" name="servicios[]"> Mecánico
 								</div>
 								<div  class="list-group-item">
 									<input type="checkbox"  value="Electromecánico" name="servicios[]"> Electromecánico
 								</div>
 								<div  class="list-group-item">
-									<input type="checkbox" value="Mecánico" name="servicios[]"> Mecánico
+									<input type="checkbox" value="Carrocería" name="servicios[]"> Carrocería
 								</div>
 								<div  class="list-group-item">
 									<input type="checkbox" value="Pintado" name="servicios[]"> Pintado
