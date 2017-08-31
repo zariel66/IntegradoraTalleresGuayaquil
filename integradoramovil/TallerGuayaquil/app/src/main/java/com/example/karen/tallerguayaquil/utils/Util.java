@@ -22,8 +22,8 @@ public class Util {
     /**
      * URL
      **/
-    public static final String API_URL = "http://192.168.0.104:9999/api/";
-    //public static final String API_URL = "http://skilledev.com/api/";
+    public static final String API_URL = "http://192.168.0.100:9999/api/";
+    //public static final String API_URL = "https://skilledev.com/api/";
 
     /**
      * UI LOADING
@@ -54,9 +54,9 @@ public class Util {
     public static final List<Service> getServices() {
         List<Service> services = new ArrayList<>();
 
-        services.add(new Service(1,"Carrocería"));
+        services.add(new Service(1,"Mecánico"));
         services.add(new Service(2,"Electromecánico"));
-        services.add(new Service(3,"Mecánico"));
+        services.add(new Service(3,"Carrocería"));
         services.add(new Service(4,"Pintado"));
         services.add(new Service(5,"Tapicería"));
         services.add(new Service(6,"Vidriería"));

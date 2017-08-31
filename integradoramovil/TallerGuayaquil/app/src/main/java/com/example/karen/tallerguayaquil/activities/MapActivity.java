@@ -55,6 +55,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -147,11 +148,11 @@ public class MapActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
 
-        if (mayRequestLocation())
-            connectAPIGoogle();
-
         populateServices();
         populateVehicles();
+
+        if (mayRequestLocation())
+            connectAPIGoogle();
     }
 
     @Override
@@ -185,7 +186,7 @@ public class MapActivity extends AppCompatActivity
             @Override
             protected void onClickConfirmed(View v, Marker marker) {
                 if (idWorkShop != 0) {
-                    workshopEvaluation(idWorkShop);
+                    workshopProfile(idWorkShop);
                 } else {
                     Util.showToast(getApplicationContext(), "Ha ocurrido un error, intentelo nuevamente");
                 }
@@ -616,7 +617,7 @@ public class MapActivity extends AppCompatActivity
         for (WorkShop workShop : workShops) {
             LatLng position = new LatLng(workShop.getLatitude(), workShop.getLongitude());
             MarkerOptions markerOptions = new MarkerOptions()
-                    //.icon(BitmapDescriptorFactory.fromResource(R.drawable.workshop_marker))
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.tallericon))
                     .position(position)
                     .snippet(workShop.getAddress() +
                             "\nSe encuentra ha " + String.format("%.2f", workShop.getDistance()) +"Km")
@@ -625,6 +626,9 @@ public class MapActivity extends AppCompatActivity
             Marker marker = mMap.addMarker(markerOptions);
             markerList.add(marker);
         }
+
+        LatLng guayaquil = new LatLng(-2.203816, -79.897453);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(guayaquil, 12));
     }
 
     void searchWorkshops(){
@@ -653,6 +657,7 @@ public class MapActivity extends AppCompatActivity
                         if (api.isError()) {
                             // Show message error
                             Util.showToast(getApplicationContext(), api.getMsg());
+                            removeWorkshops();
                         } else {
                             List<WorkShop> workShopList = api.getData();
                             addWorkshops(workShopList);
@@ -667,59 +672,6 @@ public class MapActivity extends AppCompatActivity
                 @Override
                 public void onFailure(@NonNull Call<Api<List<WorkShop>>> call, @NonNull Throwable t) {
 
-                    Util.showToast(getApplicationContext(),
-                            getString(R.string.message_network_local_failed));
-                    Util.hideLoading();
-                }
-            });
-        } else {
-            Util.showToast(
-                    getApplicationContext(), getString(R.string.message_network_connectivity_failed));
-        }
-    }
-
-    void workshopEvaluation(final int id){
-
-        if (Util.isNetworkAvailable(getApplicationContext())) {
-            Util.showLoading(MapActivity.this, "Solicitando visita...");
-
-            SessionManager sessionManager = new SessionManager(getApplicationContext());
-            Person person = sessionManager.getPerson();
-
-            Map<String, String> params = new HashMap<>();
-            params.put("api_token", person.getToken());
-
-            ApiService auth = ServiceGenerator.createApiService();
-            String url = String.format("nuevaevaluacion/%s", id);
-
-            Call<Api<WorkShop>> call = auth.createEvaluation(url, params);
-            call.enqueue(new Callback<Api<WorkShop>>() {
-                @Override
-                public void onResponse(@NonNull Call<Api<WorkShop>> call,
-                                       @NonNull retrofit2.Response<Api<WorkShop>> response) {
-
-                    Log.e("Evaluation", response.toString());
-                    if (response.isSuccessful()) {
-                        Api<WorkShop> api = response.body();
-
-                        if (api.isError()) {
-                            // Show message error
-                            Util.showToast(getApplicationContext(), api.getMsg());
-                        } else {
-                            Util.showToast(getApplicationContext(), api.getMsg());
-                            workshopProfile(id);
-                        }
-                    } else {
-                        Util.showToast(getApplicationContext(),
-                                getString(R.string.message_service_server_failed));
-                        Util.hideLoading();
-                    }
-                }
-
-                @Override
-                public void onFailure(@NonNull Call<Api<WorkShop>> call, @NonNull Throwable t) {
-                    Log.e("workshop-evaluation", t.toString());
-                    t.printStackTrace();
                     Util.showToast(getApplicationContext(),
                             getString(R.string.message_network_local_failed));
                     Util.hideLoading();
@@ -762,6 +714,7 @@ public class MapActivity extends AppCompatActivity
 
                             Bundle bundle = new Bundle();
                             bundle.putSerializable("profile", workShop);
+                            bundle.putString("service", service.getName());
 
                             Intent i = new Intent(MapActivity.this, WorkShopProfileActivity.class);
                             i.putExtras(bundle);
@@ -789,8 +742,6 @@ public class MapActivity extends AppCompatActivity
                     getApplicationContext(), getString(R.string.message_network_connectivity_failed));
         }
     }
-
-
 
     private int getPixelsFromDp(Context context, float dp) {
         final float scale = context.getResources().getDisplayMetrics().density;

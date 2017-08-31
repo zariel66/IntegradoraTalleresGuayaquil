@@ -20,8 +20,7 @@
         android:layout_height="match_parent"
         android:text="No se encontraron reservaciones"
         android:textSize="18sp"
-        android:gravity="center"
-        android:visibility="gone"/>
+        android:gravity="center"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/btn_search"
