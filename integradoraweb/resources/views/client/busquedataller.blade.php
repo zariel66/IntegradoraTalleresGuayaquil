@@ -146,6 +146,10 @@
 		    if (window.localStorage.getItem("resultadosbusqueda") !== null) {
 				$("#search-results").html(window.localStorage.getItem("resultadosbusqueda"));
 				var talleres= JSON.parse(window.localStorage.getItem("marcadores"));
+				var servicio= window.localStorage.getItem("servicio");
+				var car= window.localStorage.getItem("car");
+				var lat= window.localStorage.getItem("lat");
+				var lng= window.localStorage.getItem("lng");
 				var icono = {
 					    url: "{{ URL::asset('imagenes/icons/tallericon.png')}}",
 					    scaledSize: new google.maps.Size(35, 35), // scaled size
@@ -158,7 +162,7 @@
 						  map: map,
 						  title: talleres[i].nombre_taller,
 						  icon: icono,
-						  url: "perfiltaller/" + talleres[i].id
+						  url: "perfiltaller/" + talleres[i].id + "/" + lat + "/" + lng + "/" + servicio + "/" + car
 						});
 					google.maps.event.addListener(workshoposXY, 'click', function() {
 						    window.location.href = this.url;
@@ -246,7 +250,7 @@
 						  map: map,
 						  title: workshops[i].nombre_taller,
 						  icon: icono,
-						  url: "perfiltaller/" + workshops[i].id
+						  url: "perfiltaller/" + workshops[i].id + "/" + posXY.lat + "/" + posXY.lng + "/" + servicio + "/" + car
 						});
 						markers.push(workshoposXY);
 						google.maps.event.addListener(workshoposXY, 'click', function() {
@@ -256,6 +260,10 @@
 					if (typeof(window.localStorage) !== "undefined") {
 					    window.localStorage.setItem("resultadosbusqueda", response.html );
 					    window.localStorage.setItem("marcadores", JSON.stringify(workshops) );
+					    window.localStorage.setItem("lat", posXY.lat);
+					    window.localStorage.setItem("lng", posXY.lng);
+					    window.localStorage.setItem("servicio", servicio);
+					    window.localStorage.setItem("car", car);
 					} 
 				}
 				else

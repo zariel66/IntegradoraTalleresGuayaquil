@@ -34,7 +34,7 @@ Route::post('nuevopwd',"SesionController@setNewPassword");
 
 Route::get('busquedataller',"ClienteController@busquedaTaller")->middleware('myauth','acm:2','review','sslp');
 Route::post('busquedataller',"ClienteController@busquedaTaller2");
-Route::get('perfiltaller/{id}',"ClienteController@perfilTaller")->middleware('myauth','acm:2','review');
+Route::get('perfiltaller/{id}/{latitude?}/{longitude?}/{service?}/{carbrand?}',"ClienteController@perfilTaller")->middleware('myauth','acm:2','review');
 Route::post('crearevaluacion',"ClienteController@nuevaEvaluacion");
 Route::get('evaluacionservicio',"ClienteController@evaluacionesRecomendaciones")->middleware('myauth');
 Route::post('evaluacionservicio',"ClienteController@calificacionNuevaEvaluacion");

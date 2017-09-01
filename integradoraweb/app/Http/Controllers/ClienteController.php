@@ -47,7 +47,7 @@ class ClienteController extends Controller
 				 from taller as t INNER JOIN servicio_taller as st ON t.id = st.idtaller INNER JOIN marca_taller as mt ON mt.idtaller=t.id INNER JOIN marca as m on mt.idmarca = m.id where st.categoria = '". $servicio ."' and mt.idmarca = ". $vehiculo ." 
 				 having distance< ". $distancia ."
 				 ORDER BY distance");
-			$html = view('client.snippet.searchresultlist')->with(array('results' => $workshops ))->render();
+			$html = view('client.snippet.searchresultlist')->with(array('results' => $workshops, "service"=> Input::get('servicio'),"latitude" => Input::get('latitude'),"longitude"=> Input::get('longitude'), "carbrand" =>Input::get('vehiculo')))->render();
 		return response()->json(array('success'=> count($workshops),'workshops' => $workshops, "html" => $html));	
 		} catch (\Exception $e) {
 			error_log("UNIT TEST MESSAGE: Exception Busqueda Taller-> " . $e->getMessage());
@@ -56,7 +56,7 @@ class ClienteController extends Controller
 		
 	}
 	
-	public function perfilTaller($id)
+	public function perfilTaller($id,$latitude="",$longitude="",$service="",$carbrand="")
 	{
 		
 		try {
@@ -67,7 +67,7 @@ class ClienteController extends Controller
 				abort(404);
 			}
 			$comentarios = $taller->calificaciones()->where('estado', 1)->orderBy('fecha_hora', 'desc')->paginate(5);
-		return view("client.perfiltaller",array("taller" => $taller,"idusuario" => $iduser,"comentarios" => $comentarios));
+		return view("client.perfiltaller",array("taller" => $taller,"idusuario" => $iduser,"comentarios" => $comentarios,"latitude"=>$latitude,"longitude"=>$longitude,"service"=>$service,"carbrand"=>$carbrand));
 		} catch (\Exception $e) {
 			abort(500);
 		}

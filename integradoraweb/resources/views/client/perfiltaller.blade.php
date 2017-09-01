@@ -15,15 +15,25 @@
 		  			<div ><p>
 		  				Ofrecemos los siguientes servicios: 
 		  				@foreach($taller->servicios as $fila)
-		  				<span class="label label-default">{{$fila->categoria}}</span>
+		  				
+		  					@if($fila->categoria == $service)
+		  					<span class="searchresult label label-default">{{$fila->categoria}}</span>
+		  					@else
+		  					<span class="label label-default">{{$fila->categoria}}</span>
+		  					@endif
+		  				
 		  				
 		  				@endforeach
 		  			</p></div>
 		  			<div ><p>
 		  				Trabajamos con las siguientes marcas de vehículos:
 		  				@foreach($taller->marcas as $fila)
-		  				<span class="label label-default">{{$fila->nombre}}</span>
 		  				
+		  					@if($fila->id == $carbrand)
+		  					<span class="searchresult label label-default">{{$fila->nombre}}</span>
+		  					@else
+		  					<span class="label label-default">{{$fila->nombre}}</span>
+		  					@endif
 		  				@endforeach
 		  			</p></div>
 		  			<br>
@@ -319,6 +329,10 @@
 		 	background-color: #333;
 		 	border-color:#333;
 		 }
+		 .searchresult
+		 {
+		 	background-color: #b13838;
+		 }
 		 @media only screen and (min-width: 640px) and (max-width: 1190px) {
 		    #form-section-background
 			{
@@ -365,7 +379,7 @@
 					};
 		var guayaquil = {lat: {{$taller->latitud}},lng: {{$taller->longitud}}};
 		map = new google.maps.Map(document.getElementById('map'), {
-			zoom: 15,
+			zoom: 11,
 			center: guayaquil,
 			disableDefaultUI: true
 		});
@@ -374,6 +388,11 @@
 						  map: map,
 						  title: "{{$taller->nombre_taller}}",
 						  icon: icono
+						});
+		posicion = new google.maps.Marker({
+						  position: {lat: {{$latitude}},lng: {{$longitude}}},
+						  map: map,
+						  title: "Mi Ubicación",
 						});
 	}
 	</script>
