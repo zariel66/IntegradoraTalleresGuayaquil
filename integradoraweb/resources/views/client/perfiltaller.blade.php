@@ -389,11 +389,14 @@
 						  title: "{{$taller->nombre_taller}}",
 						  icon: icono
 						});
+		@if($latitude != "" and $longitude!="")
 		posicion = new google.maps.Marker({
+
 						  position: {lat: {{$latitude}},lng: {{$longitude}}},
 						  map: map,
 						  title: "Mi Ubicación",
 						});
+		@endif
 	}
 	</script>
 	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMWnFVjp1hJEu6zTj5Y646z15ecr1WH7Q&callback=initMap">
