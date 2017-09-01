@@ -35,7 +35,7 @@
 						</select>
 					</div>
 					<div class="col-md-3 col-md-offset-1" style="margin-top:25px">
-						<button class="btn" id="search-btn" onclick="searchWorkshops(15)"><span class="glyphicon glyphicon-search"></span> Buscar Taller</button>
+						<button class="btn" id="search-btn" onclick="searchWorkshops(30)"><span class="glyphicon glyphicon-search"></span> Buscar Taller</button>
 					</div>
 				<!-- </form> -->
 			</div>
