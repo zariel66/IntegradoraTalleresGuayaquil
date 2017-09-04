@@ -12,12 +12,13 @@ use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class HomeController extends Controller
 {
 	public function __construct()
     {
-        $this->middleware('guest');
+        //$this->middleware('guest');
     }
 	public function register()
 	{
@@ -306,5 +307,65 @@ class HomeController extends Controller
 	public function index()
 	{
 		return view("basic.index");
+	}
+
+	public function editarUsuario()
+	{
+		try {
+			$user = Auth::user();
+			$reglas  = array(
+				'nombre' => 'required|regex:/(^[A-Za-záéíóú ]+$)+/|min:3',
+				'apellido' => 'required|regex:/(^[A-Za-záéíóú ]+$)+/|min:3',
+				
+				'username' => [
+			        'required',
+			        Rule::unique('usuario','username')->ignore($user->id),
+			        'min:3',
+			        'regex:/(^[A-Za-z][A-Za-z0-9 ]+$)+/'
+			        ],
+		        'correo' => [
+			        'required',
+			        Rule::unique('usuario','correo')->ignore($user->id),
+			        'email'
+			        ],
+			);
+			$mensajes = array(
+				"nombre.required" => "El :attribute es requerido",
+				"apellido.required" => "El :attribute es requerido",
+				"username.required" => "El usuario es requerido",
+				"correo.required" => "El :attribute es requerido",
+				"nombre.min" => "El :attribute debe tener mínimo :min caracteres",
+				"apellido.min" => "El :attribute debe tener mínimo :min caracteres",
+				"username.min" => "El usuario debe tener mínimo :min caracteres",
+
+				"nombre.regex" => "El :attribute solo debe contener texto",
+				"apellido.regex" => "El :attribute solo debe contener texto",
+				"username.regex" => "El nombre de usuario debe comenzar con una letra seguido de caracteres alfanuméricos",
+
+				"username.unique" => "El usuario ingresado ya existe, elija otro",
+				"correo.unique" => "El :attribute ingresado ya se encuentra en uso, elija otro",
+
+				"correo.email" => "Ingrese una dirección de correo válida",
+				);
+			$validator = Validator::make(Input::all(),$reglas,$mensajes);
+			if ($validator->fails()) {
+				$html = view('basic.snippet.formeditarusuario')->with(array('usuario' => $user,"errors"=> $validator->getMessageBag()))->render();
+				return response()->json(array("success"=> 0, "html"=>$html));
+				
+			}
+
+			$user->update(
+			[
+				"nombre" => Input::get("nombre"),
+				"apellido" => Input::get("apellido"),
+				"username" => Input::get("username"),
+				"correo" => Input::get("correo"),	
+			]);
+			
+		} catch (\Exception $e) {
+			error_log("UNIT TEST MESSAGE: Exception Editar Usuario-> " . $e->getMessage());
+			abort(500);
+		}
+		return response()->json(array("success"=> 1));
 	}
 }

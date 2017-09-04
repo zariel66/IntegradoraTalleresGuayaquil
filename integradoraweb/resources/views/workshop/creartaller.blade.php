@@ -86,13 +86,13 @@
 						<div class="col-md-3">
 							<ul class="list-group checkbox-list" >
 								<div  class="list-group-item">
-									<input type="checkbox" value="Carrocería" name="servicios[]"> Carrocería
+									<input type="checkbox" value="Mecánico" name="servicios[]"> Mecánico
 								</div>
 								<div  class="list-group-item">
 									<input type="checkbox"  value="Electromecánico" name="servicios[]"> Electromecánico
 								</div>
 								<div  class="list-group-item">
-									<input type="checkbox" value="Mecánico" name="servicios[]"> Mecánico
+									<input type="checkbox" value="Carrocería" name="servicios[]"> Carrocería
 								</div>
 								<div  class="list-group-item">
 									<input type="checkbox" value="Pintado" name="servicios[]"> Pintado

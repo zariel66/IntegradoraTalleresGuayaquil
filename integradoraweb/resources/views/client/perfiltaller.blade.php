@@ -64,6 +64,11 @@
 		  			@endif
 		  		</div>
 		  		<div class="col-md-4">
+		  			<div class="row">
+		  				<a class="pull-right" href="{{url('busquedataller')}}">Volver a los resultados</a>
+		  				<br>
+		  				<br>
+		  			</div>
 		  			@if(count($comentarios)>0)
 		  			<div class="row">
 		  				<div class="col-md-4">

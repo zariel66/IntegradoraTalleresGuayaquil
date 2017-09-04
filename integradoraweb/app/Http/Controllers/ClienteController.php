@@ -227,4 +227,25 @@ class ClienteController extends Controller
 		}
 		return response()->json(array("html"=> $html,"success"=> 0));
 	}
+	public function editarCarro()
+	{
+		try {
+			$vehiculo= Vehiculo::find(Input::get('id'));
+			$vehiculo->update(
+			[
+				"modelo"=> Input::get('modelo'),
+				"idmarca"=> Input::get('marca'),
+				
+			]);
+			$usuario= Auth::user();
+			$marcas= Marca::orderBy('nombre',"ASC")->get();
+			$html = view('client.snippet.carsrows')->with(array("usuario"=> $usuario,"marcas" => $marcas))->render();
+			return response()->json(array("html"=> $html,"success"=> 1));
+		} catch (\Exception $e) {
+			
+			error_log("UNIT TEST MESSAGE: Exception Editar Vehiculo-> " . $e->getMessage());
+			abort(500);
+		}
+		return response()->json(array("html"=> $html,"success"=> 0));
+	}
 }

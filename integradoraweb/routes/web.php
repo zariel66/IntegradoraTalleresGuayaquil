@@ -20,6 +20,7 @@ Route::post("registroclientesubmit","HomeController@registrarClienteSubmit")->mi
 Route::get("serverinfo","HomeController@serverInfo");
 Route::get("tokenplz","HomeController@tokengeneration");
 Route::get("register","HomeController@register");
+Route::post("editarusuario","HomeController@editarUsuario")->middleware('myauth');
 
 /*SESION*/
 Route::get('login',"HomeController@login")->middleware('guest','sslp');
@@ -41,6 +42,7 @@ Route::post('evaluacionservicio',"ClienteController@calificacionNuevaEvaluacion"
 Route::get('perfil',"ClienteController@miPerfil")->middleware('myauth','acm:2','review');
 Route::post('anadircarro',"ClienteController@anadirCarro")->middleware('myauth','acm:2','review');
 Route::post('borrarcarro',"ClienteController@borrarCarro")->middleware('myauth','acm:2','review');
+Route::post('editarcarro',"ClienteController@editarCarro")->middleware('myauth','acm:2','review');
 
 /*WORKSHOP*/
 Route::get('tallertickets',"WorkshopController@userTickets")->middleware('myauth','acm:1');

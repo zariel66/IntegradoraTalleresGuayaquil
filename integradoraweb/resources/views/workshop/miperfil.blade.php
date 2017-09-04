@@ -4,16 +4,19 @@
 	<div class="panel col-md-8 col-md-offset-2">
 		<div class="panel-body">
 			<div class="row">
-				<div class="col-md-3 text-left">
-					<h1><strong>Mi Perfil</strong></h1>
+				<div class="col-md-6 text-left">
+					<h1><strong>Mi Perfil - Taller</strong></h1>
 				</div>
 				
 			</div>
 			<hr>
 			<div id="user-info" class="row">
 				<div class="row">
-					<div class="col-md-12 text-left">
+					<div class="col-md-10 text-left">
 						<h3><strong>Información de la Cuenta</strong></h3>
+					</div>
+					<div class="col-md-2 text-right" style="line-height:55px;padding-right:30px;padding-top:8px;">
+						<a href="" data-toggle="modal" data-target="#userDataForm">Editar</a>
 					</div>
 				</div>
 				<br>
@@ -60,6 +63,26 @@
 				</table>
 			</div>
 		</div>
+	</div>
+</div>
+<div class="modal fade" id="userDataForm" role="dialog">
+	<div class="modal-dialog">
+	
+	  <!-- Modal content-->
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <button type="button" class="close" data-dismiss="modal">&times;</button>
+		  <h4 class="modal-title">Editar Información de la Cuenta</h4>
+		</div>
+		<div class="modal-body" id="formeditar">
+			@include("basic.snippet.formeditarusuario")
+		</div>
+		<div class="modal-footer">
+			<button onclick="editarUsuario()" type="button" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Guardar</button>
+			<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+		</div>
+	  </div>
+	  
 	</div>
 </div>
 	<style type="text/css">
@@ -111,46 +134,37 @@
 		}
 	</style>
 	<script type="text/javascript">
-	function addCar() {
-	 	var marca = $("#marca").val();
-	 	var modelo = $("#modelo").val();
-	 	var values = {"idmarca":marca, "modelo":modelo};
-	 	if(modelo == "")
-	 	{
-	 		return;
-	 	}
-	 	var jqxhr = $.ajax({
-			method: "POST",
-			url: "anadircarro",
-			dataType: 'json',
-			data: values,
-			success: function(response)
-			{
-				if(response.success == 1)
-				{
-					$("#car-table").html(response.html);
-				}
-			}
-		});
-	};
-
-	function deleteCar(id)
+	function editarUsuario()
 	{
-		var values = {"idvehiculo":id};
+		var nombre = $("input[name=nombre]").val();
+		var apellido = $("input[name=apellido]").val();
+		var correo = $("input[name=correo]").val();
+		var username = $("input[name=username]").val();
+		var values = {"nombre":nombre,"apellido":apellido,"correo":correo,"username":username};
 		var jqxhr = $.ajax({
 			method: "POST",
-			url: "borrarcarro",
+			url: "/editarusuario",
 			dataType: 'json',
 			data: values,
 			success: function(response)
 			{
 				if(response.success == 1)
 				{
-					$("#car-table").html(response.html);
+					location.reload(true);
+				}
+				else
+				{
+					$("#formeditar").html(response.html);
+					$("input[name=nombre]").val(nombre);
+					$("input[name=apellido]").val(apellido);
+					$("input[name=correo]").val(correo);
+					$("input[name=username]").val(username);
 				}
 			}
 		});
 	}
+
+
 	</script>
 	@include("workshop.snippet.deletemodals")
 @stop
