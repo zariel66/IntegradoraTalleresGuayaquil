@@ -21,12 +21,12 @@
 						<br>
 						<div class="col-md-4 col-md-offset-2">
 							<ul class="text-left" style="list-style-type:disc;padding-left:0;">
-							  <li>Carrocería</li>
-							  <li>Electromecánico</li>
-							  <li>Mecánico</li>
-							  <li>Pintado</li>
-							  <li>Tapicería</li>
-							  <li>Vidriería</li>
+								<li>Mecánico</li>
+								<li>Electromecánico</li>
+								<li>Carrocería</li>
+								<li>Pintado</li>
+								<li>Tapicería</li>
+								<li>Vidriería</li>
 							</ul>  
 						</div>
 					</article>

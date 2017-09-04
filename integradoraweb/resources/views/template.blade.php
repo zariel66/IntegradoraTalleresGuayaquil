@@ -35,7 +35,7 @@
 			<ul class="nav navbar-nav">
 				<li class=""><a href="{{url('busquedataller')}}">Buscar taller</a></li>
 				
-				<li><a href="{{url('perfil')}}">Mi perfil</a></li>
+				<li><a href="{{url('perfil')}}">Mi perfil - Usuario</a></li>
 				<li><a href="{{url('evaluacionservicio')}}">Encuestas del servicio
 				@if(session()->has('pendingreview') && session()->get('pendingreview')>0)	
 				  <span class="badge">{{session()->get('pendingreview')}}</span>
@@ -45,7 +45,7 @@
 			@else if(Auth::user()->tipo == 1)
 			<ul class="nav navbar-nav">
 				<li class=""><a href="{{url('tallertickets')}}">Clientes</a></li>
-				<li class=""><a href="{{url('perfiltallerowner')}}">Mi Perfil</a></li>
+				<li class=""><a href="{{url('perfiltallerowner')}}">Mi Perfil - Taller</a></li>
 			</ul>
  			@endif
  			@else

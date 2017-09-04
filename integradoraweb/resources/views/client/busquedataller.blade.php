@@ -35,7 +35,7 @@
 						</select>
 					</div>
 					<div class="col-md-3 col-md-offset-1" style="margin-top:25px">
-						<button class="btn" id="search-btn" onclick="searchWorkshops(15)"><span class="glyphicon glyphicon-search"></span> Buscar Taller</button>
+						<button class="btn" id="search-btn" onclick="searchWorkshops(30)"><span class="glyphicon glyphicon-search"></span> Buscar Taller</button>
 					</div>
 				<!-- </form> -->
 			</div>
@@ -123,7 +123,8 @@
 		map = new google.maps.Map(document.getElementById('map'), {
 			zoom: 13,
 			center: guayaquil,
-			disableDefaultUI: true
+			disableDefaultUI: true,
+			zoomControl: true,
 		});
 
 		google.maps.event.addListener(map, 'click', function( event ){
@@ -162,7 +163,8 @@
 						  map: map,
 						  title: talleres[i].nombre_taller,
 						  icon: icono,
-						  url: "perfiltaller/" + talleres[i].id + "/" + lat + "/" + lng + "/" + servicio + "/" + car
+						  url: "perfiltaller/" + talleres[i].id + "/" + lat + "/" + lng + "/" + servicio + "/" + car,
+						  id: talleres[i].id
 						});
 					google.maps.event.addListener(workshoposXY, 'click', function() {
 						    window.location.href = this.url;
@@ -250,7 +252,8 @@
 						  map: map,
 						  title: workshops[i].nombre_taller,
 						  icon: icono,
-						  url: "perfiltaller/" + workshops[i].id + "/" + posXY.lat + "/" + posXY.lng + "/" + servicio + "/" + car
+						  url: "perfiltaller/" + workshops[i].id + "/" + posXY.lat + "/" + posXY.lng + "/" + servicio + "/" + car,
+						  id: workshops[i].id
 						});
 						markers.push(workshoposXY);
 						google.maps.event.addListener(workshoposXY, 'click', function() {
@@ -287,6 +290,32 @@
           markers[i].setMap(map);
         }
       }
+
+    function redicon(id)
+    {
+    	var icono = {
+			    url: "{{ URL::asset('imagenes/icons/tallericon2.png')}}",
+			    scaledSize: new google.maps.Size(35, 35), // scaled size
+			    origin: new google.maps.Point(0,0), // origin
+			    anchor: new google.maps.Point(0, 0) // anchor
+			};
+		var icono2 = {
+			    url: "{{ URL::asset('imagenes/icons/tallericon.png')}}",
+			    scaledSize: new google.maps.Size(35, 35), // scaled size
+			    origin: new google.maps.Point(0,0), // origin
+			    anchor: new google.maps.Point(0, 0) // anchor
+			};
+    	for (var i = 0; i < markers.length; i++) {
+    		markers[i].setIcon(icono2);
+    		if(markers[i].id == id)
+    		{
+    			markers[i].setIcon(icono);
+    		}
+          
+        }
+
+    } 
+
 
 	document.onload=getLocation(); 
 	</script>

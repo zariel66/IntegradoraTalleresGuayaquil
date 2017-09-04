@@ -11,7 +11,7 @@
 		  	@foreach($reviews as $review)
 		  	<div id="review-content">
 				<div class="row">
-					<h4>Cuéntanos tu experiencia en <strong>{{$review->taller->nombre_taller}}</strong></h4>
+					<h4>Cuéntanos tú experiencia en <strong>{{$review->taller->nombre_taller}}</strong></h4>
 				</div>
 				<br>
 				<div class="row">

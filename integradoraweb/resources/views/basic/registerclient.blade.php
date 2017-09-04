@@ -16,7 +16,7 @@
 							<label>Nombres(*): </label>
 						</div>
 						<div class="col-md-3">
-							<input value="{{old('nombre')}}" class="form-control" name="nombre" type="text"
+							<input maxlength="100" value="{{old('nombre')}}" class="form-control" name="nombre" type="text"
 							@if($errors->has('nombre'))
 							style="border-color:red;"
 							@endif
@@ -27,7 +27,7 @@
 							<label>Correo(*): </label>
 						</div>
 						<div class="col-md-3">
-							<input value="{{old('correo')}}" class="form-control" name="correo" type="text"
+							<input maxlength="100" value="{{old('correo')}}" class="form-control" name="correo" type="text"
 							@if($errors->has('correo'))
 							style="border-color:red;"
 							@endif
@@ -41,7 +41,7 @@
 							<label>Apellidos(*): </label>
 						</div>
 						<div class="col-md-3">
-							<input value="{{old('apellido')}}" class="form-control" name="apellido" type="text"
+							<input maxlength="100" value="{{old('apellido')}}" class="form-control" name="apellido" type="text"
 							@if($errors->has('apellido'))
 							style="border-color:red;"
 							@endif
@@ -65,7 +65,7 @@
 							<label>Usuario(*): </label>
 						</div>
 						<div class="col-md-3">
-							<input value="{{old('username')}}" class="form-control" name="username" type="text"
+							<input maxlength="32" value="{{old('username')}}" class="form-control" name="username" type="text"
 							@if($errors->has('username'))
 							style="border-color:red;"
 							@endif
@@ -76,7 +76,7 @@
 							<label>Modelo de su vehículo(*): </label>
 						</div>
 						<div class="col-md-3">
-							<input value="{{old('modelo')}}" class="form-control" name="modelo" type="text"
+							<input maxlength="100" value="{{old('modelo')}}" class="form-control" name="modelo" type="text"
 							@if($errors->has('modelo'))
 							style="border-color:red;"
 							@endif
@@ -90,7 +90,7 @@
 							<label>Contraseña(*): </label>
 						</div>
 						<div class="col-md-3">
-							<input value="{{old('password')}}" class="form-control" type="password" name="password"
+							<input maxlength="100" value="{{old('password')}}" class="form-control" type="password" name="password"
 							@if($errors->has('password'))
 							style="border-color:red;"
 							@endif
@@ -106,7 +106,7 @@
 							<label>Confirmar Contraseña(*):</label>
 						</div>
 						<div class="col-md-3">
-							<input class="form-control" type="password" name="password_confirmation"
+							<input maxlength="100" class="form-control" type="password" name="password_confirmation"
 							@if($errors->has('password_confirmation'))
 							style="border-color:red;"
 							@endif

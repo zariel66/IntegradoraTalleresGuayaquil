@@ -89,13 +89,14 @@
 						</div>
 						<div class="col-md-3">
 							<ul class="list-group checkbox-list" >
-								@if($taller->servicios->contains("categoria","Carrocería"))
+								
+								@if($taller->servicios->contains("categoria","Mecánico"))
 								<div  class="list-group-item">
-									<input checked="true" type="checkbox" value="Carrocería" name="servicios[]"> Carrocería
+									<input checked="true" type="checkbox" value="Mecánico" name="servicios[]"> Mecánico
 								</div>
 								@else
 								<div  class="list-group-item">
-									<input type="checkbox" value="Carrocería" name="servicios[]"> Carrocería
+									<input type="checkbox" value="Mecánico" name="servicios[]"> Mecánico
 								</div>
 								@endif
 								@if($taller->servicios->contains("categoria","Electromecánico"))
@@ -107,13 +108,13 @@
 									<input type="checkbox"  value="Electromecánico" name="servicios[]"> Electromecánico
 								</div>
 								@endif
-								@if($taller->servicios->contains("categoria","Mecánico"))
+								@if($taller->servicios->contains("categoria","Carrocería"))
 								<div  class="list-group-item">
-									<input checked="true" type="checkbox" value="Mecánico" name="servicios[]"> Mecánico
+									<input checked="true" type="checkbox" value="Carrocería" name="servicios[]"> Carrocería
 								</div>
 								@else
 								<div  class="list-group-item">
-									<input type="checkbox" value="Mecánico" name="servicios[]"> Mecánico
+									<input type="checkbox" value="Carrocería" name="servicios[]"> Carrocería
 								</div>
 								@endif
 								@if($taller->servicios->contains("categoria","Pintado"))
