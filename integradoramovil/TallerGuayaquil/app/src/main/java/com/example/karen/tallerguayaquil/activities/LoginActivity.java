@@ -91,7 +91,7 @@ public class LoginActivity extends AppCompatActivity {
             focusView.requestFocus();
         } else {
             if (Util.isNetworkAvailable(getApplicationContext())) {
-
+                Util.hideSoftKeyboard(getApplicationContext(), getCurrentFocus());
                 Util.showLoading(LoginActivity.this, "Iniciando Sesión...");
 
                 Map<String, String> params = new HashMap<>();

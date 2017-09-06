@@ -33,6 +33,10 @@ public interface ApiService {
     Call<Api<List<WorkShop>>> searchWorkshops(@FieldMap Map<String, String> params);
 
     @FormUrlEncoded
+    @POST("registrarvehiculo")
+    Call<Api<Vehicle>> registerVehicle(@FieldMap Map<String, String> params);
+
+    @FormUrlEncoded
     @POST
     Call<Api<WorkShop>> getWorkshopProfile(@Url String url, @FieldMap Map<String, String> params);
 
