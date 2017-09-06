@@ -487,10 +487,13 @@ class MovilController extends Controller
             $code = Input::get('code');
            
             $user = User::where('api_token', $token)->firstOrFail();
+            $taller = Taller::where('idusuario', $user->id)->firstOrFail();
+
             $reservacion = Calificacion::where([
+                ['idtaller', $taller->id],
                 ['desc_code', $code],
             ])->with('user')->firstOrFail();
-           
+          
             return response()->json([
                 'is_error' => false,
                 'data' => $reservacion
@@ -499,7 +502,7 @@ class MovilController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'is_error' => true,
-                'msg' => $e->getMessage()
+                'msg' => 'No se encontro reservacion'
             ]);
         }
     }
