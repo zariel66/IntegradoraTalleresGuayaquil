@@ -24,6 +24,77 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+<<<<<<< HEAD
+=======
+
+        mUsernameView = (EditText) findViewById(R.id.txt_username);
+        mPasswordView = (EditText) findViewById(R.id.txt_password);
+
+        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
+                if (id == EditorInfo.IME_ACTION_DONE) {
+                    Util.hideSoftKeyboard(getApplicationContext(), getCurrentFocus());
+                    attemptLogin(null);
+                    return true;
+                }
+                return false;
+            }
+        });
+    }
+
+    /**
+     * Attempts to sign in or register the account specified by the login form.
+     * If there are form errors (invalid email, missing fields, etc.), the
+     * errors are presented and no actual login attempt is made.
+     */
+    public void attemptLogin(View v) {
+
+
+        // Reset errors.
+        mUsernameView.setError(null);
+        mPasswordView.setError(null);
+
+        // Store values at the time of the login attempt.
+        String username = mUsernameView.getText().toString();
+        String password = mPasswordView.getText().toString();
+
+        boolean cancel = false;
+        View focusView = null;
+
+
+        if (TextUtils.isEmpty(username)) {
+            mUsernameView.setError(getString(R.string.error_field_required));
+            focusView = mUsernameView;
+            cancel = true;
+        }
+
+        if (TextUtils.isEmpty(password)) {
+            mPasswordView.setError(getString(R.string.error_field_required));
+            focusView = mPasswordView;
+            cancel = true;
+        }
+
+
+        if (cancel) {
+            // There was an error; don't attempt login and focus the first
+            // form field with an error.
+            focusView.requestFocus();
+        } else {
+            if (Util.isNetworkAvailable(getApplicationContext())) {
+                Util.hideSoftKeyboard(getApplicationContext(), getCurrentFocus());
+                Util.showLoading(LoginActivity.this, "Iniciando Sesión...");
+
+                Map<String, String> params = new HashMap<>();
+                params.put("username", username);
+                params.put("password", password);
+
+                loginTask(params);
+            } else {
+                Util.showToast(getApplicationContext(), getString(R.string.message_network_connectivity_failed));
+            }
+        }
+>>>>>>> master
     }
 
 <<<<<<< HEAD

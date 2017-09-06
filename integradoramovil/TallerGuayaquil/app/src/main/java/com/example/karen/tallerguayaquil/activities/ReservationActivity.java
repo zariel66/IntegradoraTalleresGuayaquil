@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -50,7 +51,7 @@ public class ReservationActivity extends AppCompatActivity {
         mEmptyTextView = (TextView) findViewById(R.id.txt_empty);
         mSearchView = (FloatingActionButton) findViewById(R.id.btn_search);
 
-        mReservationView.setEmptyView(mSearchView);
+        mReservationView.setEmptyView(mEmptyTextView);
 
         mReservationView.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
@@ -85,7 +86,7 @@ public class ReservationActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.main_workshop, menu);
         return true;
     }
 
@@ -251,11 +252,11 @@ public class ReservationActivity extends AppCompatActivity {
                                 getString(R.string.message_service_server_failed));
                     }
                     Util.hideLoading();
-                    finish();
                 }
 
                 @Override
                 public void onFailure(@NonNull Call<Api<Evaluation>> call, @NonNull Throwable t) {
+                    Log.e("reservation", t.toString());
 
                     Util.showToast(getApplicationContext(),
                             getString(R.string.message_network_local_failed));

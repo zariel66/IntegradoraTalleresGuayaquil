@@ -119,7 +119,8 @@ class WorkshopController extends Controller
 			    "descuento"=> $descuento,
 			    "total"=> $total,
 			    "estado" => 2,
-			    'fecha_hora' => \Carbon\Carbon::now()
+			    'fecha_hora' => \Carbon\Carbon::now(),
+			    'fecha_visita' => \Carbon\Carbon::now(),
 			]);
 			$output = "<strong>El código de la transacción ha sido confirmado. El usuario evaluará la calidad del servicio en los próximos días</strong>";
 			// Mail::send('emails.reminder', ['calificacion' => $calificacion], function ($m) use ($calificacion) {
@@ -381,5 +382,26 @@ class WorkshopController extends Controller
 			abort(500);
 		}
 		return redirect("perfiltallerowner");
+	}
+
+	public function historialTaller()
+	{
+		try {
+			$result = DB::table('calificacion')
+			->join('taller', 'calificacion.idtaller', '=', 'taller.id')
+			->join('usuario', 'calificacion.idusuario', '=', 'usuario.id')
+			->where(function ($query){
+			    $query->where("calificacion.estado",1);
+			    $query->orWhere("calificacion.estado",2);
+			})->where("taller.idusuario", Auth::user()->id)
+			->orderBy('calificacion.fecha_visita',"DESC")
+			->distinct()
+			->select('calificacion.id','usuario.nombre','usuario.apellido','calificacion.descuento','calificacion.total','calificacion.fecha_visita','taller.nombre_taller')->get();
+			
+			return view("workshop.historial",array('registros' => $result ));
+		} catch (\Exception $e) {
+			abort(500);
+		}
+		
 	}
 }

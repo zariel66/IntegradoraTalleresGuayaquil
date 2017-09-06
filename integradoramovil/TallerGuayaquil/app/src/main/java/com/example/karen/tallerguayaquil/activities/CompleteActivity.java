@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -27,8 +29,8 @@ import retrofit2.Response;
 
 public class CompleteActivity extends AppCompatActivity {
 
-    private TextView mNameView, mCodeView;
-    private EditText mDescountView, mSubTotalView, mTotalView;
+    private TextView mNameView, mCodeView, mTotalView;
+    private EditText mDescountView, mSubTotalView;
     private Button mSendView;
 
     private Evaluation evaluation;
@@ -46,9 +48,65 @@ public class CompleteActivity extends AppCompatActivity {
         mCodeView = (TextView) findViewById(R.id.txt_code);
         mCodeView.setText(evaluation.getCode());
 
-        mDescountView = (EditText) findViewById(R.id.txt_descount);
+        mTotalView = (TextView) findViewById(R.id.txt_total);
         mSubTotalView = (EditText) findViewById(R.id.txt_subtotal);
-        mTotalView = (EditText) findViewById(R.id.txt_total);
+        mDescountView = (EditText) findViewById(R.id.txt_descount);
+
+        mDescountView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                double descount = 0;
+                double subtotal = 0;
+                try {
+                    descount = Double.valueOf(editable.toString());
+                    subtotal = Double.valueOf(mSubTotalView.getText().toString());
+                } catch (Exception ignore){}
+
+                if (descount > 0 && subtotal > 0) {
+                    mTotalView.setText("" + (subtotal - (subtotal * descount / 100)));
+                } else {
+                    mTotalView.setText("");
+                }
+            }
+        });
+
+        mSubTotalView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                double descount = 0;
+                double subtotal = 0;
+                try {
+                    descount = Double.valueOf(mDescountView.getText().toString());
+                    subtotal = Double.valueOf(editable.toString());
+                } catch (Exception ignore){}
+
+                if (descount > 0 && subtotal > 0) {
+                    mTotalView.setText("" + (subtotal - (subtotal * descount / 100)));
+                } else {
+                    mTotalView.setText("");
+                }
+            }
+        });
 
         mSendView = (Button) findViewById(R.id.btn_send);
 
@@ -105,15 +163,11 @@ public class CompleteActivity extends AppCompatActivity {
         }
 
 
-        if (TextUtils.isEmpty(subtotal)) {
+        if (TextUtils.isEmpty(total)) {
             mTotalView.setError(getString(R.string.error_field_required));
             focusView = mTotalView;
             cancel = true;
-        }else if (Double.valueOf(subtotal) == 0) {
-            mTotalView.setError("Total debe ser mayor a 0");
-            focusView = mTotalView;
-            cancel = true;
-        }else if (Double.valueOf(subtotal) > 100) {
+        }else if (Double.valueOf(total) > 100) {
             mTotalView.setError("Total debe ser menor a 100");
             focusView = mTotalView;
             cancel = true;

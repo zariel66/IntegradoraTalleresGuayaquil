@@ -47,6 +47,7 @@
 			<ul class="nav navbar-nav">
 				<li class=""><a href="{{url('tallertickets')}}">Clientes</a></li>
 				<li class=""><a href="{{url('perfiltallerowner')}}">Mi Perfil - Taller</a></li>
+				<li class=""><a href="{{url('historialtaller')}}">Historial de Clientes</a></li>
 			</ul>
  			@endif
  			@else
