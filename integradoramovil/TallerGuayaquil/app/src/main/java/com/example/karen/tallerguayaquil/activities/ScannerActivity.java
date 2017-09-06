@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.example.karen.tallerguayaquil.R;
 import com.example.karen.tallerguayaquil.models.Api;
@@ -71,6 +72,7 @@ public class ScannerActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(@NonNull Call<Api<Evaluation>> call,
                                        @NonNull retrofit2.Response<Api<Evaluation>> response) {
+                    Log.i("scanner", response.toString());
 
                     if (response.isSuccessful()) {
                         Api<Evaluation> api = response.body();
@@ -80,6 +82,7 @@ public class ScannerActivity extends AppCompatActivity {
                             Util.showToast(getApplicationContext(), api.getMsg());
                         } else {
                             Evaluation evaluation = api.getData();
+
 
                             if (evaluation!=null) {
                                 Bundle bundle = new Bundle();
@@ -104,6 +107,7 @@ public class ScannerActivity extends AppCompatActivity {
                     Util.showToast(getApplicationContext(),
                             getString(R.string.message_network_local_failed));
                     Util.hideLoading();
+                    finish();
                 }
             });
         } else {
