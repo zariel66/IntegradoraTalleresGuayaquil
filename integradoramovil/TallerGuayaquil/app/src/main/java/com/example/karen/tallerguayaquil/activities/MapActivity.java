@@ -14,19 +14,23 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.NumberPicker;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.karen.tallerguayaquil.R;
 import com.example.karen.tallerguayaquil.listeners.OnInfoWindowElemTouchListener;
 import com.example.karen.tallerguayaquil.models.Api;
+import com.example.karen.tallerguayaquil.models.Brand;
 import com.example.karen.tallerguayaquil.models.Person;
 import com.example.karen.tallerguayaquil.models.Service;
 import com.example.karen.tallerguayaquil.models.Vehicle;
@@ -94,7 +98,7 @@ public class MapActivity extends AppCompatActivity
     private Service service = null;
     //private double lastLat=0, lastLong=0;
     private double lastLat=-2.151868, lastLong=-79.925051;
-    private int distance = 5;
+    private int distance = 50;
 
     private int idWorkShop;
 
@@ -104,7 +108,7 @@ public class MapActivity extends AppCompatActivity
         setContentView(R.layout.activity_map);
 
         final FloatingActionsMenu menu_fab = (FloatingActionsMenu) findViewById(R.id.menu_fab);
-        FloatingActionButton fab_radio = (FloatingActionButton) findViewById(R.id.fab_radio);
+        FloatingActionButton fab_radio = (FloatingActionButton) findViewById(R.id.fab_search);
         FloatingActionButton fab_route = (FloatingActionButton) findViewById(R.id.fab_route);
         FloatingActionButton fab_stop = (FloatingActionButton) findViewById(R.id.fab_stop);
 
@@ -112,7 +116,7 @@ public class MapActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 menu_fab.collapse();
-                showRadiusPicker();
+                startSearch();
             }
         });
         fab_route.setOnClickListener(new View.OnClickListener() {
@@ -143,7 +147,6 @@ public class MapActivity extends AppCompatActivity
         idWorkShop = 0;
     }
 
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -164,6 +167,52 @@ public class MapActivity extends AppCompatActivity
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+
+        if (!mayRequestLocation()) {
+            mapReady();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        if (requestCode == Util.LOCATION_REQUEST_CODE) {
+            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                mapReady();
+                connectAPIGoogle();
+            } else {
+                Util.showToast(getApplicationContext(), "Se requieren estos permisos para continuar");
+                mayRequestLocation();
+            }
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_add_vehicle) {
+            addVehicle();
+            return true;
+        } else if (id == R.id.action_about) {
+            showAbout();
+            return true;
+        }else if (id == R.id.action_logout) {
+            showLogOut();
+            return true;
+        }
+
+        return false;
+    }
+
+    private void mapReady() {
 
         // Initial location
         mMap.setMyLocationEnabled(true);
@@ -216,41 +265,27 @@ public class MapActivity extends AppCompatActivity
                 return infoWindow;
             }
         });
+
+        // Make a request for locations
+        LocationRequest locationRequest = LocationRequest.create();
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest.setInterval(3000);
+        locationRequest.setFastestInterval(1000);
+
+        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, this);
+
+        Util.showToast(getApplicationContext(), "Conectado!");
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        if (requestCode == Util.LOCATION_REQUEST_CODE) {
-            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                connectAPIGoogle();
-            } else {
-                Util.showToast(getApplicationContext(), "Se requieren estos permisos para continuar");
-                mayRequestLocation();
-            }
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.action_about) {
-            showAbout();
-            return true;
-        }else if (id == R.id.action_logout) {
-            showLogOut();
-            return true;
+    private void addVehicle() {
+        if (Util.isNetworkAvailable(getApplicationContext())) {
+            Util.showLoading(MapActivity.this, "Obteniendo marcas...");
+            brandsTask();
+        } else {
+            Util.showToast(
+                    getApplicationContext(), getString(R.string.message_network_connectivity_failed));
         }
 
-        return false;
     }
 
     private void showAbout(){
@@ -366,6 +401,7 @@ public class MapActivity extends AppCompatActivity
                         Util.showToast(getApplicationContext(),
                                 getString(R.string.message_service_server_failed));
                     }
+                    vehicleArrayAdapter.notifyDataSetChanged();
                     Util.hideLoading();
                 }
 
@@ -398,9 +434,6 @@ public class MapActivity extends AppCompatActivity
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             service = serviceArrayAdapter.getItem(which);
-
-                            // Search workshops in radius
-                            startSearch();
                         }
                     });
             alert.show();
@@ -422,9 +455,6 @@ public class MapActivity extends AppCompatActivity
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             vehicle = vehicleArrayAdapter.getItem(which);
-
-                            // Search workshops in radius
-                            startSearch();
                         }
                     });
             alert.show();
@@ -484,16 +514,6 @@ public class MapActivity extends AppCompatActivity
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-
-        // Make a request for locations
-        LocationRequest locationRequest = LocationRequest.create();
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        locationRequest.setInterval(3000);
-        locationRequest.setFastestInterval(1000);
-
-        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, this);
-
-        Util.showToast(getApplicationContext(), "Conectado!");
     }
 
     @Override
@@ -748,4 +768,143 @@ public class MapActivity extends AppCompatActivity
         return (int)(dp * scale + 0.5f);
     }
 
+
+    /**
+     * Brands task
+     */
+    private void brandsTask(){
+        ApiService api = ServiceGenerator.createApiService();
+
+        Call<List<Brand>> call = api.getBrands();
+        call.enqueue(new Callback<List<Brand>>() {
+
+            @Override
+            public void onResponse(Call<List<Brand>> call, retrofit2.Response<List<Brand>> response) {
+                if (response.isSuccessful()) {
+                    List<Brand> brands = response.body();
+
+                    if (!brands.isEmpty()) {
+                        ArrayAdapter<Brand> brandArrayAdapter = new ArrayAdapter<Brand>(
+                                getApplicationContext(), R.layout.dialog_item);
+
+                        for (Brand b : brands) {
+                            brandArrayAdapter.add(b);
+                        }
+
+                        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                        View view = inflater.inflate(R.layout.dialog_add_vehicle, null, false);
+
+                        final Spinner mVehicleBrand = view.findViewById(R.id.spn_vehicle_brand);
+                        mVehicleBrand.setAdapter(brandArrayAdapter);
+
+                        final EditText mModelView = view.findViewById(R.id.txt_model);
+
+                        AlertDialog.Builder alert = new AlertDialog.Builder(MapActivity.this);
+                        alert.setTitle("Añadir Vehículo");
+                        alert.setIcon(R.drawable.workshop_marker);
+                        alert.setView(view);
+
+                        alert.setPositiveButton("Aceptar", new DialogInterface.OnClickListener(){
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                Brand brand = (Brand) mVehicleBrand.getSelectedItem();
+                                String model = mModelView.getEditableText().toString();
+
+                                // Reset errors.
+                                mModelView.setError(null);
+
+                                if (model.length() < 2) {
+                                    mModelView.setError(getString(R.string.error_field_required));
+                                    mModelView.requestFocus();
+                                } else {
+
+                                    if (Util.isNetworkAvailable(getApplicationContext())) {
+                                        dialog.dismiss();
+
+                                        Util.showLoading(MapActivity.this, "Registrando vehículo...");
+
+                                        SessionManager sessionManager = new SessionManager(getApplicationContext());
+                                        String token = sessionManager.getToken();
+
+                                        Map<String, String> params = new HashMap<>();
+                                        params.put("marca", "" + brand.getId());
+                                        params.put("modelo", model);
+                                        params.put("api_token", token);
+
+                                        registerVehicleTask(params);
+
+                                    } else {
+                                        Util.showToast(
+                                                getApplicationContext(), getString(R.string.message_network_connectivity_failed));
+                                    }
+
+                                }
+
+                            }
+                        });
+
+                        alert.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                dialog.dismiss();
+                            }
+                        });
+
+                        AlertDialog ad = alert.create();
+                        ad.show();
+
+                    } else {
+                        Util.showToast(getApplicationContext(), getString(R.string.message_service_server_empty));
+                    }
+                } else {
+                    Util.showToast(getApplicationContext(), getString(R.string.message_service_server_failed));
+                }
+                Util.hideLoading();
+            }
+
+            @Override
+            public void onFailure(Call<List<Brand>> call, Throwable t) {
+                Log.e("Marcas", t.getMessage());
+                Util.showToast(getApplicationContext(), getString(R.string.message_network_local_failed));
+                Util.hideLoading();
+            }
+        });
+    }
+
+    /**
+     * Add Vehicle
+     */
+    private void registerVehicleTask(Map<String,String> params){
+
+        ApiService auth = ServiceGenerator.createApiService();
+        Call<Api<Vehicle>> call = auth.registerVehicle(params);
+        call.enqueue(new Callback<Api<Vehicle>>() {
+            @Override
+            public void onResponse(@NonNull Call<Api<Vehicle>> call,
+                                   @NonNull retrofit2.Response<Api<Vehicle>> response) {
+
+                if (response.isSuccessful()) {
+                    Api api = response.body();
+                    Util.showToast(getApplicationContext(), api.getMsg());
+
+                    if (!api.isError()) {
+                        Vehicle v = (Vehicle) api.getData();
+                        Log.i("Vehiculo", v.toString());
+                        vehicleArrayAdapter.add(v);
+                        vehicleArrayAdapter.notifyDataSetChanged();
+                    }
+                } else {
+                    Util.showToast(getApplicationContext(),
+                            getString(R.string.message_service_server_failed));
+                }
+                Util.hideLoading();
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Api<Vehicle>> call, @NonNull Throwable t) {
+
+                Util.showToast(getApplicationContext(),
+                        getString(R.string.message_network_local_failed));
+                Util.hideLoading();
+            }
+        });
+    }
 }
