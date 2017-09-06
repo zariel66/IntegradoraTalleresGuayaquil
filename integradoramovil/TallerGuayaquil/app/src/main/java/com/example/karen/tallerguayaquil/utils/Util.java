@@ -22,8 +22,8 @@ public class Util {
     /**
      * URL
      **/
-    public static final String API_URL = "http://192.168.0.100:9999/api/";
-    //public static final String API_URL = "https://skilledev.com/api/";
+    //public static final String API_URL = "http://192.168.0.106:9999/api/";
+    public static final String API_URL = "https://skilledev.com/api/";
 
     /**
      * UI LOADING
