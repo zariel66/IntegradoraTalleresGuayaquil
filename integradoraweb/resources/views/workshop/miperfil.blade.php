@@ -4,7 +4,7 @@
 	<div class="panel col-md-8 col-md-offset-2">
 		<div class="panel-body">
 			<div class="row">
-				<div class="col-md-6 text-left">
+				<div class="col-md-10 text-left">
 					<h1><strong>Mi Perfil - Taller</strong></h1>
 				</div>
 				

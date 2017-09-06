@@ -56,5 +56,6 @@ Route::post('editartaller/{id}',"WorkshopController@editarTallerSubmit")->middle
 Route::get('creartaller',"WorkshopController@crearTaller")->middleware('myauth','acm:1');
 Route::post('creartallersubmit',"WorkshopController@crearTallerSubmit")->middleware('myauth','acm:1');
 Route::get('eliminartaller/{id}',"WorkshopController@eliminarTaller")->middleware('myauth','acm:1');
+Route::get('historialtaller',"WorkshopController@historialTaller")->middleware('myauth','acm:1');
 
 

@@ -480,6 +480,7 @@ class MovilController extends Controller
         }
     }
 
+
     public function getReservacion()
     {
         try {
@@ -529,7 +530,8 @@ class MovilController extends Controller
                 "descuento"=> $descuento,
                 "total"=> $total,
                 "estado" => 2,
-                'fecha_hora' => \Carbon\Carbon::now()
+                'fecha_hora' => \Carbon\Carbon::now(),
+                'fecha_visita' => \Carbon\Carbon::now()
             ]);
        
             Mail::send('emails.reminder', ['calificacion' => $calificacion], function ($m) use ($calificacion) {
