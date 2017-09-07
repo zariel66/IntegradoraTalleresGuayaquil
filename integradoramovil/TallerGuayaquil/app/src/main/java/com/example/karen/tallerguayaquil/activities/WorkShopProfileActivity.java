@@ -385,15 +385,15 @@ public class WorkShopProfileActivity extends AppCompatActivity
         TextView mTotalCosteView = (TextView) rowView.findViewById(R.id.txt_coste);
 
         mTotalHonestyView.setText(String.valueOf(honestyCount));
-        mHonestyView.setProgressDrawable(getDrawable(getColorRange(honestyCount)));
+        mHonestyView.setProgressDrawable(getResources().getDrawable(getColorRange(honestyCount)));
         mHonestyView.setProgress((int)honestyCount);
 
         mTotalEfficiencyView.setText(String.valueOf(efficiencyCount));
-        mEfficiencyView.setProgressDrawable(getDrawable(getColorRange(efficiencyCount)));
+        mEfficiencyView.setProgressDrawable(getResources().getDrawable(getColorRange(efficiencyCount)));
         mEfficiencyView.setProgress((int)efficiencyCount);
 
         mTotalCosteView.setText(String.valueOf(costeCount));
-        mCosteView.setProgressDrawable(getDrawable(getColorRange(costeCount)));
+        mCosteView.setProgressDrawable(getResources().getDrawable(getColorRange(costeCount)));
         mCosteView.setProgress((int)costeCount);
 
         return rowView;
