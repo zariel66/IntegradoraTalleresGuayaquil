@@ -36,7 +36,7 @@
 				<li class=""><a href="{{url('busquedataller')}}">Buscar taller</a></li>
 				
 				<li><a href="{{url('perfil')}}">Mi perfil - Usuario</a></li>
-				<li><a href="{{url('evaluacionservicio')}}">Encuestas del servicio
+				<li><a href="{{url('evaluacionservicio')}}">Encuestas pendientes
 				@if(session()->has('pendingreview') && session()->get('pendingreview')>0)	
 				  <span class="badge">{{session()->get('pendingreview')}}</span>
 				@endif  
