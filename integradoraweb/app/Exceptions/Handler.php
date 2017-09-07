@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 class Handler extends ExceptionHandler
 {
     /**
@@ -53,6 +54,11 @@ class Handler extends ExceptionHandler
             error_log("TokenMismatchException handled");
             abort(500);
         }
+        if ($exception instanceof MethodNotAllowedHttpException) {
+            error_log("MethodNotAllowedHttpException handled");
+            abort(500);
+        }
+
 
         return parent::render($request, $exception);
     }

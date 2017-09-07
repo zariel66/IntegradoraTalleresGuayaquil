@@ -183,7 +183,7 @@ public class MapActivity extends AppCompatActivity {
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        if (!mayRequestLocation()) {
+        if (mayRequestLocation()) {
             mapReady();
         }
     }
@@ -280,6 +280,9 @@ public class MapActivity extends AppCompatActivity {
                 return infoWindow;
             }
         });
+    }
+
+    private void mapConnected() {
 
         // Make a request for locations
         LocationRequest locationRequest = LocationRequest.create();
@@ -529,6 +532,9 @@ public class MapActivity extends AppCompatActivity {
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
+        if (mayRequestLocation()) {
+            mapConnected();
+        }
     }
 
     @Override
@@ -655,7 +661,7 @@ public class MapActivity extends AppCompatActivity {
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.tallericon))
                     .position(position)
                     .snippet(workShop.getAddress() +
-                            "\nSe encuentra ha " + String.format("%.2f", workShop.getDistance()) +"Km")
+                            "\nSe encuentra a " + String.format("%.2f", workShop.getDistance()) +"Km")
                     .title(workShop.getWorkshopName() + ',' + workShop.getId());
 
             Marker marker = mMap.addMarker(markerOptions);
