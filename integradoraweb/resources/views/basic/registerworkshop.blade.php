@@ -100,15 +100,12 @@
 							<div style="color:red"><small>{{ $errors->first('password') }}</small></div>
 						</div>
 						<div class="col-md-2 col-md-offset-1">
-							<label>Teléfonos del establecimiento(*): </label>
+							<label>Ciudad(*): </label>
 						</div>
 						<div class="col-md-3">
-							<input maxlength="50" value="{{old('telefono')}}" class="form-control" type="text" name="telefono"
-							@if($errors->has('telefono'))
-							style="border-color:red;"
-							@endif
-							>
-							<div style="color:red"><small>{{ $errors->first('telefono') }}</small></div>
+							<select name="ciudad" class="form-control" style="">
+								<option value="Guayaquil">Guayaquil</option>
+							</select>
 						</div>
 					</div>
 					<br>
@@ -123,6 +120,27 @@
 							@endif
 							>
 							<div style="color:red"><small>{{ $errors->first('password_confirmation') }}</small></div>
+							
+						</div>
+						<div class="col-md-2 col-md-offset-1">
+							<label>Teléfono del establecimiento(*): </label>
+						</div>
+						<div class="col-md-3">
+							<input maxlength="11" placeholder="04XXXXXXX" value="{{old('telefono','(04)')}}" class="form-control" type="text" name="telefono"
+							@if($errors->has('telefono'))
+							style="border-color:red;"
+							@endif
+							>
+							<div style="color:red"><small>{{ $errors->first('telefono') }}</small></div>
+						</div>
+						
+					</div>
+					<br>
+					<div class="row">
+						<div class="col-md-2">
+							
+						</div>
+						<div class="col-md-3">
 							
 						</div>
 						<div class="col-md-2 col-md-offset-1">
@@ -278,7 +296,25 @@
 		//alert( "Latitude: "+event.latLng.lat()+" "+", longitude: "+event.latLng.lng() ); 
 	});
  }
-  
+$("input[name=telefono]").keydown(function(e) {
+var oldvalue=$(this).val();
+var field=this;
+ setTimeout(function () {
+	
+	var patt = /^\(04\)[0-9]*$/;
+	var res = patt.test(field.value);
+    if(field.value.indexOf('(04)') !== 0) {
+        $(field).val(oldvalue);
+        
+    }
+    else if(!res)
+    {
+    	$(field).val(oldvalue);
+    	
+    } 
+    
+ }, 1);
+});  
 </script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMWnFVjp1hJEu6zTj5Y646z15ecr1WH7Q&callback=initMap">
 </script>
