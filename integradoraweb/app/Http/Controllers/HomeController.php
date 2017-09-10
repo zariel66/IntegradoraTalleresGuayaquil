@@ -42,7 +42,7 @@ class HomeController extends Controller
 			'password' => 'required|min:8',
 			'password_confirmation' => 'same:password',
 			'direccion' => 'required|min:10',
-			'telefono' => 'required|regex:/^(04)[0-9]{7}$/',
+			'telefono' => 'required|regex:/^\(04\)[0-9]{7}$/',
 			'nombre_empleado' => 'required|min:10',
 			"marcas" => 'required|array|min:1',
 			"servicios" => 'required|array|min:1',
