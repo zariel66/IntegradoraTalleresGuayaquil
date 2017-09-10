@@ -8,7 +8,7 @@ class Taller extends Model
 {
 	protected $table = 'taller';
     protected $primaryKey = 'id';
-    protected $fillable = ['honestidad','precio','eficiencia','telefono','nombre_taller','nombre_empleado','latitud','longitud','direccion'];
+    protected $fillable = ['honestidad','precio','eficiencia','telefono','nombre_taller','nombre_empleado','latitud','longitud','direccion','ciudad'];
     public $timestamps = false;
     public function marcas()
     {

@@ -44,7 +44,7 @@
 				  			<h4><strong>Contacto:</strong></h4> 
 				  		</div>
 		  				<p>Nombre del maestro: {{$taller->nombre_empleado}}</p>
-		  				<p>Teléfonos: {{$taller->telefono}}</p>
+		  				<p>Teléfono: {{$taller->telefono}}</p>
 		  				<p>Correo: {{$taller->usuario->correo}}</p>
 		  				<p>Al mostrar este código en el taller recibirá un descuento en el servicio:</p>
 		  				<p id="discount-code"><span class="label label-default"></span></p>
@@ -56,7 +56,7 @@
 				  			<h4><strong>Contacto:</strong></h4> 
 				  		</div>
 		  				<p>Nombre del maestro: {{$taller->nombre_empleado}}</p>
-		  				<p>Teléfonos: {{$taller->telefono}}</p>
+		  				<p>Teléfono: {{$taller->telefono}}</p>
 		  				<p>Correo: {{$taller->usuario->correo}}</p>
 		  				<p>Al mostrar este código en el taller recibirá un descuento en el servicio:</p>
 		  				<p id="discount-code"><span class="label label-default">{{$taller->calificaciones->where('estado', 0)->where('idusuario',$idusuario)->first()->desc_code}}</span></p>

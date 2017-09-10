@@ -12,10 +12,11 @@ use App\Taller;
 use App\Calificacion;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Http\Request;
+//use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Request;
 class WorkshopController extends Controller
 {
 	public function __construct()
@@ -202,7 +203,7 @@ class WorkshopController extends Controller
 		$rules = array(
 			
 			'direccion' => 'required|min:10',
-			'telefono' => 'required|min:6',
+			'telefono' => 'required|regex:/^04[0-9]{7}$/',
 			'nombre_empleado' => 'required|min:10',
 			"marcas" => 'required|array|min:1',
 			"servicios" => 'required|array|min:1',
@@ -221,7 +222,7 @@ class WorkshopController extends Controller
 			"servicios.required" => "Debe seleccionar al menos un servicio que ofrece en su taller",
 			"nombre_taller.required" => "El nombre del taller es requerido",
 
-			"telefono.min" => "El teléfono debe tener mínimo :min dígitos",
+			"telefono.regex" => "El teléfono debe tener el formato de la ciudad de Guayaquil 04XXXXXXX",
 			"direccion.min" => "La dirección debe tener mínimo :min caracteres",
 			"nombre_empleado.min" => "El nombre del empleado debe tener mínimo :min caracteres",
 			"nombre_taller.min" => "El nombre del taller debe tener mínimo :min caracteres",
@@ -296,7 +297,7 @@ class WorkshopController extends Controller
 		$rules = array(
 			
 			'direccion' => 'required|min:10',
-			'telefono' => 'required|min:6',
+			'telefono' => 'required|regex:/^04[0-9]{7}$/',
 			'nombre_empleado' => 'required|min:10',
 			"marcas" => 'required|array|min:1',
 			"servicios" => 'required|array|min:1',
@@ -313,7 +314,7 @@ class WorkshopController extends Controller
 			"servicios.required" => "Debe seleccionar al menos un servicio que ofrece en su taller",
 			"nombre_taller.required" => "El nombre del taller es requerido",
 
-			"telefono.min" => "El teléfono debe tener mínimo :min dígitos",
+			"telefono.regex" => "El teléfono debe tener el formato de la ciudad de Guayaquil 04XXXXXXX",
 			"direccion.min" => "La dirección debe tener mínimo :min caracteres",
 			"nombre_empleado.min" => "El nombre del empleado debe tener mínimo :min caracteres",
 			"nombre_taller.min" => "El nombre del taller debe tener mínimo :min caracteres",
@@ -343,6 +344,7 @@ class WorkshopController extends Controller
 					'nombre_empleado' => Input::get('nombre_empleado'),
 					'telefono' => Input::get('telefono'),
 					"nombre_taller" => Input::get('nombre_taller'),
+					"ciudad" => "Guayaquil"
 					)
 				);
 			foreach (Input::get('marcas') as $marca)
@@ -387,6 +389,23 @@ class WorkshopController extends Controller
 	public function historialTaller()
 	{
 		try {
+			if(Request::ajax())
+			{
+				
+				$result = DB::table('calificacion')
+				->join('taller', 'calificacion.idtaller', '=', 'taller.id')
+				->join('usuario', 'calificacion.idusuario', '=', 'usuario.id')
+				->where(function ($query){
+				    $query->where("calificacion.estado",1);
+				    $query->orWhere("calificacion.estado",2);
+				})->where("taller.idusuario", Auth::user()->id)
+				->whereYear('calificacion.fecha_visita', '=', Input::get('year'))
+				->orderBy('calificacion.fecha_visita',"DESC")
+				->distinct()
+				->select('calificacion.id','usuario.nombre','usuario.apellido','calificacion.descuento','calificacion.total','calificacion.fecha_visita','taller.nombre_taller')->get();
+				$html = view('workshop.snippet.historialtable')->with(array('registros' => $result ))->render();
+				return response()->json(array("success"=>1,'html' => $html ));
+			}
 			$result = DB::table('calificacion')
 			->join('taller', 'calificacion.idtaller', '=', 'taller.id')
 			->join('usuario', 'calificacion.idusuario', '=', 'usuario.id')

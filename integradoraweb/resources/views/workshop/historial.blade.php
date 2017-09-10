@@ -12,7 +12,7 @@
 				<p><strong>Visualizar por año</strong></p>
 				</div>
 				<div class="col-md-2">
-					<select class="form-control" id="searchfilter" onchange="filterSearch()">
+					<select class="form-control" id="searchfilter" onchange="yearSelect()">
 						<option value="0">Todo el tiempo</option>
 						<option value="{{\Carbon\Carbon::now()->year}}">{{\Carbon\Carbon::now()->year}}</option>
 						<option value="{{\Carbon\Carbon::now()->subYears(1)->year}}">{{\Carbon\Carbon::now()->subYears(1)->year}}</option>
@@ -34,7 +34,7 @@
 						<th class="text-center">Descuento Recibido</th>
 						<th class="text-center">Total Cancelado</th></tr>
 					</thead>
-					<tbody id="tickets-table">
+					<tbody id="history-table">
 					  
 					  @include("workshop.snippet.historialtable")
 					</tbody>
@@ -101,6 +101,31 @@
 
 <script type="text/javascript">
 
-
+var tableContent = $("#history-table").html();
+function yearSelect()
+{
+	var anio = $("#searchfilter").val();
+	if(anio == 0)
+	{
+		$("#history-table").html(tableContent);
+		return;
+	}
+	var jqxhr = $.ajax({
+		method: "GET",
+		url: "historialtaller",
+		dataType: 'json',
+		data: {year: anio},
+		success: function(response)
+		{
+			if(response.success == 1)
+			{
+				
+				$("#history-table").html(response.html);	
+			}
+			
+		}
+	});
+			
+}
 </script>
 @stop

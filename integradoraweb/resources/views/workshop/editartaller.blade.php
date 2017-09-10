@@ -40,10 +40,10 @@
 					<br>
 					<div class="row">
 						<div class="col-md-2">
-							<label>Teléfonos del establecimiento(*): </label>
+							<label>Teléfono del establecimiento(*): </label>
 						</div>
 						<div class="col-md-3">
-							<input maxlength="50" class="form-control" name="telefono" type="text" value="{{!empty(old('telefono'))? old('telefono') : $taller->telefono}}"
+							<input maxlength="11" class="form-control" name="telefono" type="text" value="{{!empty(old('telefono'))? old('telefono') : $taller->telefono}}"
 							@if($errors->has('telefono'))
 							style="border-color:red;"
 							@endif
@@ -269,6 +269,25 @@
 			//alert( "Latitude: "+event.latLng.lat()+" "+", longitude: "+event.latLng.lng() ); 
 		});
 	 }
+	 $("input[name=telefono]").keydown(function(e) {
+		var oldvalue=$(this).val();
+		var field=this;
+		 setTimeout(function () {
+			
+			var patt = /^\(04\)[0-9]*$/;
+			var res = patt.test(field.value);
+		    if(field.value.indexOf('(04)') !== 0) {
+		        $(field).val(oldvalue);
+		        
+		    }
+		    else if(!res)
+		    {
+		    	$(field).val(oldvalue);
+		    	
+		    } 
+		    
+		 }, 1);
+	});
 	</script>
 	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMWnFVjp1hJEu6zTj5Y646z15ecr1WH7Q&callback=initMap">
 	</script>

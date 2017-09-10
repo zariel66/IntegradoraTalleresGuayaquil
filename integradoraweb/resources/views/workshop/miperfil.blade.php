@@ -50,7 +50,7 @@
 				      <tr>
 				        <th class="text-center">Nombre del Taller</th>
 				        <th class="text-center">Dirección</th>
-				        <th class="text-center">Teléfonos</th>
+				        <th class="text-center">Teléfono</th>
 				        <th class="text-center">Ver</th>
 				        <th class="text-center">Editar</th>
 				        <th class="text-center">Eliminar</th>

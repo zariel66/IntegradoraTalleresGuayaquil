@@ -42,7 +42,7 @@ class HomeController extends Controller
 			'password' => 'required|min:8',
 			'password_confirmation' => 'same:password',
 			'direccion' => 'required|min:10',
-			'telefono' => 'required|min:6',
+			'telefono' => 'required|regex:/^04[0-9]{7}$/',
 			'nombre_empleado' => 'required|min:10',
 			"marcas" => 'required|array|min:1',
 			"servicios" => 'required|array|min:1',
@@ -74,12 +74,13 @@ class HomeController extends Controller
 			"nombre.regex" => "El :attribute solo debe contener texto",
 			"apellido.regex" => "El :attribute solo debe contener texto",
 			"username.regex" => "El nombre de usuario debe comenzar con una letra seguido de caracteres alfanuméricos",
+			"telefono.regex" => "El teléfono debe tener el formato de la ciudad de Guayaquil 04XXXXXXX",
 
 			"nombre.min" => "El :attribute debe tener mínimo :min caracteres",
 			"apellido.min" => "El :attribute debe tener mínimo :min caracteres",
 			"username.min" => "El usuario debe tener mínimo :min caracteres",
 			"password.min" => "La contraseña debe tener mínimo :min caracteres",
-			"telefono.min" => "El teléfono debe tener mínimo :min caracteres",
+			
 			"direccion.min" => "La dirección debe tener mínimo :min caracteres",
 			"nombre_empleado.min" => "El nombre del empleado debe tener mínimo :min caracteres",
 			"nombre_taller.min" => "El nombre del taller debe tener mínimo :min caracteres",
@@ -127,6 +128,7 @@ class HomeController extends Controller
 					'nombre_empleado' => Input::get('nombre_empleado'),
 					'telefono' => Input::get('telefono'),
 					"nombre_taller" => Input::get('nombre_taller'),
+					'ciudad' => 'Guayaquil'
 					)
 				);
 			foreach (Input::get('marcas') as $marca)
