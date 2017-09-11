@@ -220,7 +220,7 @@ class WorkshopController extends Controller
 			"servicios.required" => "Debe seleccionar al menos un servicio que ofrece en su taller",
 			"nombre_taller.required" => "El nombre del taller es requerido",
 
-			"telefono.regex" => "El teléfono debe tener el formato de la ciudad de Guayaquil 04XXXXXXX",
+			"telefono.regex" => "El teléfono debe tener el formato de la ciudad de Guayaquil (04)XXXXXXX",
 			"direccion.min" => "La dirección debe tener mínimo :min caracteres",
 			"nombre_empleado.min" => "El nombre del empleado debe tener mínimo :min caracteres",
 			"nombre_taller.min" => "El nombre del taller debe tener mínimo :min caracteres",
@@ -312,7 +312,7 @@ class WorkshopController extends Controller
 			"servicios.required" => "Debe seleccionar al menos un servicio que ofrece en su taller",
 			"nombre_taller.required" => "El nombre del taller es requerido",
 
-			"telefono.regex" => "El teléfono debe tener el formato de la ciudad de Guayaquil 04XXXXXXX",
+			"telefono.regex" => "El teléfono debe tener el formato de la ciudad de Guayaquil (04)XXXXXXX",
 			"direccion.min" => "La dirección debe tener mínimo :min caracteres",
 			"nombre_empleado.min" => "El nombre del empleado debe tener mínimo :min caracteres",
 			"nombre_taller.min" => "El nombre del taller debe tener mínimo :min caracteres",
