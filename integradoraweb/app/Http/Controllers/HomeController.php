@@ -74,7 +74,7 @@ class HomeController extends Controller
 			"nombre.regex" => "El :attribute solo debe contener texto",
 			"apellido.regex" => "El :attribute solo debe contener texto",
 			"username.regex" => "El nombre de usuario debe comenzar con una letra seguido de caracteres alfanuméricos",
-			"telefono.regex" => "El teléfono debe tener el formato de la ciudad de Guayaquil 04XXXXXXX",
+			"telefono.regex" => "El teléfono debe tener el formato de la ciudad de Guayaquil (04)XXXXXXX",
 
 			"nombre.min" => "El :attribute debe tener mínimo :min caracteres",
 			"apellido.min" => "El :attribute debe tener mínimo :min caracteres",

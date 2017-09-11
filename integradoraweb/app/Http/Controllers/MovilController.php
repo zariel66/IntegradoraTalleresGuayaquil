@@ -125,7 +125,7 @@ class MovilController extends Controller
                     'correo' => Input::get('correo'),
                     'password' => bcrypt(Input::get('password')),
                     'tipo' => 2,
-                    'username' => Input::get('username'),
+                    'username' => strtolower(Input::get('username')),
                     'api_token' => $api_token
                 )
             );
@@ -175,7 +175,7 @@ class MovilController extends Controller
             'password' => 'required|min:8',
             'password_confirmation' => 'same:password',
             'direccion' => 'required|min:10',
-            'telefono' => 'required|min:6',
+            'telefono' => 'required|regex:/^\(04\)[0-9]{7}$/',
             'nombre_empleado' => 'required|min:10',
             'marcas' => 'required',
             'servicios' => 'required',
@@ -209,13 +209,13 @@ class MovilController extends Controller
             "nombre.regex" => "El :attribute solo debe contener texto",
             "apellido.regex" => "El :attribute solo debe contener texto",
             "username.regex" => "El nombre de usuario debe comenzar con una letra seguido de caracteres alfanuméricos",
+            "telefono.regex" => "El teléfono debe tener el formato de la ciudad de Guayaquil 04XXXXXXX",
            
             "nombre.min" => "El :attribute debe tener mínimo :min caracteres",
             "apellido.min" => "El :attribute debe tener mínimo :min caracteres",
             "username.min" => "El usuario debe tener mínimo :min caracteres",
             "password.min" => "La contraseña debe tener mínimo :min caracteres",
            
-            "telefono.min" => "El teléfono debe tener mínimo :min caracteres",
             "direccion.min" => "La dirección debe tener mínimo :min caracteres",
             "nombre_empleado.min" => "El nombre del empleado debe tener mínimo :min caracteres",
             "nombre_taller.min" => "El nombre del taller debe tener mínimo :min caracteres",
@@ -244,20 +244,21 @@ class MovilController extends Controller
                   'correo' => Input::get('correo'),
                   'password' => bcrypt(Input::get('password')),
                   'tipo' => 1,
-                  'username' => Input::get('username'),
+                  'username' => strtolower(Input::get('username')),
                   'api_token' => $api_token
               )
           );
        
           $idtaller = DB::table('taller')->insertGetId(
               array(
-                  'latitud' => Input::get('latitud'),
-                  'longitud' => Input::get('longitud'),
-                  'direccion' => Input::get('direccion'),
-                  'idusuario' => $idusuario,
-                  'nombre_empleado' => Input::get('nombre_empleado'),
-                  'telefono' => Input::get('telefono'),
-                  'nombre_taller' => Input::get('nombre_taller'),
+                'latitud' => Input::get('latitud'),
+                'longitud' => Input::get('longitud'),
+                'direccion' => Input::get('direccion'),
+                'idusuario' => $idusuario,
+                'nombre_empleado' => Input::get('nombre_empleado'),
+                'telefono' => Input::get('telefono'),
+                'nombre_taller' => Input::get('nombre_taller'),
+                'ciudad' => 'Guayaquil'
               )
           );
        
@@ -283,8 +284,10 @@ class MovilController extends Controller
        
         } catch (\Exception $e) {
             DB::rollback();
-            return response()->json(['error' => $e->getMessage()]);
-            //abort(500);
+            return response()->json([
+                'is_error' => true,
+                'msg' => $e->getMessage()
+            ]);
         }
        
         DB::commit();
@@ -358,11 +361,18 @@ class MovilController extends Controller
            
             $user = User::where('api_token', $token)->firstOrFail();
             $taller =  Taller::find($id_taller);
-           
+	               
             if(!is_null($taller))
-            {
+	        {
+	            $taller['correo'] = $taller->usuario->correo;
+
                 try {
-                    $code = $taller->calificaciones->where('estado', 0)->where('idusuario',$user->id)->first()->desc_code;
+                    $code = $taller
+                        ->calificaciones
+                        ->where('estado', 0)
+                        ->where('idusuario',$user->id)
+                        ->first()
+                        ->desc_code;
                     $taller['code'] = $code;
                 } catch (\Exception $e) {}
                
@@ -439,7 +449,7 @@ class MovilController extends Controller
             $user = User::where('api_token', $token)->firstOrFail();
             $calificaciones = Calificacion::where([
                 ['idtaller', $id_taller],
-                ['estado', 1],
+                ['estado', '<>', 0],
             ])->with('user')->get();
 
             return response()->json([
@@ -581,6 +591,44 @@ class MovilController extends Controller
                 'msg' => 'Se ha anadido el vehiculo correctamente',
                 'data' => $vehiculo
             ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'is_error' => true,
+                'msg' => $e->getMessage()
+            ]);
+        }
+    }
+
+
+    public function historialTaller() {
+        try {
+            $token = Input::get('api_token');
+            $year = Input::get('year');
+
+            $user = User::where('api_token', $token)->firstOrFail();
+            $taller =  Taller::where('idusuario', $user->id)->firstOrFail();;
+
+            $calificaciones = Calificacion::where([
+                ['idtaller', $taller->id],
+                ['estado', '<>', 0],
+            ]);
+
+            if ($year) {
+                $calificaciones = $calificaciones
+                    ->whereYear('fecha_visita', $year);
+            }
+
+            $calificaciones = $calificaciones
+                ->orderBy('fecha_visita','desc')
+                ->with('user')
+                ->with('taller')
+                ->get();
+
+            return response()->json([
+                'is_error' => false,
+                'data' => $calificaciones
+            ]);
+
         } catch (\Exception $e) {
             return response()->json([
                 'is_error' => true,

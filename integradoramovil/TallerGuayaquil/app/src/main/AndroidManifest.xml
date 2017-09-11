@@ -26,7 +26,9 @@
         android:theme="@style/AppTheme.FullScreen">
 >>>>>>> master
 
-        <activity android:name=".activities.ActionActivity">
+        <activity
+            android:name=".activities.ActionActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -44,42 +46,65 @@
         <activity android:name=".activities.LoginActivity" />
 =======
         <!-- Sign up Person -->
-        <activity android:name=".activities.SignupPersonActivity" />
-        <activity android:name=".activities.SignupVehicleActivity" />
+        <activity
+            android:name=".activities.SignupPersonActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activities.SignupVehicleActivity"
+            android:screenOrientation="portrait"/>
 
         <!-- Sign up WorkShop -->
-        <activity android:name=".activities.SignupServiceActivity"/>
+        <activity
+            android:name=".activities.SignupServiceActivity"
+            android:screenOrientation="portrait"/>
 
         <!-- Login -->
-        <activity android:name=".activities.LoginActivity" />
+        <activity
+            android:name=".activities.LoginActivity"
+            android:screenOrientation="portrait"/>
 
         <!-- Main -->
         <activity
             android:name=".activities.ReservationActivity"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.MapActivity"
-            android:theme="@style/AppTheme" />
-
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.WorkShopProfileActivity"
+<<<<<<< HEAD
             android:theme="@style/AppTheme" />
 
 <<<<<<< HEAD
 >>>>>>> master
 =======
+=======
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait"/>
+>>>>>>> master
         <activity
             android:name=".activities.ScannerActivity"
             android:clearTaskOnLaunch="true"
             android:screenOrientation="portrait"
             android:stateNotNeeded="true"
             android:windowSoftInputMode="stateAlwaysHidden" />
-
         <activity
             android:name=".activities.CompleteActivity"
+<<<<<<< HEAD
             android:theme="@style/AppTheme" />
 >>>>>>> master
+=======
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activities.RecordActivity"
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait"/>
+>>>>>>> master
 
+        <!-- Meta -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_android_map_api_key" />

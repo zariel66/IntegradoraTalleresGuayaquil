@@ -94,7 +94,10 @@ public class ReservationActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_about) {
+        if (id == R.id.action_record) {
+            showRecord();
+            return true;
+        }else if (id == R.id.action_about) {
             showAbout();
             return true;
         }else if (id == R.id.action_logout) {
@@ -103,6 +106,11 @@ public class ReservationActivity extends AppCompatActivity {
         }
 
         return false;
+    }
+
+    private void showRecord() {
+        Intent i = new Intent(ReservationActivity.this, RecordActivity.class);
+        startActivity(i);
     }
 
     private void showAbout(){

@@ -66,10 +66,10 @@ public class WorkShopProfileActivity extends AppCompatActivity
 
     private LinearLayout mEvaluationView, mLyDescountCodeView, mLyCommentView;
     private RelativeLayout mContainerView;
-    private TextView mTitleView, mAddressView, mPhoneView, mNameView, mCodeTextView,
+    private TextView mTitleView, mAddressView, mPhoneView, mNameView, mCodeTextView, mEmailView,
             mTotalHonestyView, mTotalEfficiencyView, mTotalCosteView, mTotalView, mEmptyText;
     private ImageView mCodeView;
-    private TagContainerLayout mServicesView, mBrandsView;
+    private TagContainerLayout mServicesView, mServiceView, mBrandsView, mBrandView;
     private ProgressBar mHonestyView, mEfficiencyView, mCosteView;
     private Button mRequestView;
 
@@ -88,7 +88,7 @@ public class WorkShopProfileActivity extends AppCompatActivity
     private float startScaleFinal;
 
     private WorkShop workShop;
-    private String serviceSelected;
+    private String serviceSelected, brandSelected;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -97,6 +97,7 @@ public class WorkShopProfileActivity extends AppCompatActivity
 
         workShop = (WorkShop) getIntent().getExtras().getSerializable("profile");
         serviceSelected = getIntent().getExtras().getString("service");
+        brandSelected = getIntent().getExtras().getString("brand");
 
         mContainerView = (RelativeLayout) findViewById(R.id.rl_container);
         mTitleView = (TextView) findViewById(R.id.txt_title);
@@ -106,18 +107,22 @@ public class WorkShopProfileActivity extends AppCompatActivity
         mCodeView = (ImageView) findViewById(R.id.img_code);
         mImageZoomView = (PhotoView) findViewById(R.id.img_zoom);
         mNameView = (TextView) findViewById(R.id.txt_name);
+        mEmailView = (TextView) findViewById(R.id.txt_email);
 
         mLyDescountCodeView = (LinearLayout) findViewById(R.id.ly_descount_code);
         mLyCommentView = (LinearLayout) findViewById(R.id.ly_comments);
 
         mServicesView = (TagContainerLayout) findViewById(R.id.tag_services);
+        mServiceView = (TagContainerLayout) findViewById(R.id.tag_service_selected);
         mBrandsView = (TagContainerLayout) findViewById(R.id.tag_brands);
+        mBrandView = (TagContainerLayout) findViewById(R.id.tag_brand_selected);
 
 
         mTitleView.setText(workShop.getWorkshopName());
         mAddressView.setText(workShop.getAddress());
         mPhoneView.setText(workShop.getPhone());
         mNameView.setText(workShop.getManagerName());
+        mEmailView.setText(workShop.getEmail());
 
         mHonestyView = (ProgressBar) findViewById(R.id.pb_honesty);
         mEfficiencyView = (ProgressBar) findViewById(R.id.pb_efficiency);
@@ -142,12 +147,11 @@ public class WorkShopProfileActivity extends AppCompatActivity
 
         populateServices();
         populateBrands();
+        populateComments();
+        populateEvaluations();
 
         if (!TextUtils.isEmpty(workShop.getCodeDesc())) {
             populateCode();
-            populateComments();
-            populateEvaluations();
-
             showEvaAndCom();
         }
 
@@ -220,35 +224,46 @@ public class WorkShopProfileActivity extends AppCompatActivity
     private void populateServices() {
 
         List<Service> servicesList = workShop.getServiceList();
-        String services[] = new String[servicesList.size()];
-        for (int i=0; i<servicesList.size(); i++) {
-            Service service = servicesList.get(i);
+        String services[] = new String[servicesList.size()-1];
+        String serv[] = new String[1];
+        int cont = 0;
+
+        for (Service service : servicesList) {
             String s = service.getCategory();
 
-            Log.i("", "**************");
-            Log.i("serviceSelected", serviceSelected);
-            Log.i("service", s.toLowerCase());
-            Log.i("", "**************");
+            if (s.toLowerCase().equals(serviceSelected.toLowerCase())) {
+                serv[0] = s.toUpperCase();
+            } else {
+                services[cont] = s;
+                cont++;
+            }
 
-            if (s.toLowerCase().equals(serviceSelected.toLowerCase()))
-                services[i] = s.toUpperCase();
-            else
-                services[i] = s;
         }
 
         mServicesView.setTags(services);
+        mServiceView.setTags(serv);
     }
 
     private void populateBrands() {
 
         List<Brand> brandList = workShop.getBrandList();
-        String brands[] = new String[brandList.size()];
-        for (int i=0; i<brandList.size(); i++) {
-            Brand brand = brandList.get(i);
-            brands[i] = brand.getName();
+        String brands[] = new String[brandList.size()-1];
+        String bra[] = new String[1];
+        int cont = 0;
+
+        for (Brand brand : brandList) {;
+            String b = brand.getName();
+
+            if (b.toLowerCase().equals(brandSelected.toLowerCase())) {
+                bra[0] = b.toUpperCase();
+            } else {
+                brands[cont] = b;
+                cont++;
+            }
         }
 
         mBrandsView.setTags(brands);
+        mBrandView.setTags(bra);
     }
 
     private void populateComments() {
@@ -278,6 +293,9 @@ public class WorkShopProfileActivity extends AppCompatActivity
                             Util.showToast(getApplicationContext(), api.getMsg());
                         } else {
                             List<Evaluation> evaluations = api.getData();
+                            int total = evaluations.size();
+
+                            mTotalView.setText(total + " usuarios han comentado eso");
 
                             if (evaluations != null && evaluations.size() > 0) {
                                 for (Evaluation evaluation : evaluations) {
@@ -311,29 +329,22 @@ public class WorkShopProfileActivity extends AppCompatActivity
     }
 
     private void populateEvaluations() {
+        double honestyCount = workShop.getHonesty();
+        double efficiencyCount = workShop.getEfficiency();
+        double costeCount = workShop.getCoste();
 
-        List<Evaluation> evaluations = workShop.getEvaluationList();
 
-        if (evaluations != null) {
-            double honestyCount = workShop.getHonesty();
-            double efficiencyCount = workShop.getEfficiency();
-            double costeCount = workShop.getCoste();
-            int total = evaluations.size();
+        mTotalHonestyView.setText(String.valueOf(honestyCount));
+        mHonestyView.setProgressDrawable(getResources().getDrawable(getColorRange(honestyCount)));
+        mHonestyView.setProgress((int)honestyCount);
 
-            mTotalView.setText(total + " usuarios han comentado eso");
+        mTotalEfficiencyView.setText(String.valueOf(efficiencyCount));
+        mEfficiencyView.setProgressDrawable(getResources().getDrawable(getColorRange(efficiencyCount)));
+        mEfficiencyView.setProgress((int)efficiencyCount);
 
-            mTotalHonestyView.setText(String.valueOf(honestyCount));
-            mHonestyView.setProgressDrawable(getResources().getDrawable(getColorRange(honestyCount)));
-            mHonestyView.setProgress((int)honestyCount);
-
-            mTotalEfficiencyView.setText(String.valueOf(efficiencyCount));
-            mEfficiencyView.setProgressDrawable(getResources().getDrawable(getColorRange(efficiencyCount)));
-            mEfficiencyView.setProgress((int)efficiencyCount);
-
-            mTotalCosteView.setText(String.valueOf(costeCount));
-            mCosteView.setProgressDrawable(getResources().getDrawable(getColorRange(costeCount)));
-            mCosteView.setProgress((int)costeCount);
-        }
+        mTotalCosteView.setText(String.valueOf(costeCount));
+        mCosteView.setProgressDrawable(getResources().getDrawable(getColorRange(costeCount)));
+        mCosteView.setProgress((int)costeCount);
     }
 
     private void populateCode() {
@@ -355,7 +366,6 @@ public class WorkShopProfileActivity extends AppCompatActivity
     private void showEvaAndCom() {
         mRequestView.setVisibility(View.GONE);
         mLyDescountCodeView.setVisibility(View.VISIBLE);
-        mLyCommentView.setVisibility(View.VISIBLE);
     }
 
     public View getEvaluationView(Evaluation evaluation) {
@@ -582,16 +592,13 @@ public class WorkShopProfileActivity extends AppCompatActivity
                             workShop = api.getData();
 
                             populateCode();
-                            populateComments();
-                            populateEvaluations();
-
                             showEvaAndCom();
                         }
                     } else {
                         Util.showToast(getApplicationContext(),
                                 getString(R.string.message_service_server_failed));
-                        Util.hideLoading();
                     }
+                    Util.hideLoading();
                 }
 
                 @Override

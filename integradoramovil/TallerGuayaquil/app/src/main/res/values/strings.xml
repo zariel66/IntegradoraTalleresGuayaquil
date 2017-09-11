@@ -43,7 +43,8 @@
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
-    <string name="error_field_required">This field is required</string>
+    <string name="error_len_password">Debe tener mínimo 6 caracteres</string>
+    <string name="error_field_required">Este campo es requerido</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
@@ -83,5 +84,18 @@
     <string name="preferences_person_email">PERSON_EMAIL</string>
     <string name="preferences_person_token">PERSON_TOKEN</string>
 >>>>>>> master
+
+    <string-array name="years">
+        <item>Todo</item>
+        <item>2017</item>
+        <item>2016</item>
+        <item>2015</item>
+        <item>2014</item>
+        <item>2013</item>
+    </string-array>
+
+    <string-array name="cities">
+        <item>Guayaquil</item>
+    </string-array>
 
 </resources>
