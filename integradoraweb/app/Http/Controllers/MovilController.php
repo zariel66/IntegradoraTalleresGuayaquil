@@ -365,7 +365,12 @@ class MovilController extends Controller
             if(!is_null($taller))
             {
                 try {
-                    $code = $taller->calificaciones->where('estado', 0)->where('idusuario',$user->id)->first()->desc_code;
+                    $code = $taller
+                        ->calificaciones
+                        ->where('estado', 0)
+                        ->where('idusuario',$user->id)
+                        ->first()
+                        ->desc_code;
                     $taller['code'] = $code;
                 } catch (\Exception $e) {}
                
@@ -442,7 +447,7 @@ class MovilController extends Controller
             $user = User::where('api_token', $token)->firstOrFail();
             $calificaciones = Calificacion::where([
                 ['idtaller', $id_taller],
-                ['estado', 1],
+                ['estado', '<>', 0],
             ])->with('user')->get();
 
             return response()->json([
@@ -603,7 +608,7 @@ class MovilController extends Controller
 
             $calificaciones = Calificacion::where([
                 ['idtaller', $taller->id],
-                ['estado', '!=', 0],
+                ['estado', '<>', 0],
             ]);
 
             if ($year) {
