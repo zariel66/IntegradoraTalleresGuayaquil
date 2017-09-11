@@ -188,7 +188,7 @@ public class SignupServiceActivity extends AppCompatActivity
             mPhoneView.setError(getString(R.string.error_field_required));
             focusView = mPhoneView;
             cancel = true;
-        } else if (phone.length() < 10) {
+        } else if (phone.length() < 7) {
             mPhoneView.setError(getString(R.string.error_incorrect_number_field));
             focusView = mPhoneView;
             cancel = true;
@@ -224,7 +224,8 @@ public class SignupServiceActivity extends AppCompatActivity
                 workShop.setManagerName(managerName);
                 workShop.setWorkshopName(workshopName);
                 workShop.setAddress(address);
-                workShop.setPhone(phone);
+                workShop.setPhone("(04)" + phone);
+                Log.i("Phone", workShop.getPhone());
 
                 // clean for prevent null pointer exception
                 workShop.getBrandList().clear();

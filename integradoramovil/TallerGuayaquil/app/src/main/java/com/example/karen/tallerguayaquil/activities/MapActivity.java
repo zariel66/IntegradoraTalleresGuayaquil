@@ -122,14 +122,14 @@ public class MapActivity extends AppCompatActivity
         fab_route.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                menu_fab.collapse();
+                //menu_fab.collapse();
                 showServices();
             }
         });
         fab_stop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                menu_fab.collapse();
+                //menu_fab.collapse();
                 showVehicles();
             }
         });
@@ -493,8 +493,7 @@ public class MapActivity extends AppCompatActivity
         } else if (vehicle != null && service != null) {
             Util.showToast(getApplicationContext(),
                     "Buscando talleres de " + service.toString() +
-                            " para " + vehicle.toString() +
-                            " en " + distance + "Km de radio");
+                            " para " + vehicle.toString());
 
             searchWorkshops();
         } else {
@@ -741,6 +740,7 @@ public class MapActivity extends AppCompatActivity
                             Bundle bundle = new Bundle();
                             bundle.putSerializable("profile", workShop);
                             bundle.putString("service", service.getName());
+                            bundle.putString("brand", vehicle.getBrand().getName());
 
                             Intent i = new Intent(MapActivity.this, WorkShopProfileActivity.class);
                             i.putExtras(bundle);

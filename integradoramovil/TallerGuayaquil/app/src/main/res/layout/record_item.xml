@@ -23,14 +23,6 @@
             android:layout_marginTop="5dp"
             android:textSize="14sp"
             android:textColor="@android:color/black"
-            android:text="Nombre Usuario: "/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:textSize="14sp"
-            android:textColor="@android:color/black"
             android:text="Nombre Cliente: "/>
 
         <TextView
@@ -39,7 +31,15 @@
             android:layout_marginTop="5dp"
             android:textSize="14sp"
             android:textColor="@android:color/black"
-            android:text="Código de Descuento: "/>
+            android:text="Nombre Taller: "/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textSize="14sp"
+            android:textColor="@android:color/black"
+            android:text="Fecha de Visita: "/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -47,7 +47,15 @@
             android:layout_marginTop="5dp"
             android:textSize="14sp"
             android:textColor="@android:color/black"
-            android:text="Fecha de Creación"/>
+            android:text="Descuento Recibido: "/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textSize="14sp"
+            android:textColor="@android:color/black"
+            android:text="Total Cancelado: "/>
 
     </LinearLayout>
 
@@ -56,16 +64,6 @@
         android:layout_height="wrap_content"
         android:layout_weight=".5"
         android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/txt_username"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:textColor="@android:color/black"
-            tools:text="jalberto"/>
 
         <TextView
             android:id="@+id/txt_name"
@@ -79,27 +77,51 @@
             android:ellipsize="marquee"
             android:fadingEdge="horizontal"
             android:marqueeRepeatLimit="marquee_forever"
-            tools:text="Juan Alberto de las Bermudas"/>
+            tools:text="Alberto Pinoargoti"/>
 
         <TextView
-            android:id="@+id/txt_code"
+            android:id="@+id/txt_workshop"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:textSize="14sp"
             android:textStyle="bold"
             android:textColor="@android:color/black"
-            tools:text="Gr43Fd3"/>
+            android:maxLines="1"
+            android:ellipsize="marquee"
+            android:fadingEdge="horizontal"
+            android:marqueeRepeatLimit="marquee_forever"
+            tools:text="Taller Juanito"/>
 
         <TextView
             android:id="@+id/txt_date"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:textSize="14sp"
             android:textStyle="bold"
             android:textColor="@android:color/black"
             tools:text="2017-10-09"/>
+
+        <TextView
+            android:id="@+id/txt_descount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            tools:text="5%"/>
+
+        <TextView
+            android:id="@+id/txt_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            tools:text="$50"/>
 
     </LinearLayout>
 
