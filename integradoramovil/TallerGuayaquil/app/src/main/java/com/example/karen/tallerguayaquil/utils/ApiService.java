@@ -60,6 +60,10 @@ public interface ApiService {
     @POST("cerrarticket")
     Call<Api> closeTicket(@FieldMap Map<String, String> params);
 
+    @FormUrlEncoded
+    @POST("historialtaller")
+    Call<Api<List<Evaluation>>> getRecord(@FieldMap Map<String, String> params);
+
 
     /** SignUp**/
     @POST("registrotallersubmit")

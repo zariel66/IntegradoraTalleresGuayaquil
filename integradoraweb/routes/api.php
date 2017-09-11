@@ -33,3 +33,4 @@ Route::post('/calificaciones/{id_taller}', 'MovilController@getCalificaciones');
 Route::post('/reservaciones', 'MovilController@getReservaciones');
 Route::post('/reservacion', 'MovilController@getReservacion');
 Route::post('/cerrarticket', 'MovilController@cerrarTicket');
+Route::post('/historialtaller', 'MovilController@historialTaller');

@@ -33,6 +33,9 @@ public class Evaluation implements Serializable {
     @SerializedName("fecha_hora")
     private String dateCreated;
 
+    @SerializedName("fecha_visita")
+    private String date;
+
     @SerializedName("desc_code")
     private String code;
 
@@ -47,6 +50,9 @@ public class Evaluation implements Serializable {
 
     @SerializedName("user")
     private Person user;
+
+    @SerializedName("taller")
+    private WorkShop workShopProfile;
 
     public int getId() {
         return id;
@@ -158,5 +164,21 @@ public class Evaluation implements Serializable {
 
     public void setUser(Person user) {
         this.user = user;
+    }
+
+    public WorkShop getWorkShopProfile() {
+        return workShopProfile;
+    }
+
+    public void setWorkShopProfile(WorkShop workShopProfile) {
+        this.workShopProfile = workShopProfile;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

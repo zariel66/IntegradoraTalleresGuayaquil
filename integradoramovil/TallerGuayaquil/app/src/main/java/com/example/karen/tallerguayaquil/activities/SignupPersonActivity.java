@@ -78,8 +78,8 @@ public class SignupPersonActivity extends AppCompatActivity {
             cancel = true;
         }
 
-        if (TextUtils.isEmpty(password) || password.length() < 8) {
-            mPasswordView.setError(getString(R.string.error_field_required));
+        if (TextUtils.isEmpty(password) || password.length() < 6) {
+            mPasswordView.setError(getString(R.string.error_len_password));
             focusView = mPasswordView;
             cancel = true;
         }

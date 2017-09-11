@@ -72,8 +72,8 @@ public class CompleteActivity extends AppCompatActivity {
                     subtotal = Double.valueOf(mSubTotalView.getText().toString());
                 } catch (Exception ignore){}
 
-                if (descount > 0 && subtotal > 0) {
-                    mTotalView.setText("" + (subtotal - (subtotal * descount / 100)));
+                if (descount > 0 && descount <= 100 && subtotal > 0) {
+                    mTotalView.setText("" + String.format("%.2f", (subtotal - (subtotal * descount / 100))));
                 } else {
                     mTotalView.setText("");
                 }
@@ -100,8 +100,8 @@ public class CompleteActivity extends AppCompatActivity {
                     subtotal = Double.valueOf(editable.toString());
                 } catch (Exception ignore){}
 
-                if (descount > 0 && subtotal > 0) {
-                    mTotalView.setText("" + (subtotal - (subtotal * descount / 100)));
+                if (descount > 0 && descount <= 100 && subtotal > 0) {
+                    mTotalView.setText("" + String.format("%.2f", (subtotal - (subtotal * descount / 100))));
                 } else {
                     mTotalView.setText("");
                 }
@@ -156,19 +156,11 @@ public class CompleteActivity extends AppCompatActivity {
             mSubTotalView.setError("Subtotal debe ser mayor a 0");
             focusView = mSubTotalView;
             cancel = true;
-        }else if (Double.valueOf(subtotal) > 100) {
-            mSubTotalView.setError("Subtotal debe ser menor a 100");
-            focusView = mSubTotalView;
-            cancel = true;
         }
 
 
         if (TextUtils.isEmpty(total)) {
             mTotalView.setError(getString(R.string.error_field_required));
-            focusView = mTotalView;
-            cancel = true;
-        }else if (Double.valueOf(total) > 100) {
-            mTotalView.setError("Total debe ser menor a 100");
             focusView = mTotalView;
             cancel = true;
         }
