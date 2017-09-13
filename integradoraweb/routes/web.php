@@ -30,6 +30,7 @@ Route::get('forgotpassword',"SesionController@forgotPassword")->middleware('gues
 Route::post('forgotpassword',"SesionController@enviarResetToken");
 Route::get('nuevopwd/{pass_token}/{correo}',"SesionController@newPassword")->middleware('guest','sslp');
 Route::post('nuevopwd',"SesionController@setNewPassword");
+Route::get('confirmarcuenta/{api_token}/{correo}',"SesionController@confirmarCuenta")->middleware('guest','sslp');
 
 /*CLIENT*/
 
