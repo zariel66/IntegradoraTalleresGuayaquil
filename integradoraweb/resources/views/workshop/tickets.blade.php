@@ -4,7 +4,7 @@
 	<div class="panel col-md-10 col-md-offset-1">
 		<div class="panel-body">
 			<div class="row">
-				<h2 class="page-header"><strong>Clientes interesados</strong></h2>
+				<h2 class="page-header"><strong>Citas Reservadas</strong></h2>
 			</div>
 			<div class="row">
 				<br>

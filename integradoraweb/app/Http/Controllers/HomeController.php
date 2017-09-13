@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
-
+use Illuminate\Support\Facades\Mail;
 class HomeController extends Controller
 {
 	public function __construct()
@@ -112,7 +112,7 @@ class HomeController extends Controller
 					'apellido' => Input::get('apellido'),
 					'correo' => Input::get('correo'),
 					'password' => bcrypt(Input::get('password')),
-					'tipo' => 1,
+					'tipo' => 3,
 					'username' => strtolower(Input::get('username')),
 					'api_token' => $api_token
 					)
@@ -158,12 +158,19 @@ class HomeController extends Controller
 		DB::commit();
 
 
-		if(Auth::attempt(['username' =>  Input::get('username'), 'password' => Input::get('password')]))
-			return redirect("tallertickets");
-		else
-			return redirect("login");
+		// if(Auth::attempt(['username' =>  Input::get('username'), 'password' => Input::get('password')]))
+		// 	return redirect("tallertickets");
+		// else
+		// 	return redirect("login");
 
+		$user = User::find($idusuario);
+		 Mail::send('emails.confirmuser', ['user' => $user], function ($m) use ($user) {
+                $m->from(config("constants.emails.from"), config("constants.app_name"));
 
+                $m->to($user->correo, $user->nombre)->subject('Active su cuenta');
+            });
+
+		return redirect("login")->with("mensajet4","Se ha enviado un enlace a su correo para confirmar sus datos");
 
 	}
 
@@ -245,7 +252,7 @@ class HomeController extends Controller
 					'apellido' => Input::get('apellido'),
 					'correo' => Input::get('correo'),
 					'password' => bcrypt(Input::get('password')),
-					'tipo' => 2,
+					'tipo' => 4,
 					'username' => strtolower(Input::get('username')),
 					'api_token' => $api_token
 					)
@@ -268,19 +275,30 @@ class HomeController extends Controller
 		}
 
 		DB::commit();
-		if(Auth::attempt(['username' =>  Input::get('username'), 'password' => Input::get('password')]))
-			return redirect("busquedataller");
-		else
-			return redirect("login");
+		// if(Auth::attempt(['username' =>  Input::get('username'), 'password' => Input::get('password')]))
+		// 	return redirect("busquedataller");
+		// else
+		// 	return redirect("login");
+		$user = User::find($idusuario);
+		 Mail::send('emails.confirmuser', ['user' => $user], function ($m) use ($user) {
+                $m->from(config("constants.emails.from"), config("constants.app_name"));
 
+                $m->to($user->correo, $user->nombre)->subject('Active su cuenta');
+            });
 
+		return redirect("login")->with("mensajet4","Se ha enviado un enlace a su correo para confirmar sus datos");
 	}
 
 	public function login()
 	{
-		
+		if(session()->has('mensajet1')) {
+			return view("basic.login",array("mensajet1"=> session()->get('mensajet1')));
+		}
 		if(session()->has('mensajet3')) {
 			return view("basic.login",array("mensajet3"=> session()->get('mensajet3')));
+		}
+		if(session()->has('mensajet4')) {
+			return view("basic.login",array("mensajet4"=> session()->get('mensajet4')));
 		}
 		return view("basic.login");
 	}
