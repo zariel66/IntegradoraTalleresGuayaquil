@@ -124,7 +124,7 @@ class MovilController extends Controller
                     'apellido' => Input::get('apellido'),
                     'correo' => Input::get('correo'),
                     'password' => bcrypt(Input::get('password')),
-                    'tipo' => 2,
+                    'tipo' => 4,
                     'username' => strtolower(Input::get('username')),
                     'api_token' => $api_token
                 )
@@ -137,19 +137,12 @@ class MovilController extends Controller
                     'modelo' => $vehicle['modelo']
                 )
             );
-           
-            // Build user
-            $user = array(
-                'id' => $idusuario,
-                'nombre' => Input::get('nombre'),
-                'apellido' => Input::get('apellido'),
-                'correo' => Input::get('correo'),
-                'tipo' => 2,
-                'username' => Input::get('username'),
-                'api_token' => $api_token,
-                'vehiculos' => array($vehicle)
-            );
-       
+
+            $user = User::find($idusuario);
+            Mail::send('emails.confirmuser', ['user' => $user], function ($m) use ($user) {
+                $m->from(config("constants.emails.from"), config("constants.app_name"));
+                $m->to($user->correo, $user->nombre)->subject('Active su cuenta');
+            });       
        
         } catch (\Exception $e) {
             DB::rollback();
@@ -243,7 +236,7 @@ class MovilController extends Controller
                   'apellido' => Input::get('apellido'),
                   'correo' => Input::get('correo'),
                   'password' => bcrypt(Input::get('password')),
-                  'tipo' => 1,
+                  'tipo' => 3,
                   'username' => strtolower(Input::get('username')),
                   'api_token' => $api_token
               )
@@ -280,7 +273,13 @@ class MovilController extends Controller
                       'idtaller' => $idtaller
                   )
               );
-          }
+	      }
+
+          $user = User::find($idusuario);
+          Mail::send('emails.confirmuser', ['user' => $user], function ($m) use ($user) {
+              $m->from(config("constants.emails.from"), config("constants.app_name"));
+              $m->to($user->correo, $user->nombre)->subject('Active su cuenta');
+          });
        
         } catch (\Exception $e) {
             DB::rollback();
