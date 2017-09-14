@@ -361,9 +361,11 @@ class MovilController extends Controller
            
             $user = User::where('api_token', $token)->firstOrFail();
             $taller =  Taller::find($id_taller);
-           
+	               
             if(!is_null($taller))
-            {
+	        {
+	            $taller['correo'] = $taller->usuario->correo;
+
                 try {
                     $code = $taller
                         ->calificaciones

@@ -44,8 +44,8 @@ class ClienteController extends Controller
 			error_log("distancia: " . $distancia);
 			$workshops = DB::select("select distinct t.*,6371*2*   asin( sqrt( power(sin(((". $latitude ." - t.latitud)*pi()/180) / 2),2)  + cos(". $latitude ." * pi()/180) * cos( t.latitud  *  pi()/180) * power( sin( (". $longitude ." - t.longitud) * pi()/180),2 )) )
 				 as distance
-				 from taller as t INNER JOIN servicio_taller as st ON t.id = st.idtaller INNER JOIN marca_taller as mt ON mt.idtaller=t.id INNER JOIN marca as m on mt.idmarca = m.id where st.categoria = '". $servicio ."' and mt.idmarca = ". $vehiculo ." 
-				 having distance< ". $distancia ."
+				 from taller as t INNER JOIN usuario as usr ON t.idusuario = usr.id INNER JOIN servicio_taller as st ON t.id = st.idtaller INNER JOIN marca_taller as mt ON mt.idtaller=t.id INNER JOIN marca as m on mt.idmarca = m.id where st.categoria = '". $servicio ."' and mt.idmarca = ". $vehiculo ." and usr.tipo=1 " . 
+				 "having distance< ". $distancia ."
 				 ORDER BY distance");
 			$html = view('client.snippet.searchresultlist')->with(array('results' => $workshops, "service"=> Input::get('servicio'),"latitude" => Input::get('latitude'),"longitude"=> Input::get('longitude'), "carbrand" =>Input::get('vehiculo')))->render();
 		return response()->json(array('success'=> count($workshops),'workshops' => $workshops, "html" => $html));	
@@ -62,6 +62,10 @@ class ClienteController extends Controller
 		try {
 			$iduser = Auth::user()->id;
 			$taller =  Taller::find($id);
+			if($taller->usuario->tipo == 3 or $taller->usuario->tipo == 4)
+			{
+				abort(404);
+			}
 			if(is_null($taller))
 			{
 				abort(404);

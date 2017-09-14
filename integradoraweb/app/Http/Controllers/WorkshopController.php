@@ -145,6 +145,7 @@ class WorkshopController extends Controller
 			->join('taller', 'calificacion.idtaller', '=', 'taller.id')
 			->join('usuario', 'calificacion.idusuario', '=', 'usuario.id')
 			->where("calificacion.idusuario",$id)
+			->where("calificacion.estado",0)
 			->where("taller.idusuario",Auth::user()->id)
 			->distinct()
 			->select('calificacion.id','usuario.nombre', 'usuario.apellido','calificacion.desc_code','taller.nombre_taller')->get();
@@ -220,7 +221,7 @@ class WorkshopController extends Controller
 			"servicios.required" => "Debe seleccionar al menos un servicio que ofrece en su taller",
 			"nombre_taller.required" => "El nombre del taller es requerido",
 
-			"telefono.regex" => "El teléfono debe tener el formato de la ciudad de Guayaquil 04XXXXXXX",
+			"telefono.regex" => "El teléfono debe tener el formato de la ciudad de Guayaquil (04)XXXXXXX",
 			"direccion.min" => "La dirección debe tener mínimo :min caracteres",
 			"nombre_empleado.min" => "El nombre del empleado debe tener mínimo :min caracteres",
 			"nombre_taller.min" => "El nombre del taller debe tener mínimo :min caracteres",
@@ -312,7 +313,7 @@ class WorkshopController extends Controller
 			"servicios.required" => "Debe seleccionar al menos un servicio que ofrece en su taller",
 			"nombre_taller.required" => "El nombre del taller es requerido",
 
-			"telefono.regex" => "El teléfono debe tener el formato de la ciudad de Guayaquil 04XXXXXXX",
+			"telefono.regex" => "El teléfono debe tener el formato de la ciudad de Guayaquil (04)XXXXXXX",
 			"direccion.min" => "La dirección debe tener mínimo :min caracteres",
 			"nombre_empleado.min" => "El nombre del empleado debe tener mínimo :min caracteres",
 			"nombre_taller.min" => "El nombre del taller debe tener mínimo :min caracteres",

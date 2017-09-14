@@ -34,6 +34,12 @@ class SesionController extends Controller
             {
                 return redirect()->intended('tallertickets');
             }
+            else if($user->tipo == 3 or $user->tipo == 4)
+            {
+                Auth::logout();
+                session()->flush();
+                return redirect("login")->with("mensajet3","La cuenta ingresada no ha sido confirmada. Ingrese a su correo para activar su cuenta.");
+            }
             
         }
         return redirect("login")->with("mensajet3","Las credenciales proporcionadas son incorrectas");
@@ -67,6 +73,11 @@ class SesionController extends Controller
         }
         try {
             $user = User::where("correo",$correo)->first();
+            if($user->tipo == 3 or $user->tipo == 4)
+            {
+                return redirect("login")->with("mensajet3","La cuenta ingresada no ha sido validada. Ingrese a su correo y confirme su registro.");        
+            }
+            
             $user->update(
             [
                 'pass_token' => str_random(10)
@@ -141,6 +152,38 @@ class SesionController extends Controller
             return Redirect::back();
         }
         return view("basic.login")->with(array("mensajet1"=>"La contraseña se ha restablecido"));
+        
+    }
+
+    public function confirmarCuenta($api_token,$correo)
+    {
+         try {
+
+            $user = User::where("correo",$correo)->where('api_token',$api_token)->first();
+          
+            if(is_null($user))
+            {
+                abort(404);    
+            }
+            if($user->tipo == 3)
+            {
+                $user->update(
+                [
+                    "tipo" => 1
+                ]);  
+            }
+            else if($user->tipo == 4)
+            {
+                $user->update(
+                [
+                    "tipo" => 2
+                ]);  
+            }
+            return redirect("login")->with("mensajet1","Su cuenta ha sido activada. Ingrese con sus credenciales.");
+        } catch (\Exception $e) {
+            abort(500);
+        }
+        
         
     }
 }
