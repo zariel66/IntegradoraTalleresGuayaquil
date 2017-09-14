@@ -145,6 +145,7 @@ class WorkshopController extends Controller
 			->join('taller', 'calificacion.idtaller', '=', 'taller.id')
 			->join('usuario', 'calificacion.idusuario', '=', 'usuario.id')
 			->where("calificacion.idusuario",$id)
+			->where("calificacion.estado",0)
 			->where("taller.idusuario",Auth::user()->id)
 			->distinct()
 			->select('calificacion.id','usuario.nombre', 'usuario.apellido','calificacion.desc_code','taller.nombre_taller')->get();
