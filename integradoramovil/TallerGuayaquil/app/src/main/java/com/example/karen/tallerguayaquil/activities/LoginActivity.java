@@ -126,16 +126,23 @@ public class LoginActivity extends AppCompatActivity {
 
                             SessionManager sessionManager = new SessionManager(LoginActivity.this);
                             if (sessionManager.savePerson(p)) {
-                                Intent intent;
+                                Intent intent = null;
+                                int type = p.getType();
 
-                                if (p.getType() == 1) { // Taller
+                                if (type == 1) { // Taller
                                     intent = new Intent(LoginActivity.this, ReservationActivity.class);
-                                } else { // Cliente
+                                } else if (type == 2) { // Cliente
                                     intent = new Intent(LoginActivity.this, MapActivity.class);
+                                } else {
+                                    Util.showToast(getApplicationContext(),
+                                            "La cuenta ingresada no ha sido actualizada. " +
+                                            "Ingrese a su correo para activar su cuenta.");
                                 }
 
-                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                startActivity(intent);
+                                if (intent != null) {
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    startActivity(intent);
+                                }
                             }
                         } else {
                             Util.showToast(getApplicationContext(),
